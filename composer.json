@@ -1,0 +1,33 @@
+{
+    "name": "extendy/smartyurl",
+    "description": "SmartyURL",
+    "type": "project",
+    "versio": "1.0.0-dev",
+    "require": {
+        "codeigniter4/framework": "^4.3",
+        "codeigniter4/settings": "^2.1",
+        "codeigniter4/shield": "dev-develop"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Extendy\\Smartyurl\\": "src/"
+        }
+    },
+    "support": {
+	"issues": "https://github.com/Extendy/SmartyURL/issues",
+	"source": "https://github.com/Extendy/SmartyURL"
+    },
+    "authors": [
+         {
+            "name": "Extendy Team",
+            "homepage": "http://extendy.net",
+            "role": "Developer"
+        },
+        {
+            "name": "Mohammed AlShannaq",
+            "homepage": "http://ms.per.jo",
+            "role": "Developer"
+        }
+    ]
+}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= session("lang"); ?>">
 <!--begin::Head-->
 
 <head>
@@ -83,7 +83,7 @@
 
                     <!-- Remember me -->
                     <?php if (setting('Auth.sessionConfig')['allowRemembering']): ?>
-                    <div class="col-8 d-inline-flex align-items-center">
+                    <div class="col-7 d-inline-flex align-items-center">
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input id="flexCheckDefault" type="checkbox" name="remember" class="form-check-input" <?php if (old('remember')): ?> checked<?php endif ?>>
@@ -93,7 +93,7 @@
                     </div>
                     <?php endif; ?>
                     <!-- /.col -->
-                    <div class="col-4">
+                    <div class="col-5">
                         <div class="d-grid gap-2 mt-4">
                             <button type="submit" class="btn btn-primary"><?= lang('Auth.login') ?></button>
                         </div>

@@ -35,7 +35,9 @@ $routes->group('account', static function($routes) {
     service('auth')->routes($routes);
 });
 
-//service('auth')->routes($routes);
+//language route
+$routes->get('lang/{locale}', 'Language::index');
+
 
 /*
  * --------------------------------------------------------------------

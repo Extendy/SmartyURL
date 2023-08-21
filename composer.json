@@ -4,9 +4,15 @@
     "type": "project",
     "versio": "1.0.0-dev",
     "require": {
+        "php": "^7.4 || ^8.0",
         "codeigniter4/framework": "^4.3",
         "codeigniter4/settings": "^2.1",
         "codeigniter4/shield": "dev-develop"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.9",
+        "mikey179/vfsstream": "^1.6",
+        "phpunit/phpunit": "^9.1"
     },
     "license": "MIT",
     "autoload": {
@@ -17,6 +23,9 @@
     "support": {
 	"issues": "https://github.com/Extendy/SmartyURL/issues",
 	"source": "https://github.com/Extendy/SmartyURL"
+    },
+    "scripts": {
+        "test": "phpunit"
     },
     "authors": [
          {

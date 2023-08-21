@@ -31,6 +31,8 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             // 'csrf',
+            //@TODO remove tests* from before production
+            'session' => ['except' => [ 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',
         ],
         'after' => [

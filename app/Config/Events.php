@@ -46,3 +46,36 @@ Events::on('pre_system', static function () {
         Services::toolbar()->respond();
     }
 });
+
+
+//minify html output on codeigniter 4 in production environment
+Events::on('post_controller_constructor', function () {
+
+    if (ENVIRONMENT !== 'testing' && setting("Smartyurl.minifyHtmloutput")) {
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+
+        ob_start(function ($buffer) {
+            $search = array(
+                '/\n/',      // replace end of line by a <del>space</del> nothing , if you want space make it down ' ' instead of ''
+                '/\>[^\S ]+/s',    // strip whitespaces after tags, except space
+                '/[^\S ]+\</s',    // strip whitespaces before tags, except space
+                '/(\s)+/s',    // shorten multiple whitespace sequences
+                '/<!--(.|\s)*?-->/' //remove HTML comments
+            );
+
+            $replace = array(
+                '',
+                '>',
+                '<',
+                '\\1',
+                ''
+            );
+
+            $buffer = preg_replace($search, $replace, $buffer);
+            return $buffer;
+        });
+
+    }
+});

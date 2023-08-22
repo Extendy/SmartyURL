@@ -21,6 +21,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'afterlangchange' => \App\Filters\LangFilter::class,  //it is just a test just to show how filter works , mshannaq not real filter
     ];
 
     /**

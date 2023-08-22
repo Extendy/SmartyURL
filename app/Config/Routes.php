@@ -36,7 +36,10 @@ $routes->group('account', static function($routes) {
 });
 
 //language route
-$routes->get('lang/{locale}', 'Language::index');
+//filter
+//https://codeigniter.com/user_guide/incoming/routing.html#applying-filters
+//https://codeigniter.com/user_guide/incoming/filters.html?highlight=filter
+$routes->get('lang/{locale}', 'Language::index',['filter' => 'afterlangchange']);
 
 
 /*

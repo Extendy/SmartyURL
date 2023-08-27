@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "codeigniter4/framework",
-            "version": "v4.3.7",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/framework.git",
-                "reference": "7c663e1b51d36a49fcdfc151cf2991821d6aa4d6"
+                "reference": "30008a0e3c342f2b6e5083927bec49feec95ed53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/7c663e1b51d36a49fcdfc151cf2991821d6aa4d6",
-                "reference": "7c663e1b51d36a49fcdfc151cf2991821d6aa4d6",
+                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/30008a0e3c342f2b6e5083927bec49feec95ed53",
+                "reference": "30008a0e3c342f2b6e5083927bec49feec95ed53",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
-            "time": "2023-07-30T08:45:46+00:00"
+            "time": "2023-08-25T07:02:01+00:00"
         },
         {
             "name": "codeigniter4/settings",
@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/shield.git",
-                "reference": "970c67e746f02142c51badda176e0a4b26c353ab"
+                "reference": "63891c77f852028df98faadec56f6197dd7d88f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/970c67e746f02142c51badda176e0a4b26c353ab",
-                "reference": "970c67e746f02142c51badda176e0a4b26c353ab",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/63891c77f852028df98faadec56f6197dd7d88f7",
+                "reference": "63891c77f852028df98faadec56f6197dd7d88f7",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/shield"
             },
-            "time": "2023-08-22T00:50:20+00:00"
+            "time": "2023-08-26T11:44:56+00:00"
         },
         {
             "name": "laminas/laminas-escaper",

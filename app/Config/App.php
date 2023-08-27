@@ -96,6 +96,10 @@ class App extends BaseConfig
      *
      * IncomingRequest::setLocale() also uses this list.
      *
+     * ******* WARNING:
+     * *** You must define language variable in Config/Smartyurl.php $locales array
+     * *** or it will break the system
+     *
      * @var string[]
      */
     public array $supportedLocales = ['en','ar'];

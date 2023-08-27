@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= session("lang"); ?>">
+<html lang="<?= smarty_current_lang(); ?>" dir="<?=smarty_current_lang_direction();?>">
 <!--begin::Head-->
 
 <head>
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" integrity="sha256-BicZsQAhkGHIoR//IB2amPN5SrRb3fHB8tFsnqRAwnk=" crossorigin="anonymous">
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="<?= setting("Smartyurl.cdn");?>css/adminlte.min.css">
+    <link rel="stylesheet" href="<?= setting("Smartyurl.cdn");?>css/adminlte<?=smarty_current_lang_dotdirection();?>.min.css">
     <!--end::Required Plugin(AdminLTE)-->
 </head>
 <!--end::Head-->

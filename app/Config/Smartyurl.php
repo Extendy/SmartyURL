@@ -19,7 +19,48 @@ class Smartyurl extends BaseConfig
     public $cdn = '/static/';
 
     /**
-     * @var bool Minify HTML while out put or not
+     * --------------------------------------------------------------------
+     * @var bool Minify HTML while out put or not, by default false
+     * --------------------------------------------------------------------
      */
-    public $minifyHtmloutput = true;
+    public $minifyHtmloutput = false;
+
+
+    /**
+     * --------------------------------------------------------------------
+     * Customize the DB group used for each model
+     * --------------------------------------------------------------------
+     */
+    public ?string $DBGroup = null;
+
+    public array $dbtables = [
+        'urls'             => 'urls',
+    ];
+
+
+    /**
+     * --------------------------------------------------------------------
+     * define support languages layout and direction
+     * All supported languages must be defined here
+     * --------------------------------------------------------------------
+     */
+    public array $locales = [
+        'ar' => [
+            'shortname' => 'ar',
+            'direction' => 'rtl',
+            'basealign' => 'right',
+            'inversealign' => 'left',
+            'name' => 'Arabic',
+            'nativename' => 'العربية',
+        ],
+        'en' => [
+            'shortname' => 'en',
+            'direction' => 'ltr',
+            'basealign' => 'left',
+            'inversealign' => 'right',
+            'name' => 'English',
+            'nativename' => 'English',
+        ],
+    ];
+
 }

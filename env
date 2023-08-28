@@ -1,6 +1,9 @@
 #--------------------------------------------------------------------
 # Example Environment Configuration file
 #
+# *********************************
+# variable must NOT bt ended with ;
+# *********************************
 # This file can be used as a starting point for your own
 # custom .env files, and contains most of the possible settings
 # available in a default install.
@@ -31,7 +34,7 @@
 #--------------------------------------------------------------------
 
 #default site name
-smartyurl.siteName = "SmartyURL Site";
+smartyurl.siteName = "SmartyURL Site"
 
 #minify html output , default is true to reduce the size and remove html comments
 #make it false if you want to debug html output
@@ -153,3 +156,6 @@ security.csrfProtection = 'session'
 #--------------------------------------------------------------------
 
 # curlrequest.shareOptions = true
+
+
+

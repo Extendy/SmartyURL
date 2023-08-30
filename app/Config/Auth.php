@@ -270,7 +270,7 @@ class Auth extends ShieldAuth
         CompositionValidator::class,
         NothingPersonalValidator::class,
         DictionaryValidator::class,
-        // PwnedValidator::class,
+        PwnedValidator::class,
     ];
 
     /**
@@ -332,7 +332,7 @@ class Auth extends ShieldAuth
      * To disable similarity checking set the value to 0.
      *     public $maxSimilarity = 0;
      */
-    public int $maxSimilarity = 50;
+    public int $maxSimilarity = 30;
 
     /**
      * --------------------------------------------------------------------

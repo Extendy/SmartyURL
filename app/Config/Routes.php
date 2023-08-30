@@ -11,6 +11,8 @@ $routes->group('account', static function($routes) {
     service('auth')->routes($routes);
 });
 
+$routes->get('/dashboard', 'Dashboard::index' );
+
 //language route
 //filter
 //https://codeigniter.com/user_guide/incoming/routing.html#applying-filters

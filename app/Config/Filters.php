@@ -25,6 +25,19 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'afterlangchange' => \App\Filters\LangFilter::class,  //it is just a test just to show how filter works , mshannaq not real filter
+
+        //for shiled .. alrady used and I put it here just to see it
+        /*
+        'session'     => \CodeIgniter\Shield\Filters\SessionAuth::class,
+        'tokens'      => \CodeIgniter\Shield\Filters\TokenAuth::class,
+        'chain'       => \CodeIgniter\Shield\Filters\ChainAuth::class,
+        'auth-rates'  => \CodeIgniter\Shield\Filters\AuthRates::class,
+        'group'       => \CodeIgniter\Shield\Filters\GroupFilter::class,
+        'permission'  => \CodeIgniter\Shield\Filters\PermissionFilter::class,
+        'force-reset' => \CodeIgniter\Shield\Filters\ForcePasswordResetFilter::class,
+        'jwt'         => \CodeIgniter\Shield\Filters\JWTAuth::class,
+        */
+
     ];
 
     /**
@@ -39,7 +52,7 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             //@TODO remove tests* from before production
-            'session' => ['except' => [ 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
+            'session' => ['except' => [ '/','tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',
         ],
         'after' => [

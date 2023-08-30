@@ -13,6 +13,13 @@ $routes->group('account', static function($routes) {
 
 $routes->get('/dashboard', 'Dashboard::index' );
 
+//URL
+$routes->group('url',  static function ($routes) {
+    $routes->get('/', 'Url::index');
+    $routes->get('new', 'Url::new');
+    $routes->post('new', 'Url::newAction');
+});
+
 //language route
 //filter
 //https://codeigniter.com/user_guide/incoming/routing.html#applying-filters

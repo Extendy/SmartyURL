@@ -5,8 +5,8 @@
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-        typeof define === 'function' && define.amd ? define(['exports'], factory) :
-            (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.adminlte = {}));
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.adminlte = {}));
 })(this, (function (exports) { 'use strict';
 
     const domContentLoadedCallbacks = [];
@@ -281,7 +281,7 @@
      * Constants
      * ------------------------------------------------------------------------
      */
-        // const NAME = 'Treeview'
+    // const NAME = 'Treeview'
     const DATA_KEY$2 = 'lte.treeview';
     const EVENT_KEY$2 = `.${DATA_KEY$2}`;
     const EVENT_EXPANDED$2 = `expanded${EVENT_KEY$2}`;

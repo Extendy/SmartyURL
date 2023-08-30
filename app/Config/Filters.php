@@ -26,7 +26,9 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'afterlangchange' => \App\Filters\LangFilter::class,  //it is just a test just to show how filter works , mshannaq not real filter
 
-        //for shiled .. alrady used and I put it here just to see it
+        //for shiled .. already used and I put it here just to see it
+        //already loaded for you by the registrar class located at
+        // src/Config/Registrar.php.
         /*
         'session'     => \CodeIgniter\Shield\Filters\SessionAuth::class,
         'tokens'      => \CodeIgniter\Shield\Filters\TokenAuth::class,

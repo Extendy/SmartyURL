@@ -9,6 +9,6 @@ class Dashboard extends BaseController
     public function index()
     {
         //
-        d("this is dashboard controller");
+        return view('basic/dashboard');
     }
 }

@@ -60,3 +60,18 @@ if (! function_exists('smarty_current_lang_dotdirection')) {
     }
 
 }
+
+/**
+ * return the given view name with a prefix of smarty theme name
+ */
+if (! function_exists('smarty_view')) {
+    function smarty_view($viewName)
+    {
+        $themeFolder = config('Smartyurl')->themeFolder;
+        $viewFile = $themeFolder . "/" . $viewName;
+
+        return $viewFile;
+    }
+}
+
+

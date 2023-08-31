@@ -37,4 +37,15 @@ class Url extends BaseController
         echo "url new action";
 
     }
+
+    /**
+     * @FIXME this is for test remove me after testing
+     * @return string
+     */
+    public function none()
+    {
+        return view('basic/none');
+    }
+
+
 }

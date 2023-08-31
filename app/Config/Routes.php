@@ -20,6 +20,10 @@ $routes->group('url',  static function ($routes) {
     $routes->post('new', 'Url::newAction');
 });
 
+
+//testing , must be removed after test
+$routes->get('/url/none', 'Url::none' );
+
 //language route
 //filter
 //https://codeigniter.com/user_guide/incoming/routing.html#applying-filters

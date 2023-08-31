@@ -127,3 +127,7 @@ nb-configuration.xml
 
 # internal notice
 *.private
+
+#extendy
+public/tests/*
+extendytest/*

@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>AdminLTE 4 | Fixed Sidebar</title>
+    <title><?= $this->renderSection('title') ?></title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="AdminLTE 4 | Fixed Sidebar">
@@ -181,7 +181,7 @@
                 <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                     <li class="nav-item">
-                        <a href="/dashboard" class="nav-link">
+                        <a href="<?=site_url("/dashboard");?>" class="nav-link">
                             <i class="nav-icon bi bi-house-door"></i>
                             <p>
                                 Dashboard
@@ -189,6 +189,15 @@
                         </a>
 
                     </li>
+
+                    <li class="nav-item">
+                        <a href="/url/none" class="nav-link">
+                            <i class="nav-icon bi bi-download"></i>
+                            <p>Empty page</p>
+                        </a>
+                    </li>
+
+
 
                 </ul>
                 <!--end::Sidebar Menu-->
@@ -200,73 +209,9 @@
 
     <!--begin::App Main-->
     <main class="app-main">
-        <!--begin::App Content Header-->
-        <div class="app-content-header">
-            <!--begin::Container-->
-            <div class="container-fluid">
-                <!--begin::Row-->
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h3 class="mb-0">Fixed Layout</h3>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-end">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                Fixed Layout
-                            </li>
-                        </ol>
-                    </div>
 
-                </div>
-                <!--end::Row-->
-            </div>
-            <!--end::Container-->
-        </div>
-        <!--end::App Content Header-->
-        <!--begin::App Content-->
-        <div class="app-content">
-            <!--begin::Container-->
-            <div class="container-fluid">
-                <!--begin::Row-->
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Default box -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Title</h3>
+        <?= $this->renderSection('main') ?>
 
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
-                                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
-                                        <i class="bi bi-x-lg"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                Start creating your amazing application!
-                                Fixed Layout
-                                <br /><br /><br /><br /><br /><br /><br /><br />
-                                <br /><br /><br /><br /><br /><br /><br />
-                                <br /><br /><br /><br /><br /><br />
-                                <br /><br /><br /><br /><br /><br /><br />
-
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">Footer</div>
-                            <!-- /.card-footer-->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                </div>
-                <!--end::Row-->
-            </div>
-            <!--end::Container-->
-        </div>
-        <!--end::App Content-->
     </main>
     <!--end::App Main-->
     <!--begin::Footer-->

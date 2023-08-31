@@ -44,6 +44,9 @@ class Smartyurl extends BaseConfig
      */
     public $themeFolder = "basic";
 
+    /**
+     * @var string[] the views used on smarty ,see helper smarty_view()
+     */
     public $views = [
         //the main layout which used for logged in users
         'layout' => 'layout',

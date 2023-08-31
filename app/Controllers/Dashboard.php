@@ -9,6 +9,6 @@ class Dashboard extends BaseController
     public function index()
     {
         //
-        return view('basic/dashboard');
+        return view(smarty_view('dashboard'));
     }
 }

@@ -86,4 +86,18 @@ if (! function_exists('smarty_view')) {
     }
 }
 
+if (! function_exists('smarty_pagetitle')) {
+    function smarty_pagetitle($pageTitle)
+    {
+        if ($pageTitle == null){
+           $title = setting("smartyurl.siteName");
+        } else {
+            $title = $pageTitle . " - " . setting("smartyurl.siteName");;
+
+        }
+
+        return $title;
+    }
+}
+
 

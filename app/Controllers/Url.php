@@ -28,8 +28,10 @@ class Url extends BaseController
     public function new(){
         if (! auth()->user()->can('url.create')) {
             //return  redirect()->route('permissions')->with('error', lang('Auth.notEnoughPrivilege'));
-            return "permission errir";
+            return "permissions error";
         }
+
+        return view(smarty_view('url/new'));
 
     }
 
@@ -44,7 +46,7 @@ class Url extends BaseController
      */
     public function none()
     {
-        return view('basic/none');
+        return view(smarty_view('none'));
     }
 
 

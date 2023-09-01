@@ -53,7 +53,7 @@
                 </li>
 
                 <!--begin: +URL on small screen only -->
-                <li class="nav-item d-block sm-none d-md-none d-lg-none d-xl-none">
+                <li class="nav-item d-block d-sm-none d-md-none d-lg-none d-xl-none">
                     <a href="/url/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i> URL</a>
                 </li>
                 <!--end: +URL on small screen only -->

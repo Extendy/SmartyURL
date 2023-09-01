@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= smarty_current_lang(); ?>" dir="<?=smarty_current_lang_direction();?>">
 <!--begin::Head-->
 
 <head>
@@ -7,8 +7,8 @@
     <title><?= $this->renderSection('title') ?></title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="AdminLTE 4 | Fixed Sidebar">
-    <meta name="author" content="ColorlibHQ">
+    <meta name="title" content="<?= $this->renderSection('title') ?>">
+    <meta name="author" content="Extendy Team">
     <meta name="description" content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
     <meta name="keywords" content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard">
     <!--end::Primary Meta Tags-->
@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" integrity="sha256-BicZsQAhkGHIoR//IB2amPN5SrRb3fHB8tFsnqRAwnk=" crossorigin="anonymous">
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="../static/css/adminlte.css">
-    <link rel="stylesheet" href="../static/css/smarty.css">
+    <link rel="stylesheet" href="<?= smarty_cdn()?>css/adminlte<?=smarty_current_lang_dotdirection();?>.min.css">
+    <link rel="stylesheet" href="<?= smarty_cdn()?>css/smarty<?=smarty_current_lang_dotdirection();?>.css">
     <!--end::Required Plugin(AdminLTE)-->
 </head>
 <!--end::Head-->
@@ -53,7 +53,7 @@
                 </li>
 
                 <!--begin: +URL on small screen only -->
-                <li class="nav-item d-block sm-none d-md-none d-lg-none d-xl-none">
+                <li class="nav-item d-block d-sm-none d-md-none d-lg-none d-xl-none">
                     <a href="/url/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i> URL</a>
                 </li>
                 <!--end: +URL on small screen only -->
@@ -133,7 +133,7 @@
                                 <div class="col-12 text-center">
 
                                     <a class="btn btn-secondary btn-sm" href="#">
-                                        <i class="bi bi-person-fill-gear"></i>  Accoumt Settings</a>
+                                        <i class="bi bi-person-fill-gear"></i>  <?=lang("Common.accountSettingsLnk");?></a>
                                 </div>
 
 
@@ -145,7 +145,8 @@
                         <li class="user-footer">
 
                             <a href="/account/logout" class="btn btn-light float-end"><i class="bi bi-box-arrow-right"></i>
-                                Sign out</a>
+                                <?= lang("Common.accountLogoutLnk");?>
+                            </a>
                         </li>
                         <!--end::Menu Footer-->
                     </ul>
@@ -167,7 +168,9 @@
             <a href="<?=site_url("/dashboard");?>" class="brand-link">
 
                 <!--begin::Brand Text-->
-                <span class="brand-text fw-light">AdminLTE 4</span>
+                <span class="brand-text fw-light">
+                <?= setting("smartyurl.siteName"); ?>
+                </span>
                 <!--end::Brand Text-->
             </a>
             <!--end::Brand Link-->
@@ -184,7 +187,7 @@
                         <a href="<?=site_url("/dashboard");?>" class="nav-link">
                             <i class="nav-icon bi bi-house-door"></i>
                             <p>
-                                Dashboard
+                                <?= lang("Common.dashboardLnk");?>
                             </p>
                         </a>
 
@@ -238,7 +241,7 @@
 <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-<script src="../static/js/adminlte.js"></script>
+<script src="<?= smarty_cdn()?>js/adminlte.js"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 <script>
     const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";

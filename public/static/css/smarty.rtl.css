@@ -1,0 +1,15 @@
+@charset "UTF-8";
+/*!
+ *   Smarty
+ *   Author: Extendy
+ *   Website: Extendy.net <https://extendy.net>
+ *   License: Open source - MIT <https://opensource.org/licenses/MIT>
+ */
+li.smarty-user-header {
+min-height: 50px;
+padding: 10px;
+    background-color: white;
+text-align: center;
+}
+
+

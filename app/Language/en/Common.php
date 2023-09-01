@@ -2,5 +2,8 @@
 
 
 return [
-    'dashboardTitle'   => 'SmartyURL',
+    'dashboardTitle'   => 'Dashboard',
+    'dashboardLnk' => 'Dashboard',
+    'accountSettingsLnk' => 'Account Settings',
+    'accountLogoutLnk' => 'Logout',
 ];

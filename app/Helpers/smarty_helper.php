@@ -62,6 +62,18 @@ if (! function_exists('smarty_current_lang_dotdirection')) {
 }
 
 /**
+ * return smarty cdn path ended with /
+ * @TODO make sure the cdn must ended with / before return it
+ */
+if (! function_exists('smarty_cdn'))
+{
+    function smarty_cdn()
+    {
+        return setting("Smartyurl.cdn");
+    }
+}
+
+/**
  * return the given view name with a prefix of smarty theme name
  */
 if (! function_exists('smarty_view')) {
@@ -71,6 +83,20 @@ if (! function_exists('smarty_view')) {
         $viewFile = $themeFolder . "/" . $viewName;
 
         return $viewFile;
+    }
+}
+
+if (! function_exists('smarty_pagetitle')) {
+    function smarty_pagetitle($pageTitle)
+    {
+        if ($pageTitle == null){
+           $title = setting("smartyurl.siteName");
+        } else {
+            $title = $pageTitle . " - " . setting("smartyurl.siteName");;
+
+        }
+
+        return $title;
     }
 }
 

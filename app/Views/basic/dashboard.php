@@ -1,6 +1,6 @@
 <?= $this->extend(smarty_view('layout')); ?>
 
-<?= $this->section('title') ?><?= lang('Common.dashboardTitle') ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= smarty_pagetitle(lang('Common.dashboardTitle')); ?> <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 

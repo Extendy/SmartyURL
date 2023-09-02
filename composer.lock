@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/shield.git",
-                "reference": "63891c77f852028df98faadec56f6197dd7d88f7"
+                "reference": "b6d327d1cfdc4a492697f79174b0e159da6a12e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/63891c77f852028df98faadec56f6197dd7d88f7",
-                "reference": "63891c77f852028df98faadec56f6197dd7d88f7",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/b6d327d1cfdc4a492697f79174b0e159da6a12e3",
+                "reference": "b6d327d1cfdc4a492697f79174b0e159da6a12e3",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/shield"
             },
-            "time": "2023-08-26T11:44:56+00:00"
+            "time": "2023-08-29T08:44:34+00:00"
         },
         {
             "name": "laminas/laminas-escaper",

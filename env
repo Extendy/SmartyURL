@@ -38,7 +38,9 @@ smartyurl.siteName = "SmartyURL Site"
 
 #minify html output , default is true to reduce the size and remove html comments
 #make it false if you want to debug html output
-smartyurl.minifyHtmloutput = true;
+smartyurl.minifyHtmloutput = true
+
+cookie.domain =  .example.com
 
 
 #--------------------------------------------------------------------

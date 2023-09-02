@@ -3,7 +3,6 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Session\Handlers\FileHandler;
 
 class App extends BaseConfig
 {
@@ -102,7 +101,7 @@ class App extends BaseConfig
      *
      * @var string[]
      */
-    public array $supportedLocales = ['en','ar'];
+    public array $supportedLocales = ['en', 'ar'];
 
     /**
      * --------------------------------------------------------------------------

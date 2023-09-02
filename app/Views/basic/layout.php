@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= smarty_current_lang(); ?>" dir="<?=smarty_current_lang_direction();?>">
+<html lang="<?= smarty_current_lang(); ?>" dir="<?= smarty_current_lang_direction(); ?>">
 <!--begin::Head-->
 
 <head>
@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" integrity="sha256-BicZsQAhkGHIoR//IB2amPN5SrRb3fHB8tFsnqRAwnk=" crossorigin="anonymous">
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="<?= smarty_cdn()?>css/adminlte<?=smarty_current_lang_dotdirection();?>.min.css">
-    <link rel="stylesheet" href="<?= smarty_cdn()?>css/smarty<?=smarty_current_lang_dotdirection();?>.css">
+    <link rel="stylesheet" href="<?= smarty_cdn()?>css/adminlte<?= smarty_current_lang_dotdirection(); ?>.min.css">
+    <link rel="stylesheet" href="<?= smarty_cdn()?>css/smarty<?= smarty_current_lang_dotdirection(); ?>.css">
     <!--end::Required Plugin(AdminLTE)-->
 </head>
 <!--end::Head-->
@@ -133,7 +133,7 @@
                                 <div class="col-12 text-center">
 
                                     <a class="btn btn-secondary btn-sm" href="#">
-                                        <i class="bi bi-person-fill-gear"></i>  <?=lang("Common.accountSettingsLnk");?></a>
+                                        <i class="bi bi-person-fill-gear"></i>  <?= lang('Common.accountSettingsLnk'); ?></a>
                                 </div>
 
 
@@ -145,7 +145,7 @@
                         <li class="user-footer">
 
                             <a href="/account/logout" class="btn btn-light float-end"><i class="bi bi-box-arrow-right"></i>
-                                <?= lang("Common.accountLogoutLnk");?>
+                                <?= lang('Common.accountLogoutLnk'); ?>
                             </a>
                         </li>
                         <!--end::Menu Footer-->
@@ -165,11 +165,11 @@
         <!--begin::Sidebar Brand-->
         <div class="sidebar-brand">
             <!--begin::Brand Link-->
-            <a href="<?=site_url("/dashboard");?>" class="brand-link">
+            <a href="<?= site_url('/dashboard'); ?>" class="brand-link">
 
                 <!--begin::Brand Text-->
                 <span class="brand-text fw-light">
-                <?= setting("smartyurl.siteName"); ?>
+                <?= setting('smartyurl.siteName'); ?>
                 </span>
                 <!--end::Brand Text-->
             </a>
@@ -184,10 +184,10 @@
                 <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                     <li class="nav-item">
-                        <a href="<?=site_url("/dashboard");?>" class="nav-link">
+                        <a href="<?= site_url('/dashboard'); ?>" class="nav-link">
                             <i class="nav-icon bi bi-house-door"></i>
                             <p>
-                                <?= lang("Common.dashboardLnk");?>
+                                <?= lang('Common.dashboardLnk'); ?>
                             </p>
                         </a>
 

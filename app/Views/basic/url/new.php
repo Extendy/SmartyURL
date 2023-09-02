@@ -1,6 +1,6 @@
 <?= $this->extend(smarty_view('layout')); ?>
 
-<?= $this->section('title') ?><?= "New Smarty URL" ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= 'New Smarty URL' ?> <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 

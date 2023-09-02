@@ -133,3 +133,4 @@ nb-configuration.xml
 public/tests/*
 /extendytest
 extendytest/*
+.php-cs-fixer.cache

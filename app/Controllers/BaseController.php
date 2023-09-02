@@ -54,26 +54,6 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
-
-        //Multi language and user language
-        $session = \Config\Services::session();
-        $language = \Config\Services::language();
-        if (!isset($session->lang)){
-            $context = 'user:' . user_id();
-            $usercustomlocale = setting()->get('App.defaultLocale', $context);
-            if ($usercustomlocale == ""){
-                //no custom lang for user , use def
-                $language->setLocale(setting("App.defaultLocale"));
-            } else {
-                //there is cusom locale for user
-                $language->setLocale($usercustomlocale);
-            }
-        } else {
-            $language->setLocale($session->lang);
-        }
-
-
-
         // E.g.: $this->session = \Config\Services::session();
     }
 }

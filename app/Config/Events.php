@@ -54,35 +54,31 @@ Events::on('pre_system', static function () {
     }
 });
 
-
-//minify html output on codeigniter 4 in production environment
-Events::on('post_controller_constructor', function () {
-
-    if (ENVIRONMENT !== 'testing' && filter_var(setting("Smartyurl.minifyHtmloutput")??false, FILTER_VALIDATE_BOOLEAN)) {
+// minify html output on codeigniter 4 in production environment
+Events::on('post_controller_constructor', static function () {
+    if (ENVIRONMENT !== 'testing' && filter_var(setting('Smartyurl.minifyHtmloutput') ?? false, FILTER_VALIDATE_BOOLEAN)) {
         while (ob_get_level() > 0) {
             ob_end_flush();
         }
 
-        ob_start(function ($buffer) {
-            $search = array(
+        ob_start(static function ($buffer) {
+            $search = [
                 '/\n/',      // replace end of line by a <del>space</del> nothing , if you want space make it down ' ' instead of ''
                 '/\>[^\S ]+/s',    // strip whitespaces after tags, except space
                 '/[^\S ]+\</s',    // strip whitespaces before tags, except space
                 '/(\s)+/s',    // shorten multiple whitespace sequences
-                '/<!--(.|\s)*?-->/' //remove HTML comments
-            );
+                '/<!--(.|\s)*?-->/', // remove HTML comments
+            ];
 
-            $replace = array(
+            $replace = [
                 '',
                 '>',
                 '<',
                 '\\1',
-                ''
-            );
+                '',
+            ];
 
-            $buffer = preg_replace($search, $replace, $buffer);
-            return $buffer;
+            return preg_replace($search, $replace, $buffer);
         });
-
     }
 });

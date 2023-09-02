@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="<?= smarty_current_lang(); ?>" dir="<?=smarty_current_lang_direction();?>">
+<html lang="<?= smarty_current_lang(); ?>" dir="<?=smarty_current_lang_direction(); ?>">
 <!--begin::Head-->
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title><?= setting("Smartyurl.siteName") . " - " . lang('Auth.login') ?></title>
+    <title><?= setting('Smartyurl.siteName') . ' - ' . lang('Auth.login') ?></title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="<?= setting("Smartyurl.siteName") . " - " . lang('Auth.login') ?>">
+    <meta name="title" content="<?= setting('Smartyurl.siteName') . ' - ' . lang('Auth.login') ?>">
     <meta name="author" content="">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" integrity="sha256-BicZsQAhkGHIoR//IB2amPN5SrRb3fHB8tFsnqRAwnk=" crossorigin="anonymous">
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="<?= smarty_cdn()?>css/adminlte<?=smarty_current_lang_dotdirection();?>.min.css">
+    <link rel="stylesheet" href="<?= smarty_cdn()?>css/adminlte<?=smarty_current_lang_dotdirection(); ?>.min.css">
     <!--end::Required Plugin(AdminLTE)-->
 </head>
 <!--end::Head-->
@@ -36,7 +36,7 @@
         <div class="card-header">
             <a href="<?= site_url(); ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
                 <h1 class="mb-0">
-                    <?= setting("Smartyurl.siteName"); ?>
+                    <?= setting('Smartyurl.siteName'); ?>
                 </h1>
             </a>
         </div>

@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-
 /**
  * Class BaseController
  *
@@ -15,39 +13,38 @@ class Url extends BaseController
 {
     public function index()
     {
-        //This is the Index of URLS
+        // This is the Index of URLS
         if (\auth()->loggedIn()) {
             $user = \auth()->user();
-            echo "<pre>";
+            echo '<pre>';
             print_r($user->username);
-            echo "</pre>";
+            echo '</pre>';
         }
-        d("this is the index of url");
+        d('this is the index of url');
     }
 
-    public function new(){
+    public function new()
+    {
         if (! auth()->user()->can('url.create')) {
-            //return  redirect()->route('permissions')->with('error', lang('Auth.notEnoughPrivilege'));
-            return "permissions error";
+            // return  redirect()->route('permissions')->with('error', lang('Auth.notEnoughPrivilege'));
+            return 'permissions error';
         }
 
         return view(smarty_view('url/new'));
-
     }
 
-    public function newAction(){
-        echo "url new action";
-
+    public function newAction()
+    {
+        echo 'url new action';
     }
 
     /**
      * @FIXME this is for test remove me after testing
+     *
      * @return string
      */
     public function none()
     {
         return view(smarty_view('none'));
     }
-
-
 }

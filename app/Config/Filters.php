@@ -24,6 +24,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'localization'  => \App\Filters\Localization::class,
         'afterlangchange' => \App\Filters\LangFilter::class,  //it is just a test just to show how filter works , mshannaq not real filter
 
         //for shiled .. already used and I put it here just to see it
@@ -53,6 +54,8 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             // 'csrf',
+            //localization filter to detect the lang layout
+            'localization',
             //@TODO remove tests* from before production
             'session' => ['except' => [ '/','tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',

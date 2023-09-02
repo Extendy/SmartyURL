@@ -1,0 +1,43 @@
+services:
+	-
+		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
+		tags:
+			- phpstan.rules.rule
+	-
+		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaNamedConstructorRule
+		tags:
+			- phpstan.rules.rule
+
+includes:
+	- phpstan-baseline.php
+
+parameters:
+	phpVersion: 80100
+	tmpDir: build/phpstan
+	level: 6
+	bootstrapFiles:
+		- phpstan-bootstrap.php
+	paths:
+		- app
+		- system
+		- utils/PHPStan
+	excludePaths:
+		- app/Views/errors/cli/*
+		- app/Views/errors/html/*
+		- system/Commands/Generators/Views/*
+		- system/Config/Routes.php
+		- system/Debug/Toolbar/Views/toolbar.tpl.php
+		- system/Images/Handlers/GDHandler.php
+		- system/Test/Filters/CITestStreamFilter.php
+		- system/ThirdParty/*
+		- system/Validation/Views/single.php
+	scanDirectories:
+		- system/Helpers
+	dynamicConstantNames:
+		- APP_NAMESPACE
+		- CI_DEBUG
+		- ENVIRONMENT
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
+	checkMissingCallableSignature: true
+	treatPhpDocTypesAsCertain: false

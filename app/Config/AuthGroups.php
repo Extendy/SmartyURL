@@ -61,13 +61,11 @@ class AuthGroups extends ShieldAuthGroups
         'users.create'        => 'Can create new non-admin users',
         'users.edit'          => 'Can edit existing non-admin users',
         'users.delete'        => 'Can delete existing non-admin users',
-        //url
+        // url
         'url.access' => 'Can Access URLs',
-        'url.new' => 'Can Create a new URL',
-        'url.edit' => 'Can Edit URL',
-        'url.delete' => 'Can Delete URL'
-
-
+        'url.new'    => 'Can Create a new URL',
+        'url.edit'   => 'Can Edit URL',
+        'url.delete' => 'Can Delete URL',
     ];
 
     /**

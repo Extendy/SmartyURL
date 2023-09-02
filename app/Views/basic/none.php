@@ -1,6 +1,6 @@
 <?= $this->extend(smarty_view('layout')); ?>
 
-<?= $this->section('title') ?><?= "None" ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= 'None' ?> <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 

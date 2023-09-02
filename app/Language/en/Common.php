@@ -1,9 +1,8 @@
 <?php
 
-
 return [
-    'dashboardTitle'   => 'Dashboard',
-    'dashboardLnk' => 'Dashboard',
+    'dashboardTitle'     => 'Dashboard',
+    'dashboardLnk'       => 'Dashboard',
     'accountSettingsLnk' => 'Account Settings',
-    'accountLogoutLnk' => 'Logout',
+    'accountLogoutLnk'   => 'Logout',
 ];

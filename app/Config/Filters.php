@@ -19,16 +19,16 @@ class Filters extends BaseConfig
      * @phpstan-var array<string, class-string>
      */
     public array $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
-        'localization'  => \App\Filters\Localization::class,
-        'afterlangchange' => \App\Filters\LangFilter::class,  //it is just a test just to show how filter works , mshannaq not real filter
+        'csrf'            => CSRF::class,
+        'toolbar'         => DebugToolbar::class,
+        'honeypot'        => Honeypot::class,
+        'invalidchars'    => InvalidChars::class,
+        'secureheaders'   => SecureHeaders::class,
+        'localization'    => \App\Filters\Localization::class,
+        'afterlangchange' => \App\Filters\LangFilter::class,  // it is just a test just to show how filter works , mshannaq not real filter
 
-        //for shiled .. already used and I put it here just to see it
-        //already loaded for you by the registrar class located at
+        // for shiled .. already used and I put it here just to see it
+        // already loaded for you by the registrar class located at
         // src/Config/Registrar.php.
         /*
         'session'     => \CodeIgniter\Shield\Filters\SessionAuth::class,
@@ -40,7 +40,6 @@ class Filters extends BaseConfig
         'force-reset' => \CodeIgniter\Shield\Filters\ForcePasswordResetFilter::class,
         'jwt'         => \CodeIgniter\Shield\Filters\JWTAuth::class,
         */
-
     ];
 
     /**
@@ -54,10 +53,10 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             // 'csrf',
-            //localization filter to detect the lang layout
+            // localization filter to detect the lang layout
             'localization',
-            //@TODO remove tests* from before production
-            'session' => ['except' => [ '/','tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
+            // @TODO remove tests* from before production
+            'session' => ['except' => ['/', 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',
         ],
         'after' => [
@@ -89,9 +88,9 @@ class Filters extends BaseConfig
      */
     public array $filters = [
         'auth-rates' => [
-        'before' => [
-            'account/login*', 'account/register', 'auth/*'
-        ]
-    ]
+            'before' => [
+                'account/login*', 'account/register', 'auth/*',
+            ],
+        ],
     ];
 }

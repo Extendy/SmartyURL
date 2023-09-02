@@ -129,5 +129,7 @@ nb-configuration.xml
 *.private
 
 #extendy
+/public/tests
 public/tests/*
+/extendytest
 extendytest/*

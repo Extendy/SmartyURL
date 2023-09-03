@@ -98,3 +98,12 @@ if (! function_exists('smarty_pagetitle')) {
         return $title;
     }
 }
+
+if (! function_exists('smarty_permission_error')) {
+    function smarty_permission_error(string $error = '')
+    {
+        $data['errorMsg'] = esc($error);
+
+        return view(smarty_view('errors/permissions'), $data);
+    }
+}

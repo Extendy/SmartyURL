@@ -27,7 +27,9 @@ class Url extends BaseController
     {
         if (! auth()->user()->can('url.create')) {
             // return  redirect()->route('permissions')->with('error', lang('Auth.notEnoughPrivilege'));
-            return 'permissions error';
+            return smarty_permission_error();
+
+            exit(1);
         }
 
         return view(smarty_view('url/new'));

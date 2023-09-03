@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * SmartyURL helpers
  * it is loadded automaticlly from Config/Autoload.php , public $helpers = [...
@@ -76,7 +78,7 @@ if (! function_exists('smarty_cdn')) {
  * return the given view name with a prefix of smarty theme name
  */
 if (! function_exists('smarty_view')) {
-    function smarty_view($viewName)
+    function smarty_view(string $viewName)
     {
         $themeFolder = config('Smartyurl')->themeFolder;
 
@@ -85,7 +87,7 @@ if (! function_exists('smarty_view')) {
 }
 
 if (! function_exists('smarty_pagetitle')) {
-    function smarty_pagetitle($pageTitle)
+    function smarty_pagetitle(string $pageTitle)
     {
         if ($pageTitle === null) {
             $title = setting('smartyurl.siteName');

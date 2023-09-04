@@ -25,8 +25,13 @@ class Language extends BaseController
         // @TODO set_cookie not working i don't know why so i use setcookie php command insted until this is fixed
         // set_cookie('smarty_lang_layout', $locale);
         setcookie('smarty_lang_layout', $locale, time() + 2592000, '/', setting('Cookie.domain'), false, false);
-        // @TODO we must think if we need to redirect the visitor to the previous url instead of base url
-        $url = base_url();
+
+        $jumpurl = request()->getVar('jump');
+        if (isset($jumpurl)) {
+            $url = site_url($jumpurl);
+        } else {
+            $url = setting('Auth.redirects')['login'];
+        }
 
         return redirect()->to($url);
     }

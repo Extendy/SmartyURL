@@ -13,13 +13,6 @@ class Url extends BaseController
 {
     public function index()
     {
-        // This is the Index of URLS
-        if (\auth()->loggedIn()) {
-            $user = \auth()->user();
-            echo '<pre>';
-            print_r($user->username);
-            echo '</pre>';
-        }
         d('this is the index of url');
     }
 

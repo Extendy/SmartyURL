@@ -12,7 +12,8 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.9",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1",
+        "ip2location/ip2location-php": "^9.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

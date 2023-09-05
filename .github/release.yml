@@ -18,6 +18,9 @@ changelog:
     - title: Refactoring
       labels:
         - refactor
+    - title: Core Development
+      labels:
+        - coredev
     - title: Others (Only for checking. Remove this category)
       labels:
         - "*"

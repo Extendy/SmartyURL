@@ -122,7 +122,7 @@
                         <li class="smarty-user-header text-bg-primary">
 
                             <p>
-                                user - useremail
+                                <?= esc(auth()->user()->username); ?> - <?= esc(auth()->user()->email); ?>
                             </p>
                         </li>
                         <!--end::User Image-->

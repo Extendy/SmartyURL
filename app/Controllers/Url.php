@@ -13,13 +13,6 @@ class Url extends BaseController
 {
     public function index()
     {
-        // This is the Index of URLS
-        if (\auth()->loggedIn()) {
-            $user = \auth()->user();
-            echo '<pre>';
-            print_r($user->username);
-            echo '</pre>';
-        }
         d('this is the index of url');
     }
 
@@ -27,7 +20,9 @@ class Url extends BaseController
     {
         if (! auth()->user()->can('url.create')) {
             // return  redirect()->route('permissions')->with('error', lang('Auth.notEnoughPrivilege'));
-            return 'permissions error';
+            return smarty_permission_error();
+
+            exit(1);
         }
 
         return view(smarty_view('url/new'));

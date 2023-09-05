@@ -22,6 +22,7 @@ $routes->group('url', static function ($routes) {
 
 // testing , must be removed after test
 $routes->get('/url/none', 'Url::none');
+$routes->get('/tests/1', 'Tests::index');
 
 // language route
 // filter

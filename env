@@ -1,9 +1,8 @@
 #--------------------------------------------------------------------
 # Example Environment Configuration file
-#
 # *********************************
 # variable must NOT bt ended with ;
-# *********************************
+# ********************************
 # This file can be used as a starting point for your own
 # custom .env files, and contains most of the possible settings
 # available in a default install.
@@ -23,37 +22,36 @@
 # APP
 #--------------------------------------------------------------------
 
-# app.baseURL = ''
+app.baseURL = 'https:/EXAMPLE.COM/'
+app.defaultLocale = 'en'
+CI_ENVIRONMENT=production
 # If you have trouble with `.`, you could also use `_`.
-# app_baseURL = ''
-# app.forceGlobalSecureRequests = false
-# app.CSPEnabled = false
+app.forceGlobalSecureRequests = false
+app.CSPEnabled = false
 
-#--------------------------------------------------------------------
 ##SmartyURL Settings
-#--------------------------------------------------------------------
 
 #default site name
-smartyurl.siteName = "SmartyURL Site"
+smartyurl.siteName = "SmartyURL"
 
 #minify html output , default is true to reduce the size and remove html comments
 #make it false if you want to debug html output
-smartyurl.minifyHtmloutput = true
-
-cookie.domain =  .example.com
+smartyurl.minifyHtmloutput = false
+# it is important to ser the cookie domain to make cookie working correctly
+cookie.domain =  .EXAMPLE.COM
 
 
 #--------------------------------------------------------------------
 # DATABASE
 #--------------------------------------------------------------------
 
-# database.default.hostname = localhost
-# database.default.database = ci4
-# database.default.username = root
-# database.default.password = root
-# database.default.DBDriver = MySQLi
-# database.default.DBPrefix =
-# database.default.port = 3306
+ database.default.hostname = localhost
+ database.default.database = databasename
+ database.default.username = databaseusername
+ database.default.password = database_password
+ database.default.DBDriver = MySQLi
+ database.default.DBPrefix =
+ database.default.port = 3306
 
 # database.tests.hostname = localhost
 # database.tests.database = ci4_test
@@ -158,6 +156,3 @@ security.csrfProtection = 'session'
 #--------------------------------------------------------------------
 
 # curlrequest.shareOptions = true
-
-
-

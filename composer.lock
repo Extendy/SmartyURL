@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "codeigniter4/framework",
-            "version": "v4.4.0",
+            "version": "v4.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/framework.git",
-                "reference": "30008a0e3c342f2b6e5083927bec49feec95ed53"
+                "reference": "844616ef291ca07b726c1aaca552e16aadc3ceeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/30008a0e3c342f2b6e5083927bec49feec95ed53",
-                "reference": "30008a0e3c342f2b6e5083927bec49feec95ed53",
+                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/844616ef291ca07b726c1aaca552e16aadc3ceeb",
+                "reference": "844616ef291ca07b726c1aaca552e16aadc3ceeb",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
-            "time": "2023-08-25T07:02:01+00:00"
+            "time": "2023-09-05T00:46:08+00:00"
         },
         {
             "name": "codeigniter4/settings",
@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/shield.git",
-                "reference": "b6d327d1cfdc4a492697f79174b0e159da6a12e3"
+                "reference": "d464eff8d4db6cbb7f8074759f208d0d74927a08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/b6d327d1cfdc4a492697f79174b0e159da6a12e3",
-                "reference": "b6d327d1cfdc4a492697f79174b0e159da6a12e3",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/d464eff8d4db6cbb7f8074759f208d0d74927a08",
+                "reference": "d464eff8d4db6cbb7f8074759f208d0d74927a08",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/shield"
             },
-            "time": "2023-08-29T08:44:34+00:00"
+            "time": "2023-09-05T13:30:21+00:00"
         },
         {
             "name": "ip2location/ip2location-php",

@@ -53,6 +53,7 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             // 'csrf',
+            'csrf' => ['except' => ['api/*']],
             // localization filter to detect the lang layout
             'localization',
             // @TODO remove tests* from before production

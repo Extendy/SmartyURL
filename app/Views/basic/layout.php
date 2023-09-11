@@ -132,7 +132,7 @@
                             <div class="row">
                                 <div class="col-12 text-center">
 
-                                    <a class="btn btn-secondary btn-sm" href="<?= site_url("account/changepwd");?>">
+                                    <a class="btn btn-secondary btn-sm" href="<?= site_url('account/changepwd'); ?>">
                                         <i class="bi bi-person-fill-gear"></i>  <?= lang('Common.accountSettingsLnk'); ?></a>
                                 </div>
 

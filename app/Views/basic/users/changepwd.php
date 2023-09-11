@@ -11,14 +11,14 @@
         <!--begin::Row-->
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0"><?=lang('Account.changeActpassword');?></h3>
+                <h3 class="mb-0"><?=lang('Account.changeActpassword'); ?></h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="<?= site_url('/dashboard'); ?>"><?= lang('Common.dashboardLnk'); ?></a></li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <a href="<?= site_url('/account/settings'); ?>">
-                            <?=lang("Account.accountSettings");?>
+                            <?=lang('Account.accountSettings'); ?>
                         </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
@@ -42,7 +42,7 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 <i class="fas fa-edit"></i>
-                                <?=lang('Account.changeActpassword');?>
+                                <?=lang('Account.changeActpassword'); ?>
                             </h3>
                         </div>
                         <div class="card-body">
@@ -74,24 +74,24 @@
                             <form action="<?= url_to('account/changepwd') ?>" method="post">
                                 <?= csrf_field() ?>
                                 <div class="mb-3">
-                                    <label for="currentPassword" class="form-label"><?=lang('Account.currentPassword');?></label>
+                                    <label for="currentPassword" class="form-label"><?=lang('Account.currentPassword'); ?></label>
                                     <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="newPassword" class="form-label"><?=lang('Account.NewPasswprd');?></label>
+                                    <label for="newPassword" class="form-label"><?=lang('Account.NewPasswprd'); ?></label>
                                     <input type="password" class="form-control" id="newPassword" name="newPassword" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="confirmPassword" class="form-label"><?=lang('Account.NewPasswordConfirm');?></label>
+                                    <label for="confirmPassword" class="form-label"><?=lang('Account.NewPasswordConfirm'); ?></label>
                                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                                 </div>
                                 <div class="row">
                                     <!-- Add Cancel button to the top-left corner -->
                                     <div class="col-6">
-                                        <button type="button" class="btn btn-secondary" onclick="window.location.href='<?= url_to('dashboard') ?>'"> <?=lang("Account.ChangePasswordCancelbtn");?> </button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.href='<?= url_to('dashboard') ?>'"> <?=lang('Account.ChangePasswordCancelbtn'); ?> </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button type="submit" class="btn btn-primary"><?=lang('Account.ChangePasswordSubmit');?></button>
+                                        <button type="submit" class="btn btn-primary"><?=lang('Account.ChangePasswordSubmit'); ?></button>
                                     </div>
                                 </div>
                             </form>

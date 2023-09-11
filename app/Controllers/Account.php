@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-//use CodeIgniter\Shield\Models\UserModel;
-
-
+// use CodeIgniter\Shield\Models\UserModel;
 
 /**
  * Class BaseController
@@ -25,55 +23,46 @@ class Account extends BaseController
      */
     public function changepwd()
     {
-
         return view(smarty_view('users/changepwd'));
-
     }
 
-
-    public function changepwdAction(){
-        //security check
+    public function changepwdAction()
+    {
+        // security check
         if (! $this->request->is('post')) {
             return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
         }
-        //@THINK does we need to check CSRF manually while we know that ci4 is check it and thru error if not posted
+        /** @THINK does we need to check CSRF manually while we know that ci4 is check it and thru error if not posted */
 
-        //as this controller for the logged in user that he want to change his password
+        // as this controller for the logged in user that he want to change his password
 
-        $user_id = user_id();
-        $currentPassword =  $this->request->getPost('currentPassword');
-        $newPassword = $this->request->getPost('newPassword');
-        $newPasswordConfirm =  $this->request->getPost('confirmPassword');
+        $user_id            = user_id();
+        $currentPassword    = $this->request->getPost('currentPassword');
+        $newPassword        = $this->request->getPost('newPassword');
+        $newPasswordConfirm = $this->request->getPost('confirmPassword');
 
         $result = auth()->check([
             'email'    => auth()->user()->email,
             'password' => $currentPassword,
         ]);
-        if (!$result->isOK()) {
-            return redirect()->to("account/changepwd")->withInput()->with('error', lang('Account.WrongCurrentPassword'));
+        if (! $result->isOK()) {
+            return redirect()->to('account/changepwd')->withInput()->with('error', lang('Account.WrongCurrentPassword'));
         }
 
-        if ($newPassword !== $newPasswordConfirm ){
-            return redirect()->to("account/changepwd")->withInput()->with('error', lang('Account.NewPasswordNotEqualConfrim'));
+        if ($newPassword !== $newPasswordConfirm) {
+            return redirect()->to('account/changepwd')->withInput()->with('error', lang('Account.NewPasswordNotEqualConfrim'));
         }
 
-        //i will try to change the password
+        // i will try to change the password
         $users = auth()->getProvider();
-        $user = auth()->user()->fill([
-            'password' => $newPassword
+        $user  = auth()->user()->fill([
+            'password' => $newPassword,
         ]);
 
         $users->save($user);
-        //@TODO @FIXME I must remove all remmber tokens for this user
-        //@TODO I must make sure from the new password is more strong
-        return redirect()->to("account/changepwd")->with('message', lang('Account.YourAccountPasswordChangedOK'));
 
-
-
-
-
-
+        // @TODO @FIXME I must remove all remmber tokens for this user
+        // @TODO I must make sure from the new password is more strong
+        return redirect()->to('account/changepwd')->with('message', lang('Account.YourAccountPasswordChangedOK'));
     }
-
-
 }

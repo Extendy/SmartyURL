@@ -9,6 +9,8 @@ $routes->get('/', 'Home::index');
 
 $routes->group('account', static function ($routes) {
     service('auth')->routes($routes);
+    $routes->get('changepwd', 'Account::changepwd');
+    $routes->post('changepwd', 'Account::changepwdAction');
 });
 
 $routes->get('/dashboard', 'Dashboard::index');

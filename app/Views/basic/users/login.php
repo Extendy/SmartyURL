@@ -58,6 +58,12 @@
                 </div>
             <?php endif ?>
 
+            <?php if (session('message') !== null) : ?>
+            <div class="alert alert-info" role="alert"><?= session('message') ?></div>
+            <?php endif ?>
+
+
+
             <form action="<?= url_to('login') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="input-group mb-1">

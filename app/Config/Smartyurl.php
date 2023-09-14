@@ -42,6 +42,8 @@ class Smartyurl extends BaseConfig
 
     /**
      * @var string[] the views used on smarty ,see helper smarty_view()
+     *
+     * @TODO i think this is not used yet
      */
     public $views = [
         // the main layout which used for logged in users
@@ -52,11 +54,11 @@ class Smartyurl extends BaseConfig
 
     /**
      * @var string contain the file name of jquery supported version eg jquery-3.7.1 without js
-     * for example if jquery-3.7.1 specified that mean there is a file with name
-     * jquery-3.7.1.js and jquery-3.7.1.min.js in cdn/js/jquery/{]
-     * if you don't show what you should use , keep it as default jquery-3.7.1
+     *             for example if jquery-3.7.1 specified that mean there is a file with name
+     *             jquery-3.7.1.js and jquery-3.7.1.min.js in cdn/js/jquery/{]
+     *             if you don't show what you should use , keep it as default jquery-3.7.1
      */
-    public $jquery_supported = "jquery-3.7.1";
+    public $jquery_supported = 'jquery-3.7.1';
 
     /**
      * --------------------------------------------------------------------

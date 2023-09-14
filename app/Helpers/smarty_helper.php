@@ -78,10 +78,9 @@ if (! function_exists('smarty_cdn')) {
  * this will reyurn the jquery file
  */
 if (! function_exists('smarty_include_jquery')) {
-    function smarty_include_jquery($min=true)
+    function smarty_include_jquery($min = true)
     {
-        helper("config");
-        return setting('Smartyurl.cdn') . "js/jquery/" . config("Smartyurl")->jquery_supported . ".min.js";
+        return setting('Smartyurl.cdn') . 'js/jquery/' . config('Smartyurl')->jquery_supported . '.min.js';
     }
 }
 

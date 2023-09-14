@@ -58,7 +58,9 @@ class Smartyurl extends BaseConfig
     public ?string $DBGroup = null;
 
     public array $dbtables = [
-        'urls' => 'urls',
+        'urls'        => 'urls',
+        'urltags'     => 'urltags',
+        'urltagsdata' => 'urltagsdata',
     ];
 
     /**

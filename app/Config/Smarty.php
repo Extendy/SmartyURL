@@ -6,9 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Smarty extends BaseConfig
 {
-    public $smarty_name = "SmartyURL";
-    public $smarty_online_repo = "https://extendy.net/SmartyURL";
-    public $smarty_version = '0.0.1-dev';
+    public $smarty_name        = 'SmartyURL';
+    public $smarty_online_repo = 'https://extendy.net/SmartyURL';
+    public $smarty_version     = '0.0.1-dev';
 
     /**
      * @var string contain the file name of jquery supported version eg jquery-3.7.1 without js

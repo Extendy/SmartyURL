@@ -75,6 +75,16 @@ if (! function_exists('smarty_cdn')) {
 }
 
 /**
+ * this will reyurn the jquery file
+ */
+if (! function_exists('smarty_include_jquery')) {
+    function smarty_include_jquery($min = true)
+    {
+        return setting('Smartyurl.cdn') . 'js/jquery/' . config('Smarty')->jquery_supported . '.min.js';
+    }
+}
+
+/**
  * return the given view name with a prefix of smarty theme name
  */
 if (! function_exists('smarty_view')) {

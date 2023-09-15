@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 // use CodeIgniter\Shield\Models\UserModel;
+use CodeIgniter\Shield\Models\RememberModel;
 
 /**
  * Class BaseController
@@ -61,7 +62,16 @@ class Account extends BaseController
 
         $users->save($user);
 
-        // @TODO @FIXME I must remove all remmber tokens for this user
+        $rememberModel = model(RememberModel::class);
+        $user          = auth()->user();
+        $rememberModel->purgeRememberTokens($user);
+
+        // if you plan to log out the user after change password then uncomment this
+        /*
+        auth()->logout();
+        return redirect()->to(config('Auth')->logoutRedirect())->with('message', lang('Account.YourAccountPasswordChangedOK'));
+        */
+
         // @TODO I must make sure from the new password is more strong
         return redirect()->to('account/changepwd')->with('message', lang('Account.YourAccountPasswordChangedOK'));
     }

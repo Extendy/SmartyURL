@@ -42,6 +42,8 @@ class Smartyurl extends BaseConfig
 
     /**
      * @var string[] the views used on smarty ,see helper smarty_view()
+     *
+     * @TODO i think this is not used yet
      */
     public $views = [
         // the main layout which used for logged in users
@@ -58,7 +60,9 @@ class Smartyurl extends BaseConfig
     public ?string $DBGroup = null;
 
     public array $dbtables = [
-        'urls' => 'urls',
+        'urls'        => 'urls',
+        'urltags'     => 'urltags',
+        'urltagsdata' => 'urltagsdata',
     ];
 
     /**

@@ -80,7 +80,7 @@ if (! function_exists('smarty_cdn')) {
 if (! function_exists('smarty_include_jquery')) {
     function smarty_include_jquery($min = true)
     {
-        return setting('Smartyurl.cdn') . 'js/jquery/' . config('Smartyurl')->jquery_supported . '.min.js';
+        return setting('Smartyurl.cdn') . 'js/jquery/' . config('Smarty')->jquery_supported . '.min.js';
     }
 }
 

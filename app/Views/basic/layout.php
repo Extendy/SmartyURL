@@ -49,12 +49,12 @@
 
 
                 <li class="nav-item d-none d-md-block">
-                    <a href="/url/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i>  New Smarty URL</a>
+                    <a href="/url/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i> <?= lang('Url.addNewURLMainbtn'); ?></a>
                 </li>
 
                 <!--begin: +URL on small screen only -->
                 <li class="nav-item d-block d-sm-none d-md-none d-lg-none d-xl-none">
-                    <a href="/url/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i> URL</a>
+                    <a href="/url/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i> <?= lang('Url.addNewURLMainShortbtn'); ?></a>
                 </li>
                 <!--end: +URL on small screen only -->
             </ul>
@@ -220,7 +220,7 @@
     <!--begin::Footer-->
     <footer class="app-footer">
         <!--begin::To the end-->
-        <div class="float-end d-none d-sm-inline">Anything you want</div>
+        <div class="float-end d-none d-sm-inline"><?= config('Smarty')->smarty_name; ?>  <a target="_blank" rel="nofollow" href="<?= config('Smarty')->smarty_online_repo; ?>">v<?= config('Smarty')->smarty_version; ?></a></div>
         <!--end::To the end-->
         <!--begin::Copyright-->
         <strong>
@@ -242,6 +242,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
 <script src="<?= smarty_cdn()?>js/adminlte.js"></script>
+<script src="<?= smarty_include_jquery(); ?>"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 <script>
     const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
@@ -268,6 +269,9 @@
     });
 </script>
 <!--end::OverlayScrollbars Configure-->
+<!--begin::jsfooterarea contains any specific javascript files that view files may load -->
+<?= $this->renderSection('jsfooterarea') ?>
+<!--end::jsfooterarea contains any specific javascript files that view files may load -->
 <!--end::Script-->
 </body><!--end::Body-->
 

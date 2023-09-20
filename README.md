@@ -12,24 +12,28 @@ In addition to shortening URLs, SmartyURL also offers a variety of other feature
 * **Tracking and analytics**
 * **Customization**
 
+## Server Requirements
 
-## SmartyURL uses
+PHP version 7.4 or higher is required, with the following extensions installed:
 
-### CodeIgniter framework
+- [intl](http://php.net/manual/en/intl.requirements.php)
+- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- [ext-curl](https://www.php.net/manual/en/curl.setup.php)
+- [gmp](https://www.php.net/manual/en/gmp.installation.php)
+- [json](https://www.php.net/manual/en/json.installation.php)
+- [bcmath](https://www.php.net/manual/en/bc.setup.php)
 
-    CodeIgniter framework v4
-    Copyright (c) 2014-2019 British Columbia Institute of Technolog
-    Copyright (c) 2019-2023 CodeIgniter Foundation
-    License: Open source - MIT <https://opensource.org/licenses/MIT>
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-#### CodeIgniter Shiled
+## SmartyURL Legal Notice
 
-#### CodeIgniter Settings
+To offer you SmartyURL features, we leverage third-party tools and libraries, including the following:
 
-
-### AdminLTE
-
-    AdminLTE v4.0.0-alpha2
-    Author: Colorlib
-    Website: AdminLTE.io <https://adminlte.io>
-    License: Open source - MIT <https://opensource.org/licenses/MIT>
+* CodeIgniter framework ,  Copyright (c) 2019-2023 CodeIgniter Foundation, MIT License <https://opensource.org/licenses/MIT>.
+* CodeIgniter Shiled, Copyright (c) 2021 Lonnie Ezell, MIT License <https://opensource.org/licenses/MIT>.
+* CodeIgniter Settings, Copyright (c) 2021 Lonnie Ezell, MIT License <https://opensource.org/licenses/MIT>.
+* SmartyURL uses AdminLTE for UI, Copyright (c) 2014-2023 ColorlibHQ , MIT License <https://opensource.org/licenses/MIT>.
+* IP2Location-PHP-Module, Copyright (C) 2005-2023 by IP2Location.com, MIT License <https://opensource.org/licenses/MIT>.
+* Laminas/Escaper Copyright (c) 2020 Laminas Project a Series of LF Projects, LLC. , BSD 3-Clause “New” or “Revised” License <https://choosealicense.com/licenses/bsd-3-clause/>.
+* psr/log, MIT license <https://opensource.org/licenses/MIT>.

@@ -36,6 +36,7 @@ class CreateUrlTable extends Migration
             'url_user_id'    => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'null' => true],
             'url_title'      => ['type' => 'varchar', 'constraint' => 200, 'null' => true, 'collate' => 'utf8_general_ci'],
             'url_targeturl'  => ['type' => 'varchar', 'constraint' => 2000, 'null' => false, 'collate' => 'utf8_general_ci'],
+            'url_conditions' => ['type' => 'json', 'null' => true, 'collate' => 'utf8_general_ci'],
             'created_at'     => ['type' => 'datetime', 'null' => false],
             'updated_at'     => ['type' => 'datetime', 'null' => false],
             'deleted_at'     => ['type' => 'datetime', 'null' => true],

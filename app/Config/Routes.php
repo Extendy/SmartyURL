@@ -22,6 +22,9 @@ $routes->group('url', static function ($routes) {
     $routes->post('new', 'Url::newAction');
 });
 
+// URL Go
+$routes->get('go/(:any)', 'Go::go/$1');
+
 // testing , must be removed after test
 $routes->get('/url/none', 'Url::none');
 $routes->get('/tests/1', 'Tests::index');

@@ -57,7 +57,7 @@ class Filters extends BaseConfig
             // localization filter to detect the lang layout
             'localization',
             // @TODO remove tests* from before production
-            'session' => ['except' => ['/', 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
+            'session' => ['except' => ['/', 'go/*', 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',
         ],
         'after' => [

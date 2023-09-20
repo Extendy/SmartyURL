@@ -22,7 +22,7 @@
 # APP
 #--------------------------------------------------------------------
 
-app.baseURL = 'https:/EXAMPLE.COM/'
+app.baseURL = 'https://EXAMPLE.COM'
 app.defaultLocale = 'en'
 CI_ENVIRONMENT=production
 # If you have trouble with `.`, you could also use `_`.
@@ -60,6 +60,29 @@ cookie.domain =  .EXAMPLE.COM
 # database.tests.DBDriver = MySQLi
 # database.tests.DBPrefix =
 # database.tests.port = 3306
+
+#--------------------------------------------------------------------
+# Email, The default Email configuration which used to send emails
+#--------------------------------------------------------------------
+
+#mail protocol: choose beteween mail, sendmail, smtp
+#and we advice you to choose smtp and enter emtp info below
+email.string $protocol = 'smtp';
+
+#choose the default sender mail
+email.fromEmail = noreplay@example.com
+
+#choose the default sender name
+email.fromName   = 'SmartyURL'
+#choose html for mail type
+email.mailType = html
+#enter the SMTP info here
+email.SMTPHost = smtp.example.com
+email.SMTPUser = noreplay@example.com
+email.SMTPPass = 'SMTPuserPassword'
+email.SMTPPort = 1025
+#SMTP Encryption. Either tls or ssl or none
+email.SMTPCrypto = ssl
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY

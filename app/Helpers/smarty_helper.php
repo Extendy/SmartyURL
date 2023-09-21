@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 
 use Config\Services;
+use IP2Location\IpTools;
 
 if (! function_exists('smarty_current_lang')) {
     /**
@@ -127,5 +128,30 @@ if (! function_exists('smarty_remove_whitespace_from_url_identifier')) {
         $cleanString = preg_replace($pattern, $replacement, $url_identifier);
 
         return trim($cleanString);
+    }
+}
+
+if (! function_exists('smarty_get_visitor_ip_country')) {
+    /**
+     * This function try to determine the given IP country code
+     *
+     * @param string $ip valid ip addresse (IPv4 or IPv6)
+     *
+     * @return string Country name in ALPHA-2 code , for example US UK SA JO
+     *
+     * @throws Exception
+     */
+    function smarty_get_visitor_ip_country($ip = null)
+    {
+        if ($ip === null) {
+            // Call the getVisitorIp() method on the instance
+            $ipTools = new IPTools();
+            $ip      = $ipTools->getVisitorIp();
+        }
+        $ip2locationdb                 = new \IP2Location\Database(Config('Smartyurl')->ip2location_bin_file, \IP2Location\Database::FILE_IO);
+        $visitorIp2locationRecords     = $ip2locationdb->lookup($ip, \IP2Location\Database::ALL);
+        $visitorIp2locationcountryCode = $visitorIp2locationRecords['countryCode'];
+
+        return trim($visitorIp2locationcountryCode);
     }
 }

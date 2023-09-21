@@ -57,7 +57,9 @@ class Filters extends BaseConfig
             // localization filter to detect the lang layout
             'localization',
             // @TODO remove tests* from before production
-            'session' => ['except' => ['/', 'go/*', 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
+            //I comment 'session' while i define this filter in Routes.php for every route need protection with shiled auth
+            //so no need to define global session here
+           // 'session' => ['except' => ['/', 'go/*', 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',
         ],
         'after' => [
@@ -89,7 +91,7 @@ class Filters extends BaseConfig
      */
     public array $filters = [
         'auth-rates' => [
-            'before' => [
+            'before' => [ '*', //ths mean all routes in the system will be protected by auth-rates filter
                 'account/login*', 'account/register', 'auth/*',
             ],
         ],

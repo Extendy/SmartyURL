@@ -40,7 +40,7 @@ class Go extends BaseController
             $finalTargetURL = $urlData['url_targeturl'];
         } else {
             // there is a url_conditions
-            $url_conditions = json_decode('dddd');
+            $url_conditions = json_decode($urlData['url_conditions']);
             if ($url_conditions === null) {
                 // invalid json comes from db, how come..
                 throw new RuntimeException("Invalid json data in url_conditions for  url '{$identifier}'");

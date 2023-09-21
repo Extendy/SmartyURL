@@ -47,9 +47,10 @@ class Smartyurl extends BaseConfig
      */
     public $views = [
         // the main layout which used for logged in users
-        'layout' => 'layout',
+        /*  'layout' => 'layout',
         // other views
-        'dashboard' => 'dashboard',
+        'dashboard' => 'dashboard',*/
+        'urlNotFound' => 'url/404.php',
     ];
 
     /**
@@ -63,6 +64,7 @@ class Smartyurl extends BaseConfig
         'urls'        => 'urls',
         'urltags'     => 'urltags',
         'urltagsdata' => 'urltagsdata',
+        'urlhits'     => 'urlhits',
     ];
 
     /**
@@ -89,4 +91,14 @@ class Smartyurl extends BaseConfig
             'nativename'   => 'English',
         ],
     ];
+
+    /**
+     * @var int the appropriate HTTP response code when reirect the url , you can use 301 , 302 default it 301
+     *          default it 302 for best results
+     *          301 means Moved Permanently (Permanent Redirect)
+     *          Use this response code if the short URL will always redirect to the same destination. It indicates to search engines and browsers that the redirection is permanent, and they should update their records accordingly.     *
+     *          302 means  Found (Temporary Redirect):
+     *          Use this response code if you intend to keep the short URL active for a temporary period. It tells search engines and browsers that the redirection is temporary, and they should continue to check the original URL for updates.
+     */
+    public $http_response_codes_when_redirect = 301;
 }

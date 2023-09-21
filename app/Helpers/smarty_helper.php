@@ -117,3 +117,15 @@ if (! function_exists('smarty_permission_error')) {
         return view(smarty_view('errors/permissions'), $data);
     }
 }
+
+if (! function_exists('smarty_remove_whitespace_from_url_identifier')) {
+    function smarty_remove_whitespace_from_url_identifier(string $url_identifier)
+    {
+        // Use a regular expression to remove all white spaces
+        $pattern     = '/\s+/';
+        $replacement = '';
+        $cleanString = preg_replace($pattern, $replacement, $url_identifier);
+
+        return trim($cleanString);
+    }
+}

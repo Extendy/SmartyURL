@@ -36,10 +36,9 @@ class Go extends BaseController
         $finalTargetURL = $urlData['url_targeturl'];
         if ($urlData['url_conditions'] === null) {
             // this mean return the target url as is because it does not have conditions
-            // @TODO how to let this use one reidrect at the end (not here) with $finalTargetURL
             $finalTargetURL = $urlData['url_targeturl'];
         } else {
-            // there is a url_conditions
+            // there is a url_conditions in db
             $url_conditions = json_decode($urlData['url_conditions']);
             if ($url_conditions === null) {
                 // invalid json comes from db, how come..
@@ -52,15 +51,19 @@ class Go extends BaseController
 
                     foreach ($url_conditions->conditions as $condition) {
                         if (property_exists($condition, $visitorCountry)) {
-                            // final traget found , @FIXME  while target found should i continue or just exit the foreach
+                            // final traget found
                             $finalTargetURL = $condition->{$visitorCountry};
+                            // exit the foreach loop while we found the condition and no need to keep searching.
+                            break;
                         }
                     }
+
                     break;
 
                 case 'device':
                     dd('this is a device condition');
                     dd($url_conditions);
+
                     break;
 
                 default:
@@ -69,12 +72,14 @@ class Go extends BaseController
                     // throw new RuntimeException("Invalid condition '{$url_conditions->condition}' in url_conditions for  url '{$identifier}'");
                     // return null;
                     $finalTargetURL = $urlData['url_targeturl'];
+
                     break;
             }
         }
 
         if ($finalTargetURL === null) {
-            // finalTarget is null, so i will use the normal target
+            // finalTarget is null,I cannot get the $finalTargetURL from url conditions
+            // So I will use the default url_targeturl
             $finalTargetURL = $urlData['url_targeturl'];
         }
 

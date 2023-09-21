@@ -40,11 +40,10 @@ class Go extends BaseController
             $finalTargetURL = $urlData['url_targeturl'];
         } else {
             // there is a url_conditions
-            $url_conditions = json_decode($urlData['url_conditions']);
+            $url_conditions = json_decode('dddd');
             if ($url_conditions === null) {
+                // invalid json comes from db, how come..
                 throw new RuntimeException("Invalid json data in url_conditions for  url '{$identifier}'");
-
-                return null;
             }
 
             switch ($url_conditions->condition) {
@@ -82,7 +81,7 @@ class Go extends BaseController
         // Use the redirect() method to redirect to the external URL
         return $response->redirect($finalTargetURL, 'auto', Config('Smartyurl')->http_response_codes_when_redirect); // You can adjust the status code and 'auto' option as needed
         // @TODO @FIXME ***** i will do the following to url before go
-        // store toe visit into url hits table
+        // store the visit into url hits table
         // then i can redirect the user
     }
 }

@@ -46,7 +46,7 @@ class Account extends BaseController
 
         // validating new password with rules
         $rules = [
-            'newPassword' => ['label' => lang('Account.theNewPassword'), 'rules' => 'required|' . Passwords::getMaxLengthRule() . '|strong_password[]'],
+            'newPassword' => ['label' => lang('Account.theNewPassword'), 'rules' => 'required|' . Passwords::getMaxLengthRule() . '|strong_password'],
         ];
         $this->validation     = Services::validation();
         $data_to_be_validated = [

@@ -26,6 +26,19 @@ class Smartyurl extends BaseConfig
      */
     public $cdn = '/static/';
 
+    /**
+     * @var string the path of ip2location db bin file
+     *             if you buy the database from ip2location ip2location.com use the bin file that
+     *             you purchased instead of this free one
+     *             the free bin file which included with SmartyURL by default is LITE and not
+     *             for all IPS in the world and not very updated.
+     *             so if you want to use country filter buy the database from ip2location.com
+     *             you can store the bin file where you want to change his path below
+     *
+     * @default is $ip2location_bin_file = VENDORPATH."ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN";
+     */
+    public $ip2location_bin_file = VENDORPATH . 'ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN';
+
     /** -------------------------------------------------------------------------
      * Please DO NOT modify uder this line unless you know what you are doing
      * ----------------------------------------------------------------------------

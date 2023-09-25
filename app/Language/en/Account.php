@@ -3,6 +3,7 @@
 return [
     'accountSettings'              => 'Account Settings',
     'changeActpassword'            => 'Change Password',
+    'theNewPassword'               => 'New Password',
     'currentPassword'              => 'Enter Current Password',
     'NewPasswprd'                  => 'Enter New Password',
     'NewPasswordConfirm'           => 'Contrim the New Password',

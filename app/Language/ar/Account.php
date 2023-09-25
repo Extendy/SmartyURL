@@ -3,6 +3,7 @@
 return [
     'accountSettings'              => 'إعدادات الحساب',
     'changeActpassword'            => 'تغيير كلمة المرور',
+    'theNewPassword'               => 'كلمة المرور الجديدة',
     'currentPassword'              => 'ادخل كلمة المرور الحالية',
     'NewPasswprd'                  => 'اختر كلمة مرور جديدة',
     'NewPasswordConfirm'           => 'اعد ادخال كلمة المرور الجديدة',

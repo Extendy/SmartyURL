@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 // use CodeIgniter\Shield\Models\UserModel;
+use CodeIgniter\Shield\Authentication\Passwords;
 use CodeIgniter\Shield\Models\RememberModel;
+use Config\Services;
 
 /**
  * Class BaseController
@@ -42,6 +44,22 @@ class Account extends BaseController
         $newPassword        = $this->request->getPost('newPassword');
         $newPasswordConfirm = $this->request->getPost('confirmPassword');
 
+        // validating new password with rules
+        $rules = [
+            'newPassword' => ['label' => lang('Account.theNewPassword'), 'rules' => 'required|' . Passwords::getMaxLengthRule() . '|strong_password[]'],
+        ];
+        $this->validation     = Services::validation();
+        $data_to_be_validated = [
+            'newPassword' => $newPassword,
+        ];
+        $this->validation->setRules($rules);
+        if (! $this->validation->run($data_to_be_validated)) {
+            // error password strength or  validity
+            // dd($this->validation->getErrors());
+            return redirect()->to('account/changepwd')->withInput()->with('error', $this->validation->getErrors()['newPassword']);
+        }
+
+        // check the current password
         $result = auth()->check([
             'email'    => auth()->user()->email,
             'password' => $currentPassword,

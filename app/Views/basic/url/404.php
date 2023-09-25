@@ -21,8 +21,8 @@
 <div class="container text-center py-5">
     <h1 class="display-4 text-primary">
         <i class="bi bi-emoji-dizzy"></i>
-        404 Not Found - <?= lang('URl.urlNotFoundShort'); ?></h1>
-    <p class="lead"><?= lang('URl.urlNotFoundLong'); ?></p>
+        404 Not Found - <?= lang('URL.urlNotFoundShort'); ?></h1>
+    <p class="lead"><?= lang('URL.urlNotFoundLong'); ?></p>
 </div>
 
 <!-- Include Bootstrap 5 JavaScript (You may need to adjust the path) -->

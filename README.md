@@ -16,15 +16,28 @@ In addition to shortening URLs, SmartyURL also offers a variety of other feature
 
 PHP version 7.4 or higher is required, with the following extensions installed:
 
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [ext-curl](https://www.php.net/manual/en/curl.setup.php)
+- [libcurl](https://www.php.net/manual/en/curl.setup.php)
 - [gmp](https://www.php.net/manual/en/gmp.installation.php)
 - [json](https://www.php.net/manual/en/json.installation.php)
 - [bcmath](https://www.php.net/manual/en/bc.setup.php)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+Every open-source project depends on its contributors to be a success. Thanks to:
+
+<a href="https://github.com/extendy/smartyurl/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=extendy/smartyurl" />
+</a>
+
+Also We would like to acknowledge the following resources and contributors for their valuable assistance and support in the development of this project:
+
+- [MassarCloud Company](https://massarcloud.sa): We would like to express our gratitude to [MassarCloud LLC](https://massarcloud.sa) for their valuable support in providing hosting services during the development of this project.
 
 ## SmartyURL Legal Notice
 
@@ -36,4 +49,3 @@ To offer you SmartyURL features, we leverage third-party tools and libraries, in
 * SmartyURL uses AdminLTE for UI, Copyright (c) 2014-2023 ColorlibHQ , MIT License <https://opensource.org/licenses/MIT>.
 * IP2Location-PHP-Module, Copyright (C) 2005-2023 by IP2Location.com, MIT License <https://opensource.org/licenses/MIT>.
 * Laminas/Escaper Copyright (c) 2020 Laminas Project a Series of LF Projects, LLC. , BSD 3-Clause “New” or “Revised” License <https://choosealicense.com/licenses/bsd-3-clause/>.
-* psr/log, MIT license <https://opensource.org/licenses/MIT>.

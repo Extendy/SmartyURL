@@ -13,7 +13,8 @@
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1",
-        "ip2location/ip2location-php": "^9.7"
+        "ip2location/ip2location-php": "^9.7",
+        "mobiledetect/mobiledetectlib": "4.8.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

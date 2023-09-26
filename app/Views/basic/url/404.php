@@ -4,8 +4,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title><?= setting('Smartyurl.siteName') . ' - ' . lang('URl.urlNotFoundShort') ?></title>
-    <meta name="title" content="<?= setting('Smartyurl.siteName') . ' - ' . lang('URl.urlNotFoundShort') ?>">
+    <title><?= setting('Smartyurl.siteName') . ' - ' . lang('Url.urlNotFoundShort') ?></title>
+    <meta name="title" content="<?= setting('Smartyurl.siteName') . ' - ' . lang('Url.urlNotFoundShort') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -21,8 +21,8 @@
 <div class="container text-center py-5">
     <h1 class="display-4 text-primary">
         <i class="bi bi-emoji-dizzy"></i>
-        404 Not Found - <?= lang('URL.urlNotFoundShort'); ?></h1>
-    <p class="lead"><?= lang('URL.urlNotFoundLong'); ?></p>
+        404 Not Found - <?= lang('Url.urlNotFoundShort'); ?></h1>
+    <p class="lead"><?= lang('Url.urlNotFoundLong'); ?></p>
 </div>
 
 <!-- Include Bootstrap 5 JavaScript (You may need to adjust the path) -->

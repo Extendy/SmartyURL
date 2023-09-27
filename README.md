@@ -1,20 +1,24 @@
 # SmartyURL
 
-SmartyURL is a powerful URL management tool with a wide range of features, including URL shortening,
-tracking clicks, and customizing links based on various variables such as visitor's country or visitor's device and more..
+SmartyURL, a powerful & open-source URL management tool, empowers businesses and individuals to customize, track, shorten URLs, and manage their URLs for marketing, analytics, and reporting.
 
-SmartyURL can empower you to manage your URLs more effectively. It is a great choice for businesses and individuals
-who need to customize and track their URLs, or who want to customize their URLs for marketing, analytics, and reporting.
+You can utilize SmartyURL to generate redirect links to the final URL, considering various variables like the visitor's geographical location or user device information.
 
-In addition to shortening URLs, SmartyURL also offers a variety of other features, such as:
+For instance, you can create a unified link for mobile app downloads, dynamically adjusting the destination URL based on the user's device, whether it runs on Android or iOS. This ensures users are directed to the appropriate download link from the official store, tailored to their operating system.
+
+Likewise, you can also generate intelligent links to route visitors to specific URLs based on their location. For instance, users from the United States will be redirected to one link, while those from Saudi Arabia will be directed to another
+
+
+In addition to shortening URLs (based on domain that you use), SmartyURL also offers a variety of other features, such as:
 
 * **Space-saving and improved readability**
+* **Smart URL redirects.**
 * **Tracking and analytics**
 * **Customization**
 
 ## Server Requirements
 
-PHP version 7.4 or higher is required, with the following extensions installed:
+You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or higher support and the following PHP extensions:
 
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
 - [intl](http://php.net/manual/en/intl.requirements.php)
@@ -23,6 +27,15 @@ PHP version 7.4 or higher is required, with the following extensions installed:
 - [gmp](https://www.php.net/manual/en/gmp.installation.php)
 - [json](https://www.php.net/manual/en/json.installation.php)
 - [bcmath](https://www.php.net/manual/en/bc.setup.php)
+
+Afterwards, you can refer to the [installation instructions](_docs/installation.md) to set up the tool on your hosting account and begin using it.
+
+Certainly, please refer to the [documentation](_docs/index.md) for detailed instructions on how to install, configure, and effectively use Smart URL for comprehensive guidance.
+
+## Documentation
+
+Please take a look to SmartyURL [documentation](_docs/index.md) for detailed installation, configuration, and usage instructions.
+
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

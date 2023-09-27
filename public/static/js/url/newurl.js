@@ -1,4 +1,4 @@
 $( document ).ready(function() {
-    console.log( "newurl.js file is ready!" );
+    console.log( "newurl.js file is ready !" );
 
 });

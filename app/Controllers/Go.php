@@ -103,7 +103,7 @@ class Go extends BaseController
                                     $finalTargetURL = null; // this will set $finalTargetURL to null .. later will be set to default
                                 }
                             } else {
-                                // $finalTargetURL is string , and it cannot be happend in 'device' case
+                                // $finalTargetURL is string , and it cannot be happened in 'device' case
                                 throw new Exception('finalTargetURL is string .The finalTargetURL should be a JSON object in the devicetype stage, which is more logical than a string');
                             }
 
@@ -131,7 +131,6 @@ class Go extends BaseController
             // So I will use the default url_targeturl
             $finalTargetURL = $urlData['url_targeturl'];
         }
-        //dd($finalTargetURL);
 
         // Use the redirect() method to redirect to the external URL
         return $response->redirect($finalTargetURL, 'auto', Config('Smartyurl')->http_response_codes_when_redirect); // You can adjust the status code and 'auto' option as needed

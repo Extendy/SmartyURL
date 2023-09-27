@@ -1,6 +1,6 @@
 # SmartyURL
 
-SmartyURL, a powerful & open-source URL management tool, empowers businesses and individuals to customize, track, shorten URLs, and manage their URLs for marketing, analytics, and reporting.
+SmartyURL, a powerful & open-source URL management tool, empowers businesses and individuals they need self-hosted tool to customize, track, shorten URLs, and manage their URLs for marketing, analytics, and reporting.
 
 You can utilize SmartyURL to generate redirect links to the final URL, considering various variables like the visitor's geographical location or user device information.
 

@@ -33,16 +33,15 @@
 </div>
 
 
-
-
 <div class="app-content-header">
     <!--begin::Container-->
-    <div class="container-fluid">
+    <div id="newurlcontainer" class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <!-- Default box -->
                 <div class="card">
-                    <form action="your-action-url" method="post">
+                    <form action="<?= url_to('url/new') ?>" method="post">
+                        <?= csrf_field() ?>
                         <div class="card-header">
                             <!-- Use Bootstrap grid for two columns -->
                             <div class="row">
@@ -60,12 +59,50 @@
                         <div class="card-body" style="box-sizing: border-box; display: block;">
                             <!-- Input group for the input field with a help icon -->
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-lg" placeholder="https://example.com/some">
+                                <label class="input-group-text" for="originalUrl">Original URL</label>
+                                <input type="text" class="form-control form-control-lg" id="originalUrl"
+                                       placeholder="https://example.com/some">
                                 <span class="input-group-text">
-                                    <i class="bi bi-link-45deg"></i>
-                                </span>
+        <i class="bi bi-link-45deg"></i>
+    </span>
                             </div>
+
+
+                            <div class="container mt-4">
+
+                                <div class="dropdown">
+                                    <button class="btn btn-dark dropdown-toggle" type="button"
+                                            id="choosUrlCondition" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Redirect condition
+                                    </button>
+                                    <ul id="newurlconditionmenu" class="dropdown-menu dropdown-menu-dark"
+                                        aria-labelledby="choosUrlCondition">
+                                        <li>
+                                            <a class="dropdown-item" id="addGeoloctionCond" href="#">
+                                                By Visitor's Geolocation
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" id="addDeviceCond" href="#">
+                                                By Visitor's Device
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <div id="conditions_div" class="mt-4">
+
+                                <!-- here content fron javascript comes for the redirect condition -->
+
+                            </div>
+
+
                         </div>
+
+
                         <!-- /.card-body -->
                         <div class="card-footer" style="box-sizing: border-box; display: block;">
                             <!-- Use Bootstrap utility classes to align Save button to the right -->
@@ -81,6 +118,7 @@
         </div>
     </div>
 </div>
+
 
 <?= $this->endSection() ?>
 

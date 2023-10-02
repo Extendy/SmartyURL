@@ -225,7 +225,7 @@
         <!--begin::Copyright-->
         <strong>
             Copyright &copy; 2023
-            <a target="_blank" href="https://extendy.net">Extendy Porject</a>.
+            <a target="_blank" href="https://extendy.net">Extendy</a>.
         </strong>
         All rights reserved.
         <!--end::Copyright-->

@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Extendy\Smartyurl\WorldCountries;
+
 /**
  * Class BaseController
  *
@@ -24,13 +26,16 @@ class Url extends BaseController
 
             exit(1);
         }
+        $worldCountries         = new WorldCountries();
+        $data['worldcountries'] = $worldCountries->getCountriesList();
 
-        return view(smarty_view('url/new'));
+        return view(smarty_view('url/new'), $data);
     }
 
     public function newAction()
     {
         echo 'url new action';
+        dd($_POST);
     }
 
     /**

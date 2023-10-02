@@ -131,6 +131,19 @@ if (! function_exists('smarty_remove_whitespace_from_url_identifier')) {
     }
 }
 
+if (! function_exists('smarty_detect_site_shortlinker')) {
+    function smarty_detect_site_shortlinker()
+    {
+        // while @ this stage we support only one site for shortlinks so we will use the baseURL
+        $string = setting('app.baseURL');
+        if (! str_ends_with($string, '/')) {
+            $string .= '/';
+        }
+
+        return $string;
+    }
+}
+
 if (! function_exists('smarty_get_visitor_ip_country')) {
     /**
      * This function try to determine the given IP country code

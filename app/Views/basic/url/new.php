@@ -40,7 +40,7 @@
             <div class="col-12">
                 <!-- Default box -->
                 <div class="card">
-                    <form action="<?= url_to('url/new') ?>" method="post">
+                    <form id="addNewURL" action="<?= url_to('url/new') ?>" method="post">
                         <?= csrf_field() ?>
                         <div class="card-header">
                             <!-- Use Bootstrap grid for two columns -->
@@ -58,13 +58,21 @@
                         </div>
                         <div class="card-body" style="box-sizing: border-box; display: block;">
                             <!-- Input group for the input field with a help icon -->
-                            <div class="input-group">
-                                <label class="input-group-text" for="originalUrl">Original URL</label>
-                                <input type="text" class="form-control form-control-lg" id="originalUrl"
-                                       placeholder="https://example.com/some">
-                                <span class="input-group-text">
-        <i class="bi bi-link-45deg"></i>
-    </span>
+                            <div class="mt-2">
+                                <label class="" for="originalUrl">Original URL:</label>
+                                <input type="url" class="form-control " name="originalUrl"
+                                       id="originalUrl"
+                                       placeholder="https://example.com/some" required>
+                            </div>
+
+                            <div class="mt-2">
+                                <label for="basic-url" class="form-label">Masked (or shorten) URL:</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"
+                                          id="basic-addon3"><?= smarty_detect_site_shortlinker(); ?></span>
+                                    <input type="text" class="form-control" id="basic-url"
+                                           aria-describedby="basic-addon3">
+                                </div>
                             </div>
 
 
@@ -73,7 +81,7 @@
                                 <div class="dropdown">
                                     <button class="btn btn-dark dropdown-toggle" type="button"
                                             id="choosUrlCondition" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Redirect condition
+                                        Add Redirect condition (Optional)
                                     </button>
                                     <ul id="newurlconditionmenu" class="dropdown-menu dropdown-menu-dark"
                                         aria-labelledby="choosUrlCondition">
@@ -111,6 +119,7 @@
                             </div>
                         </div>
                         <!-- /.card-footer-->
+                        <input type="hidden" name="redirectCondition" id="redirectCondition" value="">
                     </form>
                 </div>
                 <!-- /.card -->
@@ -124,6 +133,10 @@
 
 
 <?= $this->section('jsfooterarea') ?>
-<script src="<?= smarty_cdn() ?>js/url/newurl.js"></script>
+<script src="<?= site_url('assist/newurl.js') ?>"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="<?= smarty_cdn()?>css/select2-bootstrap.css" rel="stylesheet" />
+<script src="<?= site_url('assist/newurl.js') ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <?= $this->endSection() ?>
 

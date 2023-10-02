@@ -146,7 +146,10 @@ email.SMTPCrypto = ssl
 # SECURITY
 #--------------------------------------------------------------------
 
-security.csrfProtection = 'session'
+#It is not recommended to set csrfProtection here . Because it should be set to session in all environments.
+#You shoud set it in Config\Security::$csrfProtection
+#security.csrfProtection = 'session'
+
 # security.tokenRandomize = false
 # security.tokenName = 'csrf_token_name'
 # security.headerName = 'X-CSRF-TOKEN'

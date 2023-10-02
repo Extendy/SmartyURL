@@ -18,7 +18,7 @@ class Assist extends BaseController
      */
     public function getAddNewUrlJsAssist(): \CodeIgniter\HTTP\ResponseInterface
     {
-        $tests  = 'sam';
+
         $jsCode = '';
 
         $this->response->setContentType('application/javascript', 'utf-8');
@@ -35,7 +35,11 @@ class Assist extends BaseController
              * Date: 2023-09-29T05:11Z
              */
             $( document ).ready(function() {
-                console.log("{$tests}");
+
+                $('#spinner').hide();
+                $("#spinner").css("display", "none");
+                $("#spinner").removeClass();
+                $('#addnewurlcontent').show();
 
 
 

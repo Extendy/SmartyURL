@@ -13,17 +13,30 @@ class Assist extends BaseController
     {
     }
 
+    public function getURLtags()
+    {
+        $this->response->setContentType('application/json', 'utf-8');
+        $arrayData = ['sam', 'aka'];
+        $jsonCode  = json_encode($arrayData);
+
+        return $this->response->setBody($jsonCode);
+    }
+
     /**
      * This Controller return the new url javascriot needed codes as application/javascript response
      */
     public function getAddNewUrlJsAssist(): \CodeIgniter\HTTP\ResponseInterface
     {
-
         $jsCode = '';
-
+        // lang vals
+        $langByvisitorsGeolocation   = lang('Url.ByvisitorsGeolocation');
+        $langDeleteCondition         = lang('Url.DeleteCondition');
+        $langSelectCountry           = lang('Url.SelectCountry');
+        $langGeographicalLocationURL = lang('Url.GeographicalLocationURL');
+        $langbtnDelete = lang("Common.btnDelete");
         $this->response->setContentType('application/javascript', 'utf-8');
         // refer for view ur/new.php because the following code will embedded to it
-        $jsCode .= <<< EOT
+        $jsCode .= <<<EOT
             /*!
              * SmartyURL
              * https://extendy.net/
@@ -35,12 +48,6 @@ class Assist extends BaseController
              * Date: 2023-09-29T05:11Z
              */
             $( document ).ready(function() {
-
-                $('#spinner').hide();
-                $("#spinner").css("display", "none");
-                $("#spinner").removeClass();
-                $('#addnewurlcontent').show();
-
 
 
                 //because tha button is  loaded dynamically through innerHTML
@@ -59,7 +66,7 @@ class Assist extends BaseController
 
 
 
-
+                //when deviceconditioncancel button clicked
                 $('#newurlcontainer').on('click', '#deviceconditioncancel', function() {
                     $('#devicediv').remove();
                     $("#choosUrlCondition").prop("disabled", false);
@@ -71,6 +78,8 @@ class Assist extends BaseController
                 //adding new Country input text for geolocation condition
                  $('#newurlcontainer').on('click', '#addNewCountryBtn', function() {
                    appendGeoLocationCountrySpace();
+
+
 
                 });
 
@@ -90,7 +99,8 @@ class Assist extends BaseController
 
                  });
 
-
+              //initailize select2
+              initailizeSelect2()
 
             });
 
@@ -129,8 +139,8 @@ class Assist extends BaseController
                      geodivcardheaderwDiv.classList.add("card-header", "bg-light"); // Add one or more classes as needed
                       geodivcardheaderwDiv.id = "geocard-headerdev";
                        geodivcardheaderwDiv.innerHTML = `
-                         <span class="mr-auto">Geographical Location</span>
-                         <button id="geoconditioncancel" type="button" class="ms-4  mt-1 btn btn-outline-danger btn-sm ml-auto">delete condition</button>
+                         <span class="mr-auto">{$langByvisitorsGeolocation}</span>
+                         <button id="geoconditioncancel" type="button" class="ms-4  mt-1 btn btn-outline-danger btn-sm ml-auto">{$langDeleteCondition}</button>
                        `;
 
                      newDiv.appendChild(geodivcardheaderwDiv);
@@ -156,6 +166,7 @@ class Assist extends BaseController
 
                     geocardbodyDev.appendChild(addNewCountryBtn);
                     appendGeoLocationCountrySpace();
+
 
 
                     $('#newurlconditionmenu').removeClass('show');
@@ -195,7 +206,7 @@ class Assist extends BaseController
                     <!-- Create a div element for the select input -->
                     <div class="col-md-3 mt-2">
                       <select placeholder="Country" name="geocountry[]" class="GeoLocationCountry select2_el form-control" required>
-                           <option value="">Select Country</option>
+                           <option value="" disabled selected>{$langSelectCountry}</option>
             EOT;
         $Countries      = new WorldCountries();
         $worldcountries = $Countries->getCountriesList();
@@ -208,17 +219,17 @@ class Assist extends BaseController
         $jsCode .= '
                       </select>';
 
-        $jsCode .= <<< 'EOT'
+        $jsCode .= <<<EOT
                                </div>
 
                                <!-- Create a div element for the text input -->
                                <div class="col-md-8 mt-2">
-                                 <input placeholder="URL" type="url" name="geofinalurl[]" class="form-control" required />
+                                 <input placeholder="{$langGeographicalLocationURL}" type="url" name="geofinalurl[]" class="form-control" required />
                                </div>
 
                                <!-- Create a div element for the delete button -->
                                <div class="col-md-1 mt-2">
-                                 <button type="button" class="delgeoCountrybtn btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                 <button type="button" class="delgeoCountrybtn btn btn-sm btn-danger"  title="{$langbtnDelete}"><i class="bi bi-trash"></i></button>
                                </div>
                              </div>
                        `;
@@ -244,48 +255,148 @@ class Assist extends BaseController
 
 
 
+
                        console.log( "controller assist/newurl.js file is ready ! @TODO remove me in production" );
 
             EOT;
 
         // for device
         $jsCode .= <<< 'EOT'
-                        //for device
-                        document.addEventListener("DOMContentLoaded", function() {
-                            const container = document.getElementById("conditions_div");
-                            const addButton = document.getElementById("addDeviceCond");
+                //for device
+                document.addEventListener("DOMContentLoaded", function() {
+                const container = document.getElementById("conditions_div");
+                const addButton = document.getElementById("addDeviceCond");
 
+                addButton.addEventListener("click", function() {
+                // Create a new div element with the HTML content you want to add
+                hiddenInput.value = "device";
+                const newDiv = document.createElement("div");
+                newDiv.innerHTML = `
+                                                       <!--begin: geolocation condition -->
 
+                                                      <div id="devicediv222222222">
+                                                                      hello
+                                                                           <button id="deviceconditioncancel" type="button" class="ms-4 btn btn-outline-danger btn-sm ml-auto">delete condition</button>
+                                                     </div>
+                                                    <!-- end: condition -->
+                                                  `;
+                                                  $('#newurlconditionmenu').removeClass('show');
+                                                  //disalethe choosUrlCondition to avoid reusing it
+                                                  $("#choosUrlCondition").prop("disabled", true);
+                                                  $("#choosUrlCondition").hide();
 
+                                                  // Append the new div to the container
+                                                  container.appendChild(newDiv);
 
-                            addButton.addEventListener("click", function() {
-                                // Create a new div element with the HTML content you want to add
-                                hiddenInput.value = "device";
-                                const newDiv = document.createElement("div");
-                                newDiv.innerHTML = `
-                                     <!--begin: geolocation condition -->
-
-                                    <div id="devicediv">
-                                                    hello
-                                                     <button id="deviceconditioncancel" type="button" class="ms-4 btn btn-outline-danger btn-sm ml-auto">delete condition</button>
-                                   </div>
-                                  <!-- end: condition -->
-                                `;
-                                $('#newurlconditionmenu').removeClass('show');
-                                //disalethe choosUrlCondition to avoid reusing it
-                                $("#choosUrlCondition").prop("disabled", true);
-                                $("#choosUrlCondition").hide();
-
-                                // Append the new div to the container
-                                container.appendChild(newDiv);
-
-                            });
-                        });
+                                              });
+                                          });
 
 
             EOT;
 
+        // remove spinner
+        $jsCode .= <<< 'EOT'
+
+
+                $(document).ready(function() {
+                    //remove loading spinner
+                    $('#spinner').hide();
+                    $("#spinner").css("display", "none");
+                    $("#spinner").removeClass();
+                    $('#addnewurlcontent').show();
+                });
+
+
+            EOT;
+
+        // Adding listener to the beforeunload to alert the user when he have unsaved
+        $langunSavedFormConfirmMsg = lang('Common.unSavedFormConfirmMsg');
+        $jsCode .= <<< EOT
+
+
+            // Add a function to display a confirmation message when leaving the page
+            window.addEventListener('beforeunload', (e) => {
+                // Check if there are unsaved changes
+                if (hasUnsavedChanges) {
+                    // Display a confirmation message
+                    e.preventDefault();
+                    e.returnValue = '{$langunSavedFormConfirmMsg}';
+                }
+            });
+
+            // Set a flag for unsaved changes whenever the form changes
+            let hasUnsavedChanges = false;
+
+            // Add event listeners to form fields to track changes
+            const formFields = document.querySelectorAll('input, textarea, select');
+            formFields.forEach((field) => {
+                field.addEventListener('change', () => {
+                    hasUnsavedChanges = true;
+                });
+            });
+
+            // Optionally, if you want to reset the flag when the form is submitted
+            const form = document.getElementById('addNewURL');
+            form.addEventListener('submit', () => {
+                hasUnsavedChanges = false;
+            });
+            EOT;
+
         // Return javascript contents
         return $this->response->setBody($jsCode);
+    }
+
+
+
+    public function getSmartyUrlGlobakJsAssist(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        $smaryUrlGlobaljsCode = "";
+        $this->response->setContentType('application/javascript', 'utf-8');
+
+        $smaryUrlGlobaljsCode = <<< EOT
+             /*!
+             * SmartyURL
+             * https://extendy.net/
+             *
+             * SmartyURL Global JS Code
+             *
+             * Copyright (c) 2023 Mohammed AlShannaq
+             * Released under the MIT license
+             * https://github.com/Extendy/SmartyURL/blob/main/LICENSE
+             *
+             * Date: 2023-10-04T01:22Z
+             */
+
+
+
+            //this enable popper tooltip
+            function initializeTooltips() {
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                        return new bootstrap.Tooltip(tooltipTriggerEl, {
+                            container: 'body' // Set the container option to 'body'
+                        });
+                    });
+
+            }
+
+
+
+            $( document ).ready(function() {
+
+                 //Enable Enable Popper bootstrap tooltips everywhere
+                initializeTooltips();
+
+            }); //  $( document ).ready(function() {
+
+
+
+
+
+        EOT;
+
+
+
+        return $this->response->setBody($smaryUrlGlobaljsCode);
     }
 }

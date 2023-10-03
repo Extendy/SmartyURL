@@ -36,6 +36,8 @@ $routes->get('lang/{locale}', 'Language::index', ['filter' => 'afterlangchange']
 
 // Assist
 $routes->get('assist/newurl.js', 'Assist::getAddNewUrlJsAssist');
+$routes->get('assist/smartyurl.js', 'Assist::getSmartyUrlGlobakJsAssist');
+$routes->get('assist/urltags.json', 'Assist::getURLtags');
 
 // testing , @TODO must be removed after testing before any production release
 $routes->get('/url/none', 'Url::none');

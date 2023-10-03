@@ -16,9 +16,12 @@ return [
 
     'GeographicalLocation'    => 'الموقع الجغرافي',
     'SelectCountry'           => 'إختر الدولة',
-    'SelectDeviceFeat'           => 'إختر مواصفات الجهاز',
+    'SelectDeviceFeat'        => 'إختر مواصفات الجهاز',
     'GeographicalLocationURL' => 'رابط التوجية حال تحقق الشرط',
-    'DeviceFeatURL' => 'رابط التوجية حال تحقق الشرط',
+    'DeviceFeatURL'           => 'رابط التوجية حال تحقق الشرط',
+    'DeviceAndroidSmartPhone' => 'هاتف ذكي أندرويد',
+    'DeviceAppleSmartPhone'   => 'هاتف ذكي أبل Apple',
+    'DeviceWindowsComputer'   => 'جهاز كمبيوتر ويندوز',
 
     'urlsLink' => 'فهرس الراوبط',
 

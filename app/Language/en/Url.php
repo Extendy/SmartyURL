@@ -16,9 +16,12 @@ return [
 
     'GeographicalLocation'    => 'Geographical Location',
     'SelectCountry'           => 'Select Country',
-    'SelectDeviceFeat'           => 'Choose Device',
+    'SelectDeviceFeat'        => 'Choose Device',
     'GeographicalLocationURL' => 'Redirection link when the condition is met',
-    'DeviceFeatURL' => 'Redirection link when the condition is met',
+    'DeviceFeatURL'           => 'Redirection link when the condition is met',
+    'DeviceAndroidSmartPhone' => 'Android Smart Phone',
+    'DeviceAppleSmartPhone'   => 'Apple Smart Phone',
+    'DeviceWindowsComputer'   => 'Microsoft Windows Computer',
 
     'urlsLink' => 'URLs Bucket',
 

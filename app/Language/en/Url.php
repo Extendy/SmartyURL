@@ -14,6 +14,7 @@ return [
     'ByvisitorsDevice'             => 'By Visitor\'s Device',
     'DeleteCondition'              => 'delete condition',
     'URLTagsOptional'              => 'URL Tags: (Optional)',
+    'EnterSomeTags'                => 'Choose Tags',
     'AddNewUrlSubmitbtn'           => 'Create Smarty Link',
 
     'GeographicalLocation'    => 'Geographical Location',

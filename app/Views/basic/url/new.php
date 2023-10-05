@@ -144,8 +144,7 @@
 
 
                                     <div class="input-group mb-3">
-                                        <input type="text" name="urlTags" id="urlTags" class="tt-input form-control"
-                                               placeholder="Tags from tagify">
+                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value=''>
 
 
                                         <div id="tagsContainer" class="mt-2"></div>
@@ -183,6 +182,12 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 <link href="<?= smarty_cdn() ?>css/select2-bootstrap.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+<link href="<?= smarty_cdn() ?>css/urltags.css" rel="stylesheet" type="text/css" />
 
 <script src="<?= site_url('assist/newurl.js') ?>"></script>
 <?= $this->endSection() ?>

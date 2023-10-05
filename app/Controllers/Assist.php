@@ -417,6 +417,33 @@ class Assist extends BaseController
             });
             EOT;
 
+        $urltags   = service('urltags');
+        $tagscloud = $urltags->getUserUrlTagsCloud(user_id(), setting('Smartyurl.urlTagsCloudLimit'), false);
+        $whitelist = '[';
+
+        foreach ($tagscloud as $tag) {
+            $whitelist .= "{value:'" . $tag['tag_name'] . "', tag_id:'" . $tag['tag_id'] . "'},";
+        }
+        $whitelist .= '],';
+        // dd($whitelist);
+
+        // urlTags
+        $jsCode .= <<< EOT
+                var input = document.querySelector('input[name="urlTags"]'),
+                // init Tagify script on the above inputs
+                tagify = new Tagify(input, {
+                    whitelist:  {$whitelist}
+
+                    maxTags: 10,
+                    dropdown: {
+                    maxItems: 20,           // <- mixumum allowed rendered suggestions
+                    classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                    enabled: 0,             // <- show suggestions on focus
+                    closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                    }
+                })
+            EOT;
+
         // Return javascript contents
         return $this->response->setBody($jsCode);
     }

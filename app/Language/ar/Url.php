@@ -14,6 +14,7 @@ return [
     'ByvisitorsDevice'             => 'بالاعتماد على جهاز الزائر',
     'DeleteCondition'              => 'حذف الشرط',
     'URLTagsOptional'              => 'هاشتاقات الرابط (اختياري)',
+    'EnterSomeTags'                => 'اختر التاقات',
     'AddNewUrlSubmitbtn'           => 'انشاء الرابط الذكي',
 
     'GeographicalLocation'    => 'الموقع الجغرافي',

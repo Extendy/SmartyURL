@@ -33,7 +33,7 @@ class Assist extends BaseController
         $langDeleteCondition         = lang('Url.DeleteCondition');
         $langSelectCountry           = lang('Url.SelectCountry');
         $langGeographicalLocationURL = lang('Url.GeographicalLocationURL');
-        $langbtnDelete = lang("Common.btnDelete");
+        $langbtnDelete               = lang('Common.btnDelete');
         $this->response->setContentType('application/javascript', 'utf-8');
         // refer for view ur/new.php because the following code will embedded to it
         $jsCode .= <<<EOT
@@ -68,12 +68,16 @@ class Assist extends BaseController
 
                 //when deviceconditioncancel button clicked
                 $('#newurlcontainer').on('click', '#deviceconditioncancel', function() {
-                    $('#devicediv').remove();
-                    $("#choosUrlCondition").prop("disabled", false);
-                    $("#choosUrlCondition").show();
-                    hiddenInput.value = "";
+                    delDeviceCondition();
 
                 });
+
+                function delDeviceCondition(){
+                     $('#devicediv').remove();
+                     $("#choosUrlCondition").prop("disabled", false);
+                     $("#choosUrlCondition").show();
+                     hiddenInput.value = "";
+                }
 
                 //adding new Country input text for geolocation condition
                  $('#newurlcontainer').on('click', '#addNewCountryBtn', function() {
@@ -93,6 +97,7 @@ class Assist extends BaseController
                     if (!divElement.find(".btn-danger").length > 0) {
                         // The div element does not contain any `.btn-danger`  so i will delete the condtion
                         delGeocondition()
+                        delDeviceCondition();
                     }
 
 
@@ -102,7 +107,8 @@ class Assist extends BaseController
               //initailize select2
               initailizeSelect2()
 
-            });
+            }); //$( document ).ready(function() {
+
 
 
              const hiddenformInput = document.createElement("input");
@@ -180,14 +186,6 @@ class Assist extends BaseController
 
 
 
-
-
-
-
-
-
-
-
                 });
             });
 
@@ -252,44 +250,121 @@ class Assist extends BaseController
 
                    }
 
-
-
-
-
-                       console.log( "controller assist/newurl.js file is ready ! @TODO remove me in production" );
-
             EOT;
 
-        // for device
-        $jsCode .= <<< 'EOT'
+        // for device condition
+        $langUrlByvisitorsDevice        = lang('Url.ByvisitorsDevice');
+        $langUrlDeleteCondition         = lang('Url.DeleteCondition');
+        $langUrlSelectDeviceFeat        = lang('Url.SelectDeviceFeat');
+        $langUrlDeviceAndroidSmartPhone = lang('Url.DeviceAndroidSmartPhone');
+        $langUrlDeviceAppleSmartPhone   = lang('Url.DeviceAppleSmartPhone');
+        $langUrlDeviceWindowsComputer   = lang('Url.DeviceWindowsComputer');
+        $langUrlDeviceFeatURL           = lang('Url.DeviceFeatURL');
+        $langCommonbtnDelete            = lang('Common.btnDelete');
+
+        $jsCode .= <<< EOT
+
+                 //for device....
+
+                //this function add new device input to device card body
+                function appendDeviceConditionSpace(){
+                    const devicecardbodyDiv = document.getElementById("devicecardbody");
+                    const addNewDeviceBtn = document.getElementById("addNewDeviceBtn");
+                    const devicesfiledsdiv =  document.createElement("div");
+
+                    devicesfiledsdiv.innerHTML = `
+                                        <div class="row">
+                                            <div class="col-md-3 mt-2">
+                                                <select placeholder="Device" name="device[]" class=" select2_el form-control" required>
+                                                    <option value="" disabled selected>{$langUrlSelectDeviceFeat}</option>
+                                                    <option value="andriodsmartphone">{$langUrlDeviceAndroidSmartPhone}</option>
+                                                    <option value="applesmartphone">{$langUrlDeviceAppleSmartPhone}</option>
+                                                    <option value="windowscomputer">{$langUrlDeviceWindowsComputer}</option>
+                                                </select>
+
+                                            </div>
+
+                                            <!-- Create a div element for the text input -->
+                                            <div class="col-md-8 mt-2">
+                                                <input placeholder="{$langUrlDeviceFeatURL}" type="url" name="devicefinalurl[]" class="form-control" required />
+                                            </div>
+
+                                            <!-- Create a div element for the devcondition  delete button -->
+                                            <div class="col-md-1 mt-2">
+                                                <button type="button" class="delDevicebtn btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{$langCommonbtnDelete}"><i class="bi bi-trash"></i></button>
+                                            </div>
+
+                                        </div>
+
+
+                    `;
+                    devicecardbodyDiv.insertBefore(devicesfiledsdiv,addNewDeviceBtn);
+                    initailizeSelect2();
+                } //function appendDeviceConditionSpace
+
+
+
                 //for device
                 document.addEventListener("DOMContentLoaded", function() {
-                const container = document.getElementById("conditions_div");
-                const addButton = document.getElementById("addDeviceCond");
+                    const container = document.getElementById("conditions_div");
+                    const addDeviceCond = document.getElementById("addDeviceCond");
 
-                addButton.addEventListener("click", function() {
-                // Create a new div element with the HTML content you want to add
-                hiddenInput.value = "device";
-                const newDiv = document.createElement("div");
-                newDiv.innerHTML = `
-                                                       <!--begin: geolocation condition -->
 
-                                                      <div id="devicediv222222222">
-                                                                      hello
-                                                                           <button id="deviceconditioncancel" type="button" class="ms-4 btn btn-outline-danger btn-sm ml-auto">delete condition</button>
-                                                     </div>
-                                                    <!-- end: condition -->
-                                                  `;
-                                                  $('#newurlconditionmenu').removeClass('show');
-                                                  //disalethe choosUrlCondition to avoid reusing it
-                                                  $("#choosUrlCondition").prop("disabled", true);
-                                                  $("#choosUrlCondition").hide();
+                    addDeviceCond.addEventListener("click", function() {
+                    hiddenInput.value = "device";
 
-                                                  // Append the new div to the container
-                                                  container.appendChild(newDiv);
+                    //adding devicediv
+                    const newDiv = document.createElement("div");
+                    newDiv.classList.add("card", "mt-4"); // Add one or more classes as needed
+                    newDiv.id = "devicediv";
+                    container.appendChild(newDiv);
+                    //add devicediv-headerdev
+                    const devicedivheaderdevDiv = document.createElement("div");
+                    devicedivheaderdevDiv.classList.add("card-header", "bg-light"); // Add one or more classes as needed
+                    devicedivheaderdevDiv.id  = "devicediv-headerdev";
+                    devicedivheaderdevDiv.innerHTML =`
+                                        <span class="mr-auto">{$langUrlByvisitorsDevice}</span>
+                                        <button id="deviceconditioncancel" type="button"
+                                                class="ms-4  mt-1 btn btn-outline-danger btn-sm ml-auto">
+                                            {$langUrlDeleteCondition}
+                                        </button>
+                    `;
 
-                                              });
-                                          });
+                    newDiv.appendChild(devicedivheaderdevDiv);
+
+                    //adding devicecardbody
+                    const devicecardbodyDiv = document.createElement("div");
+                    devicecardbodyDiv.classList.add("card-body"); // Add one or more classes as needed
+                    devicecardbodyDiv.id = "devicecardbody"
+                    newDiv.appendChild(devicecardbodyDiv);
+
+                    //adding addNewDeviceBtn
+                    const addNewDeviceBtn = document.createElement("button");
+                    addNewDeviceBtn.id = "addNewDeviceBtn";
+                    addNewDeviceBtn.innerHTML = "+";
+                    addNewDeviceBtn.classList.add("btn","btn-dark" , "mt-4"); // Add one or more classes as needed
+                    addNewDeviceBtn.setAttribute("aria-expanded", false);
+                    addNewDeviceBtn.setAttribute("type", "button");
+
+                    devicecardbodyDiv.appendChild(addNewDeviceBtn);
+                    appendDeviceConditionSpace();
+
+                    $('#newurlconditionmenu').removeClass('show');
+                    //disalethe choosUrlCondition to avoid reusing it
+                    $("#choosUrlCondition").prop("disabled", true);
+                    $("#choosUrlCondition").hide();
+
+
+
+                });  //addDeviceCond.addEventListener("click", function() {
+
+
+                //adding new Device input text when clock on add new device btn for device condition
+                 $('#newurlcontainer').on('click', '#addNewDeviceBtn', function() {
+                   appendDeviceConditionSpace();
+                  }); // $('#newurlcontainer').on('click', '#addNewDeviceBtn', function() {
+
+                });
 
 
             EOT;
@@ -346,56 +421,57 @@ class Assist extends BaseController
         return $this->response->setBody($jsCode);
     }
 
-
-
     public function getSmartyUrlGlobakJsAssist(): \CodeIgniter\HTTP\ResponseInterface
     {
-        $smaryUrlGlobaljsCode = "";
+        $smaryUrlGlobaljsCode = '';
         $this->response->setContentType('application/javascript', 'utf-8');
 
-        $smaryUrlGlobaljsCode = <<< EOT
-             /*!
-             * SmartyURL
-             * https://extendy.net/
-             *
-             * SmartyURL Global JS Code
-             *
-             * Copyright (c) 2023 Mohammed AlShannaq
-             * Released under the MIT license
-             * https://github.com/Extendy/SmartyURL/blob/main/LICENSE
-             *
-             * Date: 2023-10-04T01:22Z
-             */
+        $smaryUrlGlobaljsCode = <<< 'EOT'
+                 /*!
+                 * SmartyURL
+                 * https://extendy.net/
+                 *
+                 * SmartyURL Global JS Code
+                 *
+                 * Copyright (c) 2023 Mohammed AlShannaq
+                 * Released under the MIT license
+                 * https://github.com/Extendy/SmartyURL/blob/main/LICENSE
+                 *
+                 * Date: 2023-10-04T01:22Z
+                 */
 
 
 
-            //this enable popper tooltip
-            function initializeTooltips() {
-                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                        return new bootstrap.Tooltip(tooltipTriggerEl, {
-                            container: 'body' // Set the container option to 'body'
+                //this enable popper tooltip
+                function initializeTooltips() {
+                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                                container: 'body' // Set the container option to 'body'
+                            });
                         });
+
+                }
+
+
+
+                $( document ).ready(function() {
+
+                     //Enable Enable Popper bootstrap tooltips everywhere
+                    initializeTooltips();
+
+                    //for .smarty-clickable-link prevent it from changing the URL or causing the page to scroll to the top
+                    $('.smarty-clickable-link').click(function (event) {
+                        event.preventDefault();
                     });
 
-            }
-
-
-
-            $( document ).ready(function() {
-
-                 //Enable Enable Popper bootstrap tooltips everywhere
-                initializeTooltips();
-
-            }); //  $( document ).ready(function() {
+                }); //  $( document ).ready(function() {
 
 
 
 
 
-        EOT;
-
-
+            EOT;
 
         return $this->response->setBody($smaryUrlGlobaljsCode);
     }

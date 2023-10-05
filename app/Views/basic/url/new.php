@@ -67,20 +67,28 @@
                                 <!-- Remove the button elements -->
                             </div>
                             <div class="card-body" style="box-sizing: border-box; display: block;">
-                                <!-- Input group for the input field with a help icon -->
-                                <div class="mt-2">
-                                    <label class="" for="originalUrl">Original URL:</label>
-                                    <input type="url" class="form-control " name="originalUrl"
-                                           id="originalUrl"
-                                           placeholder="https://example.com/some" required>
-                                </div>
 
                                 <div class="mt-2">
-                                    <label for="basic-url" class="form-label">Masked (or shorten) URL:</label>
-                                    <div class="input-group mb-3">
+                                    <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
+                                    <input dir="ltr" type="url" class="form-control " name="originalUrl"
+                                           id="UrlTitle" required
+                                           placeholder="https://example.com/somelink?example=1">
+                                </div>
+
+
+                                <div class="mt-2">
+                                    <label class="" for="UrlTitle"><?= lang('Url.UrlTitle') . ' ' . lang('Url.UrlTitleDescription') . ' ' . lang('Common.Optional'); ?>:</label>
+                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="<?= lang('Url.UrlTitleDescription'); ?>" >
+                                </div>
+
+
+                                <div class="mt-2">
+                                    <label for="basic-url" class="form-label"><?= lang('Url.MaskedShortUrl'); ?>
+                                        :</label>
+                                    <div class="input-group mb-3" dir="ltr">
                                     <span class="input-group-text"
                                           id="basic-addon3"><?= smarty_detect_site_shortlinker(); ?></span>
-                                        <input type="text" class="form-control" id="basic-url"
+                                        <input type="text" dir="ltr" class="form-control" id="basic-url"
                                                aria-describedby="basic-addon3">
                                     </div>
                                 </div>
@@ -91,18 +99,18 @@
                                     <div class="dropdown">
                                         <button class="btn btn-dark dropdown-toggle" type="button"
                                                 id="choosUrlCondition" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Add Redirect condition (Optional)
+                                            <?= lang('Url.AddRedirectConditionOptional'); ?>
                                         </button>
                                         <ul id="newurlconditionmenu" class="dropdown-menu dropdown-menu-dark"
                                             aria-labelledby="choosUrlCondition">
                                             <li>
-                                                <a class="dropdown-item" id="addGeoloctionCond" href="#">
-                                                    By Visitor's Geolocation
+                                                <a class="smarty-clickable-link dropdown-item" id="addGeoloctionCond" href="#">
+                                                    <?= lang('Url.ByvisitorsGeolocation'); ?>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" id="addDeviceCond" href="#">
-                                                    By Visitor's Device
+                                                <a class="smarty-clickable-link dropdown-item" id="addDeviceCond" href="#">
+                                                    <?= lang('Url.ByvisitorsDevice'); ?>
                                                 </a>
                                             </li>
 
@@ -118,6 +126,34 @@
                                 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="mt-4">
+                                    <label for="urlTags" class="form-label"><?= lang('Url.URLTagsOptional'); ?></label>
+
+
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="urlTags" id="urlTags" class="tt-input form-control"
+                                               placeholder="Tags from tagify">
+
+
+                                        <div id="tagsContainer" class="mt-2"></div>
+
+
+                                    </div>
+                                </div>
+
                             </div>
 
 
@@ -125,7 +161,8 @@
                             <div class="card-footer" style="box-sizing: border-box; display: block;">
                                 <!-- Use Bootstrap utility classes to align Save button to the right -->
                                 <div class="d-flex justify-content-end">
-                                    <input type="submit" class="btn btn-primary" value="Save">
+                                    <input type="submit" class="btn btn-primary"
+                                           value=" <?= lang('Url.AddNewUrlSubmitbtn'); ?>">
                                 </div>
                             </div>
                             <!-- /.card-footer-->
@@ -146,6 +183,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 <link href="<?= smarty_cdn() ?>css/select2-bootstrap.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script src="<?= site_url('assist/newurl.js') ?>"></script>
 <?= $this->endSection() ?>
 

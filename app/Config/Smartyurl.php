@@ -39,12 +39,54 @@ class Smartyurl extends BaseConfig
      */
     public $ip2location_bin_file = VENDORPATH . 'ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN';
 
+    /**
+     * @var bool if url tags is shared between site users?
+     *           if you enable this setting so any tags in system will be shared between users
+     *           even if that tag was created by a user, all users will see the tag
+     *           --> if enabled they only see tags , NO LINKS
+     *           this useful  when are running a private site for your employees and you want
+     *           then to share tags cloud between them.
+     *           by default, we disable it until you decide to enable it by making the value true
+     *
+     * @default false
+     */
+    public $urltags_shared_between_users = false;
+
+    /**
+     * @var int when try to return the tags cloud for the users what is the maximum number the tags cloud shoud
+     *          contains
+     *          we think 500 tag is enough, if you want you can increase or decrease it.
+     *
+     * @default 500
+     */
+    public $urlTagsCloudLimit = 500;
+
     /** -------------------------------------------------------------------------
      * Please DO NOT modify uder this line unless you know what you are doing
      * ----------------------------------------------------------------------------
      * -----------------------------------------------------------------------------
      * ----------------------------------------------------------------------------
      */
+
+    /**
+     * @var int maxiumum requests are made to a url Go service (redirect) per minute IP address, after
+     *          that number to url go will return 429 error
+     *          this is to protect the go services from being attacked.
+     *
+     * @default is 4
+     * means 4 requests / minute per IP address. we think it is enough , if you need more try ti increase it.
+     */
+    public $urlWebRateLimit = 4;
+
+    /**
+     * @var int maxiumum requests are made website per minute per IP address , after
+     *          that number to url go will return 429 error
+     *          this is to protect the go services from begin attacked.
+     *
+     * @default is 50
+     * means 50 requests / minute per IP address. we think it is enough , if you need more try ti increase it.
+     */
+    public $siteRateLimit = 50;
 
     /**
      * @var string default theme folder in app/Views

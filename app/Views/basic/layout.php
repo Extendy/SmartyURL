@@ -225,7 +225,7 @@
         <!--begin::Copyright-->
         <strong>
             Copyright &copy; 2023
-            <a target="_blank" href="https://extendy.net">Extendy Porject</a>.
+            <a target="_blank" href="https://extendy.net">Extendy</a>.
         </strong>
         All rights reserved.
         <!--end::Copyright-->
@@ -268,6 +268,9 @@
         }
     });
 </script>
+<!--begin::SmartyUL Globals js -->
+<script src="<?= site_url('assist/smartyurl.js') ?>"></script>
+<!--end::SmartyUL Globals js-->
 <!--end::OverlayScrollbars Configure-->
 <!--begin::jsfooterarea contains any specific javascript files that view files may load -->
 <?= $this->renderSection('jsfooterarea') ?>

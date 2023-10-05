@@ -24,16 +24,22 @@ $routes->group('url', static function ($routes) {
 
 // URL redirects
 // with go route
-$routes->get('go/(:any)', 'Go::go/$1');
+$routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 // Route any undefined request to Go Controller.
-$routes->add('(:any)', 'Go::go/$1');
-
-// testing , @TODO must be removed after testing before any production release
-$routes->get('/url/none', 'Url::none');
-$routes->get('/tests/1', 'Tests::index');
+$routes->add('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 
 // language route
 // filter
 // https://codeigniter.com/user_guide/incoming/routing.html#applying-filters
 // https://codeigniter.com/user_guide/incoming/filters.html?highlight=filter
 $routes->get('lang/{locale}', 'Language::index', ['filter' => 'afterlangchange']);
+
+// Assist
+$routes->get('assist/newurl.js', 'Assist::getAddNewUrlJsAssist');
+$routes->get('assist/smartyurl.js', 'Assist::getSmartyUrlGlobalJsAssist');
+$routes->get('assist/urltags.json', 'Assist::getURLtags');
+
+// testing , @TODO must be removed after testing before any production release
+$routes->get('/url/none', 'Url::none');
+$routes->get('/tests/1', 'Tests::index');
+$routes->get('/tests/testCountry', 'Tests::testCountry');

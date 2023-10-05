@@ -11,4 +11,5 @@ return [
     'unSavedFormConfirmMsg' => 'You have unsaved changes in page form. Are you sure you want to leave?',
 
     'btnDelete' => 'Delete',
+    'Optional'  => 'Optional',
 ];

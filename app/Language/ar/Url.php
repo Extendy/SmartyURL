@@ -6,6 +6,8 @@ return [
     'addNewURLTitle'        => 'انشاء رابط جديد',
 
     'OriginalUrl'                  => 'الرابط الأصلي',
+    'UrlTitle'                     => 'العنوان',
+    'UrlTitleDescription'          => '(اي وصف للرابط)',
     'MaskedShortUrl'               => 'الرابط المختصر',
     'AddRedirectConditionOptional' => 'اضافة شرط اعادة توجية (اختياري)',
     'ByvisitorsGeolocation'        => 'بالاعتماد على الموقع الجغرافي للزائر',

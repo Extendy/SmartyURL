@@ -6,6 +6,8 @@ return [
     'addNewURLTitle'        => 'Create New URL',
 
     'OriginalUrl'                  => 'Original URL',
+    'UrlTitle'                     => 'Title',
+    'UrlTitleDescription'          => '(Any description)',
     'MaskedShortUrl'               => 'Masked (or shorten) URL',
     'AddRedirectConditionOptional' => 'Add Redirect condition (Optional',
     'ByvisitorsGeolocation'        => 'By Visitor\'s Geolocation',

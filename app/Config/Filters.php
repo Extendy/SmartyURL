@@ -26,6 +26,10 @@ class Filters extends BaseConfig
         'secureheaders'   => SecureHeaders::class,
         'localization'    => \App\Filters\Localization::class,
         'afterlangchange' => \App\Filters\LangFilter::class,  // it is just a test just to show how filter works , mshannaq not real filter
+        'webratelimit'    => \App\Filters\Webratelimit::class,
+        'smartyglobal'    => \App\Filters\SmartyglobalFilter::class,
+
+        // if you want to define alias for multiple filter see https://forum.codeigniter.com/thread-76946.html
 
         // for shiled .. already used and I put it here just to see it
         // already loaded for you by the registrar class located at
@@ -61,6 +65,7 @@ class Filters extends BaseConfig
             // so no need to define global session here
             // 'session' => ['except' => ['/', 'go/*', 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',
+            'smartyglobal', // global filter for SmartyUrl
         ],
         'after' => [
             'toolbar',
@@ -91,7 +96,7 @@ class Filters extends BaseConfig
      */
     public array $filters = [
         'auth-rates' => [
-            'before' => ['*', // ths mean all routes in the system will be protected by auth-rates filter
+            'before' => [// '*', // ths mean all routes in the system will be protected by auth-rates filter
                 'account/login*', 'account/register', 'auth/*',
             ],
         ],

@@ -24,9 +24,9 @@ $routes->group('url', static function ($routes) {
 
 // URL redirects
 // with go route
-$routes->get('go/(:any)', 'Go::go/$1');
+$routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 // Route any undefined request to Go Controller.
-$routes->add('(:any)', 'Go::go/$1');
+$routes->add('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 
 // language route
 // filter

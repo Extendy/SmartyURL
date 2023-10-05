@@ -28,8 +28,12 @@ class SmartyglobalFilter implements FilterInterface
         helper('setting');
         $throttler = Services::throttler();
 
-        if ($throttler->check(md5($request->getIPAddress()), setting('Smartyurl.siteRateLimit'), SECOND) === false) {
-            return Services::response()->setStatusCode(429);
+        if ($throttler->check(md5($request->getIPAddress()), setting('Smartyurl.siteRateLimit'), MINUTE) === false) {
+            $response = service('response');
+            $response->setStatusCode(429);
+            $response->setBody('<h1>You are being rate limited</h1>');
+
+            return $response;
         }
     }
 

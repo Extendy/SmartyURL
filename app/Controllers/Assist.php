@@ -421,7 +421,7 @@ class Assist extends BaseController
         return $this->response->setBody($jsCode);
     }
 
-    public function getSmartyUrlGlobakJsAssist(): \CodeIgniter\HTTP\ResponseInterface
+    public function getSmartyUrlGlobalJsAssist(): \CodeIgniter\HTTP\ResponseInterface
     {
         $smaryUrlGlobaljsCode = '';
         $this->response->setContentType('application/javascript', 'utf-8');

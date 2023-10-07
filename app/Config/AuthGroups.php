@@ -55,6 +55,7 @@ class AuthGroups extends ShieldAuthGroups
      * If a permission is not listed here it cannot be used.
      */
     public array $permissions = [
+        'super.admin'         => 'Does he super admin',
         'admin.access'        => 'Can access the sites admin area',
         'admin.settings'      => 'Can access the main site settings',
         'users.manage-admins' => 'Can manage other admins',
@@ -78,6 +79,7 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $matrix = [
         'superadmin' => [
+            'super.*',
             'admin.*',
             'users.*',
             'url.*',

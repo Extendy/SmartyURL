@@ -134,3 +134,4 @@ public/tests/*
 /extendytest
 extendytest/*
 .php-cs-fixer.cache
+/DND/*

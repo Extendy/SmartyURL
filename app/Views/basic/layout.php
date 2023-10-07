@@ -269,7 +269,7 @@
     });
 </script>
 <!--begin::SmartyUL Globals js -->
-<script src="<?= site_url('assist/smartyurl.js') ?>"></script>
+<script src="<?= site_url('assist/smartyurl') ?>"></script>
 <!--end::SmartyUL Globals js-->
 <!--end::OverlayScrollbars Configure-->
 <!--begin::jsfooterarea contains any specific javascript files that view files may load -->

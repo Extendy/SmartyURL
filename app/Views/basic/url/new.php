@@ -52,6 +52,7 @@
                     <div class="card">
                         <form id="addNewURL" action="<?= url_to('url/new') ?>" method="post">
                             <?= csrf_field() ?>
+                            <input type="hidden" name="redirectCondition" id="redirectCondition" value="">
                             <div class="card-header">
                                 <!-- Use Bootstrap grid for two columns -->
                                 <div class="row">
@@ -72,13 +73,13 @@
                                     <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
                                     <input dir="ltr" type="url" class="form-control " name="originalUrl"
                                            id="UrlTitle" required
-                                           placeholder="https://example.com/somelink?example=1">
+                                           placeholder="https://example.com/somelink?example=1" value="<?= old("originalUrl");?>">
                                 </div>
 
 
                                 <div class="mt-2">
                                     <label class="" for="UrlTitle"><?= lang('Url.UrlTitle') . ' ' . lang('Url.UrlTitleDescription') . ' ' . lang('Common.Optional'); ?>:</label>
-                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="<?= lang('Url.UrlTitleDescription'); ?>" >
+                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="<?= lang('Url.UrlTitleDescription'); ?>" value="<?= old("UrlTitle");?>" >
                                 </div>
 
 
@@ -88,8 +89,8 @@
                                     <div class="input-group mb-3" dir="ltr">
                                     <span class="input-group-text"
                                           id="basic-addon3"><?= smarty_detect_site_shortlinker(); ?></span>
-                                        <input type="text" dir="ltr" class="form-control" id="basic-url"
-                                               aria-describedby="basic-addon3">
+                                        <input type="text" dir="ltr" class="form-control" name="UrlIdentifier"  id="UrlIdentifier"
+                                               aria-describedby="basic-addon3" value="<?= old("UrlIdentifier");?>">
                                     </div>
                                 </div>
 
@@ -97,7 +98,7 @@
                                 <div class="container mt-4">
 
                                     <div class="dropdown">
-                                        <button class="btn btn-dark dropdown-toggle" type="button"
+                                        <button class="btn btn-dark dropdown-toggle " type="button"
                                                 id="choosUrlCondition" data-bs-toggle="dropdown" aria-expanded="false">
                                             <?= lang('Url.AddRedirectConditionOptional'); ?>
                                         </button>
@@ -122,6 +123,20 @@
                                 <div id="conditions_div" class="mt-4">
 
                                     <!-- here content fron javascript comes for the redirect condition -->
+                                    <?php
+                                    if ( old("redirectCondition") != ""){
+                                        $segment_form_data = [];
+                                        $segment_form_data['redirectCondition'] = old("redirectCondition");
+                                        //geo
+                                        $segment_form_data['geocountry'] = old("geocountry");
+                                        $segment_form_data['geofinalurl'] = old("geofinalurl");
+                                        //device
+                                        $segment_form_data['device'] = old("device");
+                                        $segment_form_data['devicefinalurl'] = old("devicefinalurl");
+
+                                        echo view(smarty_view('url/segments/url_conditions'),$segment_form_data);
+                                    }
+                                    ?>
 
                                 </div>
 
@@ -144,7 +159,7 @@
 
 
                                     <div class="input-group mb-3">
-                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value=''>
+                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= old("urlTags");?>'>
 
 
                                         <div id="tagsContainer" class="mt-2"></div>
@@ -165,7 +180,6 @@
                                 </div>
                             </div>
                             <!-- /.card-footer-->
-                            <input type="hidden" name="redirectCondition" id="redirectCondition" value="">
                         </form>
                     </div>
                     <!-- /.card -->
@@ -189,6 +203,6 @@
 
 <link href="<?= smarty_cdn() ?>css/urltags.css" rel="stylesheet" type="text/css" />
 
-<script src="<?= site_url('assist/newurl.js') ?>"></script>
+<script src="<?= site_url('assist/newurl') ?>"></script>
 <?= $this->endSection() ?>
 

@@ -49,6 +49,15 @@ class Assist extends BaseController
              */
             $( document ).ready(function() {
 
+                //hide choosUrlCondition if hidechoosUrlCondition is defined any where
+                //hidechoosUrlCondition defined true when coming from proccess form or edit to hide the choosUrlCondition at start
+                //and let javascript decide when to show it.
+                if (typeof hidechoosUrlCondition !== "undefined") {
+                    if (hidechoosUrlCondition){
+                        $("#choosUrlCondition").hide();
+                    }
+                }
+
 
                 //because tha button is  loaded dynamically through innerHTML
                 $('#newurlcontainer').on('click', '#geoconditioncancel', function() {

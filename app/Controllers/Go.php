@@ -49,6 +49,8 @@ class Go extends BaseController
 
             switch ($url_conditions->condition) {
                 case 'location':
+                    //sample json data
+                    //{"condition": "location", "conditions": [{"JO": "https://extendy.net/?jo"}, {"SA": "https://extendy.net/?sa"}]}
                     $visitorCountry = smarty_get_visitor_ip_country();
 
                     foreach ($url_conditions->conditions as $condition) {
@@ -63,6 +65,8 @@ class Go extends BaseController
                     break;
 
                 case 'device':
+                    //sample json data
+                    //{"condition": "device", "conditions": [{"computer": [{"windows": "www.microsoft.com"}, {"linux": "www.linux.com"}], "smartphone": [{"andriod": "www.andriod.com"}, {"iphone": "www.apple.com"}]}]}
                     $smartyurldevicedetect = new SmartyUrlDevice();
                     $visitorDevice         = $smartyurldevicedetect->detectVistorDeviceType();
                     if ($visitorDevice === 'tablet' || $visitorDevice === 'phone') {

@@ -131,7 +131,7 @@
                                         $segment_form_data['geocountry'] = old("geocountry");
                                         $segment_form_data['geofinalurl'] = old("geofinalurl");
                                         //device
-                                        $segment_form_data['devicefinalurl'] = old("devicefinalurl");
+                                        $segment_form_data['device'] = old("device");
                                         $segment_form_data['devicefinalurl'] = old("devicefinalurl");
 
                                         echo view(smarty_view('url/segments/url_conditions'),$segment_form_data);

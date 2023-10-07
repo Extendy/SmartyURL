@@ -26,6 +26,9 @@ return [
     'DeviceAppleSmartPhone'   => 'هاتف ذكي أبل Apple',
     'DeviceWindowsComputer'   => 'جهاز كمبيوتر ويندوز',
 
+    'AddNewURLAdded' => 'لقد تم انشاء الرابط بنجاح',
+    'AddNewURLError' => 'حدث خطا ما اثناء اضافة الرابط',
+
     'urlsLink' => 'فهرس الراوبط',
 
     'urlNotFoundShort' => '404 رابط غير موجود',

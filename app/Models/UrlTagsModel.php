@@ -10,7 +10,10 @@ class UrlTagsModel extends BaseModel
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'tag_name',
+        'tag_user_id',
+    ];
 
     // Dates
     protected $useTimestamps = false;
@@ -59,5 +62,22 @@ class UrlTagsModel extends BaseModel
 
         // Retrieve the results based on the condition
         return $this->findAll();
+    }
+
+    /**
+     * This function try to find tag and return how many tags found, it is only return nmbers
+     *
+     * @return int
+     */
+    public function findTagNo(string $tag, int $userId, bool $shared = false)
+    {
+        // Define the condition to filter results where tag_user_id is equal to $userId
+        if (! $shared) {
+            $this->where('tag_user_id', $userId)->where('tag_name', $tag);
+        } else {
+            $this->where('tag_name', $tag);
+        }
+
+        return $this->countAllResults();
     }
 }

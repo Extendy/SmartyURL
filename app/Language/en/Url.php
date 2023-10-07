@@ -26,6 +26,9 @@ return [
     'DeviceAppleSmartPhone'   => 'Apple Smart Phone',
     'DeviceWindowsComputer'   => 'Microsoft Windows Computer',
 
+    'AddNewURLAdded' => 'The URL has been created successfully',
+    'AddNewURLError' => 'An error occurred while adding the URL',
+
     'urlsLink' => 'URLs Bucket',
 
     'urlNotFoundShort' => '404 URL Not Found',

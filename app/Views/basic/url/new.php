@@ -203,6 +203,6 @@
 
 <link href="<?= smarty_cdn() ?>css/urltags.css" rel="stylesheet" type="text/css" />
 
-<script src="<?= site_url('assist/newurl.js') ?>"></script>
+<script src="<?= site_url('assist/newurl') ?>"></script>
 <?= $this->endSection() ?>
 

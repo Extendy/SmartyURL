@@ -20,4 +20,9 @@ class UrlTags
 
         return $jsonreturn ? json_encode($tagscloud) : $tagscloud;
     }
+
+    // This function try to insert tags if not insetred into tags db table
+    public function tryInsertTags($tags)
+    {
+    }
 }

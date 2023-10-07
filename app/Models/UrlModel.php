@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
-
-class UrlModel extends Model
+class UrlModel extends BaseModel
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'urls';
     protected $primaryKey       = 'url_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'url_identifier',
+        'url_user_id',
+        'url_title',
+        'url_targeturl',
+        'url_conditions',
+    ];
 
     // Dates
     protected $useTimestamps = false;
@@ -38,4 +41,15 @@ class UrlModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    protected function initialize(): void
+    {
+        parent::initialize();
+
+        $this->table = $this->dbtables['urls'];
+    }
+
+    public function InsertURL()
+    {
+    }
 }

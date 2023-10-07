@@ -30,4 +30,6 @@ return [
 
     'urlNotFoundShort' => '404 URL Not Found',
     'urlNotFoundLong'  => 'Oops, the link you are trying to access is not found. It may have been deleted or modified.',
+
+    'urlIdentifieralreadyExists' => 'Masked URL "{0}" Already Exists on database, choose another one',
 ];

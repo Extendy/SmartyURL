@@ -27,6 +27,15 @@ class Assist extends BaseController
      */
     public function getAddNewUrlJsAssist(): \CodeIgniter\HTTP\ResponseInterface
     {
+        // this need logged in user
+        if (! auth()->loggedIn()) {
+            $response = service('response');
+            $this->response->setContentType('application/json', 'utf-8');
+            $response->setStatusCode(404);
+            $response->setBody("alert('This file requires valid authentication for access. Please Refresh');");
+
+            return $response;
+        }
         $jsCode = '';
         // lang vals
         $langByvisitorsGeolocation   = lang('Url.ByvisitorsGeolocation');

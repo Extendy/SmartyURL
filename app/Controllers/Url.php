@@ -54,7 +54,10 @@ class Url extends BaseController
     public function newAction()
     {
         // dd($this->request->getPost("UrlIdentifier"));
-        $identifier    = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
+        $identifier = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
+        if (! preg_match(Config('Smartyurl')->urlIdentifierpattern, $identifier)) {
+            return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierPatternError', [Config('Smartyurl')->urlIdentifierpattern]));
+        }
         $UrlIdentifier = new UrlIdentifier();
         if ($UrlIdentifier->CheckURLIdentifierExists($identifier)) {
             // url idenitifier is exists on db

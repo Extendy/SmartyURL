@@ -18,15 +18,9 @@ In addition to shortening URLs (based on domain that you use), SmartyURL also of
 
 ## Server Requirements
 
-You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or higher support and the following PHP extensions:
+You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or higher support and the following PHP extensions (typically supported by most PHP hosting providers):
 
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [libcurl](https://www.php.net/manual/en/curl.setup.php)
-- [gmp](https://www.php.net/manual/en/gmp.installation.php)
-- [json](https://www.php.net/manual/en/json.installation.php)
-- [bcmath](https://www.php.net/manual/en/bc.setup.php)
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) , [intl](http://php.net/manual/en/intl.requirements.php) , [mbstring](http://php.net/manual/en/mbstring.installation.php) ,  [libcurl](https://www.php.net/manual/en/curl.setup.php) , [gmp](https://www.php.net/manual/en/gmp.installation.php) , [json](https://www.php.net/manual/en/json.installation.php), [bcmath](https://www.php.net/manual/en/bc.setup.php)
 
 Afterwards, you can refer to the [installation instructions](_docs/installation.md) to set up the tool on your hosting account and begin using it.
 
@@ -54,12 +48,4 @@ Also We would like to acknowledge the following resources and contributors for t
 
 ## SmartyURL Legal Notice
 
-To offer you SmartyURL features, we leverage third-party tools and libraries, including the following:
-
-* CodeIgniter framework ,  Copyright (c) 2019-2023 CodeIgniter Foundation, MIT License <https://opensource.org/licenses/MIT>.
-* CodeIgniter Shiled, Copyright (c) 2021 Lonnie Ezell, MIT License <https://opensource.org/licenses/MIT>.
-* CodeIgniter Settings, Copyright (c) 2021 Lonnie Ezell, MIT License <https://opensource.org/licenses/MIT>.
-* SmartyURL uses AdminLTE for UI, Copyright (c) 2014-2023 ColorlibHQ , MIT License <https://opensource.org/licenses/MIT>.
-* IP2Location-PHP-Module, Copyright (C) 2005-2023 by IP2Location.com, MIT License <https://opensource.org/licenses/MIT>.
-* Laminas/Escaper Copyright (c) 2020 Laminas Project a Series of LF Projects, LLC. , BSD 3-Clause “New” or “Revised” License <https://choosealicense.com/licenses/bsd-3-clause/>.
-* MobileDetect , Copyright (c) 2021 Şerban Ghiţă, Nick Ilyin and contributors. , MIT License <https://opensource.org/licenses/MIT>.
+For more information, please refer to the [Legal Notice](_docs/legalnotice.md).

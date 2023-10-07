@@ -34,6 +34,7 @@ class Url extends BaseController
 
     public function newAction()
     {
+        return redirect()->to('url/new')->withInput()->with('error', lang('Account.WrongCurrentPassword'));
         echo 'url new action';
         dd($_POST);
     }

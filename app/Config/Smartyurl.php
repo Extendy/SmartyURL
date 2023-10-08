@@ -48,6 +48,9 @@ class Smartyurl extends BaseConfig
      *           then to share tags cloud between them.
      *           by default, we disable it until you decide to enable it by making the value true
      *
+     *           KEEP IT FALSE IF YOU DO NOT NEED SHARED TAGS BETWEEN USERS
+     *           FOR LARGE & PUBLIC SITES ENABLE THIS CAN MAKE PERFORMANCE AND PRIVACY PROBLEMS
+     *
      * @default false
      */
     public $urltags_shared_between_users = false;

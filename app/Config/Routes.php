@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Dashboard::index', ['filter' => 'session']);
 
 $routes->group('account', static function ($routes) {
     service('auth')->routes($routes);

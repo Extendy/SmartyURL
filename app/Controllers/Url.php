@@ -40,8 +40,6 @@ class Url extends BaseController
         if (! auth()->user()->can('url.new')) {
             // return  redirect()->route('permissions')->with('error', lang('Auth.notEnoughPrivilege'));
             return smarty_permission_error();
-
-            exit(1);
         }
         $data = [];
         // no need to pass $worldCountries
@@ -53,6 +51,9 @@ class Url extends BaseController
 
     public function newAction()
     {
+        if (! auth()->user()->can('url.new')) {
+            return smarty_permission_error();
+        }
         // dd($this->request->getPost("UrlIdentifier"));
         $identifier = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
         if (! preg_match(Config('Smartyurl')->urlIdentifierpattern, $identifier)) {

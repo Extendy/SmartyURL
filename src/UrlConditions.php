@@ -67,4 +67,38 @@ class UrlConditions
 
         return $final_json;
     }
+
+    public function validateConditionsFinalURls($json_urlConditions): bool
+    {
+        $SmartyURL     = new SmartyUrl();
+        $valid         = true;
+        $urlConditions = json_decode($json_urlConditions);
+
+        switch ($urlConditions->condition) {
+            case 'location':
+                foreach ($urlConditions->conditions as $geolocationcondition_url) {
+                    if (! $SmartyURL->isValidURL($geolocationcondition_url)) {
+                        // not valid url
+                        return false;
+                    }
+                }
+                break;
+
+            case 'device':
+                foreach ($urlConditions->conditions as $devicecondition) {
+                    foreach ($devicecondition as $deviceconditionsarray) {
+                        foreach ($deviceconditionsarray as $devices) {
+                            foreach ($devices as $finalurl) {
+                                if (! $SmartyURL->isValidURL($finalurl)) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+
+        return $valid;
+    }
 }

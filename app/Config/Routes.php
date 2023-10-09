@@ -27,7 +27,7 @@ $routes->group('url', static function ($routes) {
 // with go route
 $routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 // Route any undefined request to Go Controller.
-$routes->add('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
+$routes->get('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 
 // language route
 // filter

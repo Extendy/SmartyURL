@@ -156,14 +156,4 @@ class Url extends BaseController
 
         return redirect()->to('url/new')->withInput()->with('notice', lang('Account.WrongCurrentPassword'));
     }
-
-    /**
-     * @FIXME this is for test remove me after testing
-     *
-     * @return string
-     */
-    public function none()
-    {
-        return view(smarty_view('none'));
-    }
 }

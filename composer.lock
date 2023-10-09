@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/shield.git",
-                "reference": "0133ff5f724279baef64b571c6f595c997f21ba4"
+                "reference": "36a41fd884ed70c7ec74ffdc1217136e1139f19c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/0133ff5f724279baef64b571c6f595c997f21ba4",
-                "reference": "0133ff5f724279baef64b571c6f595c997f21ba4",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/36a41fd884ed70c7ec74ffdc1217136e1139f19c",
+                "reference": "36a41fd884ed70c7ec74ffdc1217136e1139f19c",
                 "shasum": ""
             },
             "require": {
@@ -210,7 +210,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/shield"
             },
-            "time": "2023-10-05T21:28:54+00:00"
+            "time": "2023-10-09T06:41:19+00:00"
         },
         {
             "name": "ip2location/ip2location-php",

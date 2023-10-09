@@ -29,6 +29,9 @@ CI_ENVIRONMENT=production
 app.forceGlobalSecureRequests = false
 app.CSPEnabled = false
 
+#log level - keep it 3 unless you are debuging or your log files will be large
+logger.threshold = 3
+
 ##SmartyURL Settings
 
 #default site name

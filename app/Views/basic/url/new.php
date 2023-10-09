@@ -69,17 +69,35 @@
                             </div>
                             <div class="card-body" style="box-sizing: border-box; display: block;">
 
+                                <!-- Error Message (Initially Hidden) -->
+                                <?php if (session('error') !== null) : ?>
+                                    <div class="alert alert-danger" role="alert" id="errorMessage" style="">
+                                        <?= session('error') ?>
+                                    </div>
+                                <?php elseif (session('errors') !== null) : ?>
+                                    <div class="alert alert-danger" role="alert" >
+                                        <?php if (is_array(session('errors'))) : ?>
+                                            <?php foreach (session('errors') as $error) : ?>
+                                                <?= $error ?>
+                                                <br>
+                                            <?php endforeach ?>
+                                        <?php else : ?>
+                                            <?= session('errors') ?>
+                                        <?php endif ?>
+                                    </div>
+                                <?php endif ?>
+
                                 <div class="mt-2">
                                     <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
                                     <input dir="ltr" type="url" class="form-control " name="originalUrl"
                                            id="UrlTitle" required
-                                           placeholder="https://example.com/somelink?example=1" value="<?= old("originalUrl");?>">
+                                           placeholder="https://example.com/somelink?example=1" value="<?= old('originalUrl'); ?>">
                                 </div>
 
 
                                 <div class="mt-2">
                                     <label class="" for="UrlTitle"><?= lang('Url.UrlTitle') . ' ' . lang('Url.UrlTitleDescription') . ' ' . lang('Common.Optional'); ?>:</label>
-                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="<?= lang('Url.UrlTitleDescription'); ?>" value="<?= old("UrlTitle");?>" >
+                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="<?= lang('Url.UrlTitleDescription'); ?>" value="<?= old('UrlTitle'); ?>" >
                                 </div>
 
 
@@ -90,7 +108,7 @@
                                     <span class="input-group-text"
                                           id="basic-addon3"><?= smarty_detect_site_shortlinker(); ?></span>
                                         <input type="text" dir="ltr" class="form-control" name="UrlIdentifier"  id="UrlIdentifier"
-                                               aria-describedby="basic-addon3" value="<?= old("UrlIdentifier");?>">
+                                               aria-describedby="basic-addon3" value="<?= old('UrlIdentifier'); ?>" required>
                                     </div>
                                 </div>
 
@@ -124,19 +142,19 @@
 
                                     <!-- here content fron javascript comes for the redirect condition -->
                                     <?php
-                                    if ( old("redirectCondition") != ""){
-                                        $segment_form_data = [];
-                                        $segment_form_data['redirectCondition'] = old("redirectCondition");
-                                        //geo
-                                        $segment_form_data['geocountry'] = old("geocountry");
-                                        $segment_form_data['geofinalurl'] = old("geofinalurl");
-                                        //device
-                                        $segment_form_data['device'] = old("device");
-                                        $segment_form_data['devicefinalurl'] = old("devicefinalurl");
+                                    if (old('redirectCondition') !== null) {
+                                        $segment_form_data                      = [];
+                                        $segment_form_data['redirectCondition'] = old('redirectCondition');
+                                        // geo
+                                        $segment_form_data['geocountry']  = old('geocountry');
+                                        $segment_form_data['geofinalurl'] = old('geofinalurl');
+                                        // device
+                                        $segment_form_data['device']         = old('device');
+                                        $segment_form_data['devicefinalurl'] = old('devicefinalurl');
 
-                                        echo view(smarty_view('url/segments/url_conditions'),$segment_form_data);
+                                        echo view(smarty_view('url/segments/url_conditions'), $segment_form_data);
                                     }
-                                    ?>
+?>
 
                                 </div>
 
@@ -159,7 +177,7 @@
 
 
                                     <div class="input-group mb-3">
-                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= old("urlTags");?>'>
+                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= old('urlTags'); ?>'>
 
 
                                         <div id="tagsContainer" class="mt-2"></div>

@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Dashboard::index', ['filter' => 'session']);
 
 $routes->group('account', static function ($routes) {
     service('auth')->routes($routes);
@@ -18,6 +18,7 @@ $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'session']);
 // URL
 $routes->group('url', static function ($routes) {
     $routes->get('/', 'Url::index', ['filter' => 'session']);
+    $routes->get('view/(:num)', 'Url::view/$1', ['filter' => 'session']);
     $routes->get('new', 'Url::new', ['filter' => 'session']);
     $routes->post('new', 'Url::newAction', ['filter' => 'session']);
 });

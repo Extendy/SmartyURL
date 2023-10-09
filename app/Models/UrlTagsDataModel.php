@@ -2,20 +2,17 @@
 
 namespace App\Models;
 
-class UrlModel extends BaseModel
+class UrlTagsDataModel extends BaseModel
 {
     protected $DBGroup          = 'default';
-    protected $primaryKey       = 'url_id';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'url_identifier',
-        'url_user_id',
-        'url_title',
-        'url_targeturl',
-        'url_conditions',
+        'url_id',
+        'tag_id',
     ];
 
     // Dates
@@ -46,10 +43,6 @@ class UrlModel extends BaseModel
     {
         parent::initialize();
 
-        $this->table = $this->dbtables['urls'];
-    }
-
-    public function InsertURL()
-    {
+        $this->table = $this->dbtables['urltagsdata'];
     }
 }

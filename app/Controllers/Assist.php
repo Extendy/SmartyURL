@@ -27,6 +27,21 @@ class Assist extends BaseController
      */
     public function getAddNewUrlJsAssist(): \CodeIgniter\HTTP\ResponseInterface
     {
+        $this->response->setContentType('application/json', 'utf-8');
+
+        // this need logged in user and has url.new permission
+        if (! auth()->loggedIn()) {
+            $this->response->setStatusCode(404);
+            $this->response->setBody("alert('This file requires valid authentication for access. Please Refresh');");
+
+            return $this->response;
+        }
+        if (! auth()->user()->can('url.new')) {
+            $this->response->setBody("console.log('permissions error');");
+            $this->response->setStatusCode(500);
+
+            return $this->response;
+        }
         $jsCode = '';
         // lang vals
         $langByvisitorsGeolocation   = lang('Url.ByvisitorsGeolocation');
@@ -34,7 +49,6 @@ class Assist extends BaseController
         $langSelectCountry           = lang('Url.SelectCountry');
         $langGeographicalLocationURL = lang('Url.GeographicalLocationURL');
         $langbtnDelete               = lang('Common.btnDelete');
-        $this->response->setContentType('application/javascript', 'utf-8');
         // refer for view ur/new.php because the following code will embedded to it
         $jsCode .= <<<EOT
             /*!

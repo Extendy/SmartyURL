@@ -48,6 +48,9 @@ class Smartyurl extends BaseConfig
      *           then to share tags cloud between them.
      *           by default, we disable it until you decide to enable it by making the value true
      *
+     *           KEEP IT FALSE IF YOU DO NOT NEED SHARED TAGS BETWEEN USERS
+     *           FOR LARGE & PUBLIC SITES ENABLE THIS CAN MAKE PERFORMANCE AND PRIVACY PROBLEMS
+     *
      * @default false
      */
     public $urltags_shared_between_users = false;
@@ -60,6 +63,20 @@ class Smartyurl extends BaseConfig
      * @default 500
      */
     public $urlTagsCloudLimit = 500;
+
+    /**
+     * The allowed pattern for Url Identifier
+     *
+     * @default '/^[A-Za-z0-9][A-Za-z0-9_\-\.]{0,49}$/'
+     * which is:
+     *          Starts with an alphanumeric character (A-Z, a-z, 0-9).
+     *          Followed by any combination of alphanumeric characters
+     *          (including underscores _ , hyphens - , and periods . ) up to a maximum length of 50 characters.
+     *          and no other special character allowded.
+     *
+     * @var string
+     */
+    public $urlIdentifierpattern = '/^[A-Za-z0-9][A-Za-z0-9_\-\.\s]{0,48}[A-Za-z0-9]$/';
 
     /** -------------------------------------------------------------------------
      * Please DO NOT modify uder this line unless you know what you are doing

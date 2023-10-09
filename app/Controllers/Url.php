@@ -54,7 +54,6 @@ class Url extends BaseController
         if (! auth()->user()->can('url.new')) {
             return smarty_permission_error();
         }
-        // dd($this->request->getPost("UrlIdentifier"));
         $identifier = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
         if (! preg_match(Config('Smartyurl')->urlIdentifierpattern, $identifier)) {
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierPatternError', [Config('Smartyurl')->urlIdentifierpattern]));
@@ -100,7 +99,6 @@ class Url extends BaseController
         if (! $inserted_url) {
             return redirect()->to('url/new')->withInput()->with('notice', lang('Account.WrongCurrentPassword'));
         }
-        d($inserted_url);
         $inserted_url_id = $UrlModel->getInsertID();
 
         // i will try to add the tags for not exists tags
@@ -125,8 +123,6 @@ class Url extends BaseController
             // as [0] ['value' => "{$tag}", 'tag_id' => $UrlTagsModel->getInsertID()]
             //    [1] ['value' => "{$tag}", 'tag_id' => $UrlTagsModel->getInsertID()]
             //    ...etc
-            // i will convert it to object to keep it as $urlTags_array
-            $try_insert_tags = $try_insert_tags;
             // now I will insert the tags for this url in urltagsdata db table
             $UrlTagsDataModel = new UrlTagsDataModel();
 
@@ -143,7 +139,7 @@ class Url extends BaseController
                 }
             }
 
-            // insert the new tags thats created on this session
+            // insert the new tags that's created on this session
             foreach ($try_insert_tags  as $newtag) {
                 $UrlTagsDataModel->insert(
                     [
@@ -154,7 +150,6 @@ class Url extends BaseController
             }
         }
 
-        d($_POST);
         if ($inserted_url_id > 0) {
             return redirect()->to('url/view/' . $inserted_url_id)->with('notice', lang('Url.AddNewURLAdded'));
         }

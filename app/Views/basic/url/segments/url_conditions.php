@@ -101,25 +101,28 @@ if ($redirectCondition === 'geolocation') {
                                 <option value="" disabled selected><?= lang('Url.SelectDeviceFeat'); ?></option>
                                 <option <?php if ($device[$i] === 'andriodsmartphone') {
                                     echo 'selected';
-                                }?> value="andriodsmartphone"><?= lang('Url.DeviceAndroidSmartPhone'); ?></option>
+                                } ?> value="andriodsmartphone"><?= lang('Url.DeviceAndroidSmartPhone'); ?></option>
                                 <option <?php if ($device[$i] === 'applesmartphone') {
                                     echo 'selected';
-                                }?> value="applesmartphone"><?= lang('Url.DeviceAppleSmartPhone'); ?></option>
+                                } ?> value="applesmartphone"><?= lang('Url.DeviceAppleSmartPhone'); ?></option>
                                 <option <?php if ($device[$i] === 'windowscomputer') {
                                     echo 'selected';
-                                }?> value="windowscomputer"><?= lang('Url.DeviceWindowsComputer'); ?></option>
+                                } ?> value="windowscomputer"><?= lang('Url.DeviceWindowsComputer'); ?></option>
                             </select>
 
                         </div>
 
                         <!-- Create a div element for the text input -->
                         <div class="col-md-8 mt-2">
-                            <input placeholder="{$langUrlDeviceFeatURL}" type="url" name="devicefinalurl[]" value="<?= $devicefinalurl[$i]; ?> " class="form-control" required />
+                            <input placeholder="{$langUrlDeviceFeatURL}" type="url" name="devicefinalurl[]"
+                                   value="<?= $devicefinalurl[$i]; ?> " class="form-control" required/>
                         </div>
 
                         <!-- Create a div element for the devcondition  delete button -->
                         <div class="col-md-1 mt-2">
-                            <button type="button" class="delDevicebtn btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{$langCommonbtnDelete}"><i class="bi bi-trash"></i></button>
+                            <button type="button" class="delDevicebtn btn btn-sm btn-danger" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="{$langCommonbtnDelete}"><i class="bi bi-trash"></i>
+                            </button>
                         </div>
 
                     </div>
@@ -143,12 +146,11 @@ if ($redirectCondition === 'geolocation') {
     } ?>
 
     <script>
-        <?php
-            //set hidechoosUrlCondition if $redirectCondition !== null to hide  choosUrlCondition
-            echo "//$redirectCondition";
-        if ($redirectCondition !== null  ){
+<?php
+        // set hidechoosUrlCondition if $redirectCondition !== null to hide  choosUrlCondition
+        if ($redirectCondition !== null) {
             echo 'var hidechoosUrlCondition = true';
         }
-        ?>
+?>
     </script>
 

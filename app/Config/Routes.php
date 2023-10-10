@@ -23,12 +23,6 @@ $routes->group('url', static function ($routes) {
     $routes->post('new', 'Url::newAction', ['filter' => 'session']);
 });
 
-// URL redirects
-// with go route
-$routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
-// Route any undefined request to Go Controller.
-$routes->get('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
-
 // language route
 // filter
 // https://codeigniter.com/user_guide/incoming/routing.html#applying-filters
@@ -38,6 +32,12 @@ $routes->get('lang/{locale}', 'Language::index', ['filter' => 'afterlangchange']
 // Assist
 $routes->get('assist/newurl', 'Assist::getAddNewUrlJsAssist');
 $routes->get('assist/smartyurl', 'Assist::getSmartyUrlGlobalJsAssist');
+
+// URL redirects
+// with go route
+$routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
+// Route any undefined request to Go Controller.
+$routes->get('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 
 // testing , @TODO must be removed after testing before any production release
 $routes->get('/url/none', 'Url::none');

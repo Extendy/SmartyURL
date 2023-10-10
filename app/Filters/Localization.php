@@ -43,7 +43,7 @@ class Localization implements FilterInterface
         // we will use the default system lang as layout language
         // becaise none of the above conditions are true , so language not known until now
         // that mean this is may be the first call of the system at this session
-        //@TODO we must know this works or not for the user when his settings contains lang
+        // @TODO we must know this works or not for the user when his settings contains lang
         $context          = 'user:' . user_id();
         $usercustomlocale = setting()->get('App.defaultLocale', $context);
         if ($usercustomlocale === '') {

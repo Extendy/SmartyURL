@@ -65,6 +65,26 @@ class UrlTagsModel extends BaseModel
     }
 
     /**
+     * This function return Tag info as array [tag_id , tag_name] for the given $tagIDs which can be one or array of tag ids
+     *
+     * @param array|int $tagIDs
+     *
+     * @return mixed
+     */
+    public function getTagInfoById($tagIDs)
+    {
+        $this->select('tag_id, tag_name');
+
+        if (is_array($tagIDs)) {
+            $query = $this->whereIn('tag_id', $tagIDs)->get();
+        } else {
+            $query = $this->where('tag_id', $tagIDs)->get();
+        }
+
+        return $query->getResult();
+    }
+
+    /**
      * This function try to find tag and return how many tags found, it is only return nmbers
      *
      * @return int

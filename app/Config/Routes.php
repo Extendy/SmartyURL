@@ -21,6 +21,8 @@ $routes->group('url', static function ($routes) {
     $routes->get('view/(:num)', 'Url::view/$1', ['filter' => 'session']);
     $routes->get('new', 'Url::new', ['filter' => 'session']);
     $routes->post('new', 'Url::newAction', ['filter' => 'session']);
+    $routes->get('edit/(:num)', 'Url::edit/$1', ['filter' => 'session']);
+    $routes->post('edit/(:num)', 'Url::editAction/$1', ['filter' => 'session']);
 });
 
 // language route

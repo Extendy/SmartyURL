@@ -45,4 +45,17 @@ class UrlTagsDataModel extends BaseModel
 
         $this->table = $this->dbtables['urltagsdata'];
     }
+
+    /**
+     * This function get the url tags for $urlid
+     *
+     * @return array
+     */
+    public function getUrlTags($urlid)
+    {
+        $this->where('url_id', $urlid);
+        $this->select('tag_id');
+
+        return $this->findAll();
+    }
 }

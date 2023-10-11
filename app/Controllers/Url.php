@@ -166,4 +166,134 @@ class Url extends BaseController
 
         return redirect()->to('url/new')->withInput()->with('notice', lang('Account.WrongCurrentPassword'));
     }
+
+    public function edit($UrlId)
+    {
+        // @TODO @FIXME  user cannot edit others URLs unless he is can super.admin
+        // check permissions
+        if (! auth()->user()->can('url.edit')) {
+            return smarty_permission_error();
+        }
+        $UrlModel = new UrlModel();
+        $UrlTags  = new UrlTags();
+        $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        if ($url_id === 0) {
+            // url_id given is not valid id
+            return redirect()->to('dashboard')->with('notice', lang('Url.urlError'));
+        }
+        $urlData = $UrlModel->where('url_id', $url_id)->first();
+        // dd($urlData);
+        if ($urlData === null) {
+            // url not exsists in dataase
+            return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+        $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);
+        // $urlTagsCloud = '[{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}]';
+
+        // will try to get the url redirection conditions
+        $urlRedirectConditions = json_decode($urlData['url_conditions']);
+        if ($urlRedirectConditions === null) {
+            // there is n conditions
+            $redirectCondition = null;
+        } else {
+            switch ($urlRedirectConditions->condition) {
+                case 'location':
+                    $redirectCondition = 'geolocation';
+                    $geocountry        = [];
+                    $geofinalurl       = [];
+
+                    foreach ($urlRedirectConditions->conditions as $conditionarray) {
+                        foreach ($conditionarray as $country => $finalUrl) {
+                            $geocountry[]  = $country;
+                            $geofinalurl[] = $finalUrl;
+                        }
+                    }
+                    $data['geocountry'] = $geocountry;
+                    // var_dump($data['geocountry']);
+                    // die;
+                    $data['geofinalurl'] = $geofinalurl;
+                    break;
+
+                case 'device':
+                    $redirectCondition = 'device';
+                    $devicecond        = [];
+                    $devicefinalurl    = [];
+
+                    foreach ($urlRedirectConditions->conditions as $conditionarray) {
+                        foreach ($conditionarray as $devicename => $devicearray) {
+                            foreach ($devicearray as $finalUrlarray) {
+                                foreach ($finalUrlarray as $device => $finalUrl) {
+                                    switch ($device) {
+                                        case 'windows':
+                                            $devicecond[]     = 'windowscomputer';
+                                            $devicefinalurl[] = $finalUrl;
+                                            break;
+
+                                        case 'andriod':
+                                            $devicecond[]     = 'andriodsmartphone';
+                                            $devicefinalurl[] = $finalUrl;
+                                            break;
+
+                                        case 'iphone':
+                                            $devicecond[]     = 'applesmartphone';
+                                            $devicefinalurl[] = $finalUrl;
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                default:
+                    // null
+                    $redirectCondition = null;
+            }
+        }
+
+        // now i will try to know the exact conditions
+        // @TODO MSHANNAQHERE
+        // dd($urlRedirectConditions);
+
+        // know define $data which will be passwd to the view
+        $data = [
+            'editUrlAction'     => site_url("/url/edit/{$url_id}"),
+            'originalUrl'       => urldecode($urlData['url_targeturl']),
+            'UrlTitle'          => $urlData['url_title'],
+            'UrlIdentifier'     => $urlData['url_identifier'],
+            'urlTags'           => $urlTagsCloud, // i must get the URLTags
+            'redirectCondition' => $redirectCondition,
+        ];
+        if ($redirectCondition === 'geolocation') {
+            $data['geocountry']  = $geocountry;
+            $data['geofinalurl'] = $geofinalurl;
+        }
+        if ($redirectCondition === 'device') {
+            $data['device']         = $devicecond;
+            $data['devicefinalurl'] = $devicefinalurl;
+        }
+
+        return view(smarty_view('url/new'), $data);
+    }
+
+    public function editAction($UrlId)
+    {
+        // @TODO @FIXME  user cannot edit others URLs unless he is can super.admin
+
+        // check permissions
+        if (! auth()->user()->can('url.edit')) {
+            return smarty_permission_error();
+        }
+        $url_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        if ($url_id === 0) {
+            // url_id given is not valid id
+            return redirect()->to('dashboard')->with('notice', lang('Url.urlError'));
+        }
+        $UrlModel = new UrlModel();
+        $urlData  = $UrlModel->where('url_id', $url_id)->first();
+        dd($urlData);
+        // user cannot edit others URLs unless he is can super.admin
+        echo 'edit url action';
+        d($UrlId);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Extendy\Smartyurl;
 
+use App\Models\UrlTagsDataModel;
 use App\Models\UrlTagsModel;
 
 class UrlTags
@@ -32,6 +33,49 @@ class UrlTags
         $tagscloud      = $this->removeDuplicateTags($all_tags_cloud);
 
         return $jsonreturn ? json_encode($tagscloud) : $tagscloud;
+    }
+
+    /**
+     * This function returns the TagsCloud for the given $UrlId
+     *
+     * @param mixed $UrlId
+     *
+     * @return false|string json
+     */
+    public function getUrlTagsCloud($UrlId)
+    {
+        // @TODO may be while list urls page i will use thus but after covert $UrlId to array ???
+        // the return cloud should be array like
+        // [{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}] ... etc
+
+        $UrlTagsDataModel = new UrlTagsDataModel();
+        $urlTags          = $UrlTagsDataModel->getUrlTags($UrlId);
+        // I will get the tag names
+        $tags = [];
+
+        foreach ($urlTags as $tag) {
+            $tags[] = $tag['tag_id'];
+        }
+        // I will try to get the Tag names
+        if (count($tags) > 0) {
+            // url has tags
+            $UrlTagsModel = new UrlTagsModel();
+            $tagscloud    = $UrlTagsModel->getTagInfoById($tags);
+        } else {
+            // url has no tags
+            $tagscloud = [];
+        }
+        // define the final url tags cloud
+        $urltagscloud = [];
+
+        foreach ($tagscloud as $tag) {
+            $urltagscloud[] = [
+                'value'  => $tag->tag_name,
+                'tag_id' => $tag->tag_id,
+            ];
+        }
+
+        return json_encode($urltagscloud);
     }
 
     // This function try to insert tags if not already exists it urltags db table

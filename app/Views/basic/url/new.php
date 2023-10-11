@@ -1,6 +1,6 @@
 <?= $this->extend(smarty_view('layout')); ?>
 
-<?= $this->section('title') ?><?= smarty_pagetitle(lang('Url.addNewURLTitle')); ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= smarty_pagetitle(isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle')); ?> <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 
@@ -20,7 +20,7 @@
             <!--begin::Row-->
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0"><?= lang('Url.addNewURLTitle'); ?></h3>
+                    <h3 class="mb-0"><?= isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle'); ?></h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
@@ -32,7 +32,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            <?= lang('Url.addNewURLTitle'); ?>
+                            <?= isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle'); ?>
                         </li>
                     </ol>
                 </div>
@@ -50,14 +50,14 @@
                 <div class="col-12">
                     <!-- Default box -->
                     <div class="card">
-                        <form id="addNewURL" action="<?= url_to('url/new') ?>" method="post">
+                        <form id="addNewURL" action="<?= $editUrlAction ?? url_to('url/new') ?>" method="post">
                             <?= csrf_field() ?>
                             <input type="hidden" name="redirectCondition" id="redirectCondition" value="">
                             <div class="card-header">
                                 <!-- Use Bootstrap grid for two columns -->
                                 <div class="row">
                                     <div class="col-6">
-                                        <h3 class="card-title"><?= lang('Url.addNewURLTitle'); ?></h3>
+                                        <h3 class="card-title"><?= isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle'); ?></h3>
                                     </div>
                                     <div class="col-6 text-end">
                                         <!-- Replace with Font Awesome help icon -->
@@ -91,13 +91,13 @@
                                     <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
                                     <input dir="ltr" type="url" class="form-control " name="originalUrl"
                                            id="UrlTitle" required
-                                           placeholder="https://example.com/somelink?example=1" value="<?= old('originalUrl'); ?>">
+                                           placeholder="" value="<?= $originalUrl ?? old('originalUrl'); ?>">
                                 </div>
 
 
                                 <div class="mt-2">
                                     <label class="" for="UrlTitle"><?= lang('Url.UrlTitle') . ' ' . lang('Url.UrlTitleDescription') . ' ' . lang('Common.Optional'); ?>:</label>
-                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="<?= lang('Url.UrlTitleDescription'); ?>" value="<?= old('UrlTitle'); ?>" >
+                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="" value="<?= $UrlTitle ?? old('UrlTitle'); ?>" >
                                 </div>
 
 
@@ -108,7 +108,7 @@
                                     <span class="input-group-text"
                                           id="basic-addon3"><?= smarty_detect_site_shortlinker(); ?></span>
                                         <input type="text" dir="ltr" class="form-control" name="UrlIdentifier"  id="UrlIdentifier"
-                                               aria-describedby="basic-addon3" value="<?= old('UrlIdentifier'); ?>" required>
+                                               aria-describedby="basic-addon3" value="<?= $UrlIdentifier ?? old('UrlIdentifier'); ?>" required>
                                     </div>
                                 </div>
 
@@ -142,15 +142,16 @@
 
                                     <!-- here content fron javascript comes for the redirect condition -->
                                     <?php
-                                    if (old('redirectCondition') !== null) {
+                                    if (old('redirectCondition') !== null || isset($redirectCondition)) {
                                         $segment_form_data                      = [];
-                                        $segment_form_data['redirectCondition'] = old('redirectCondition');
+                                        $segment_form_data['redirectCondition'] = $redirectCondition ?? old('redirectCondition');
                                         // geo
-                                        $segment_form_data['geocountry']  = old('geocountry');
-                                        $segment_form_data['geofinalurl'] = old('geofinalurl');
+
+                                        $segment_form_data['geocountry']  = $geocountry ?? old('geocountry');
+                                        $segment_form_data['geofinalurl'] = $geofinalurl ?? old('geofinalurl');
                                         // device
-                                        $segment_form_data['device']         = old('device');
-                                        $segment_form_data['devicefinalurl'] = old('devicefinalurl');
+                                        $segment_form_data['device']         = $device ?? old('device');
+                                        $segment_form_data['devicefinalurl'] = $devicefinalurl ?? old('devicefinalurl');
 
                                         echo view(smarty_view('url/segments/url_conditions'), $segment_form_data);
                                     }
@@ -177,7 +178,7 @@
 
 
                                     <div class="input-group mb-3">
-                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= old('urlTags'); ?>'>
+                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= $urlTags ?? old('urlTags'); ?>'>
 
 
                                         <div id="tagsContainer" class="mt-2"></div>
@@ -194,7 +195,7 @@
                                 <!-- Use Bootstrap utility classes to align Save button to the right -->
                                 <div class="d-flex justify-content-end">
                                     <input type="submit" class="btn btn-primary"
-                                           value=" <?= lang('Url.AddNewUrlSubmitbtn'); ?>">
+                                           value=" <?= isset($editUrlAction) ? lang('Url.UpdateUrlSubmitbtn') : lang('Url.AddNewUrlSubmitbtn'); ?>">
                                 </div>
                             </div>
                             <!-- /.card-footer-->

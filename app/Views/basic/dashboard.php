@@ -37,6 +37,25 @@
         <!--begin::Row-->
         <div class="row">
             <div class="col-12">
+
+                <?php if (session('error') !== null) : ?>
+                    <div class="alert alert-danger" role="alert" id="infoMessage" style="">
+                        <?= session('error') ?>
+                    </div>
+                <?php endif ?>
+
+                <?php if (session('message') !== null) : ?>
+                    <div class="alert alert-success" role="alert" id="infoMessage" style="">
+                        <?= session('message') ?>
+                    </div>
+                <?php endif ?>
+
+                <?php if (session('notice') !== null) : ?>
+                    <div class="alert alert-warning" role="alert" id="infoMessage" style="">
+                        <?= session('notice') ?>
+                    </div>
+                <?php endif ?>
+
                 <!-- Default box -->
                 <div class="card">
                     <div class="card-header">

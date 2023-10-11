@@ -21,13 +21,9 @@ $routes->group('url', static function ($routes) {
     $routes->get('view/(:num)', 'Url::view/$1', ['filter' => 'session']);
     $routes->get('new', 'Url::new', ['filter' => 'session']);
     $routes->post('new', 'Url::newAction', ['filter' => 'session']);
+    $routes->get('edit/(:num)', 'Url::edit/$1', ['filter' => 'session']);
+    $routes->post('edit/(:num)', 'Url::editAction/$1', ['filter' => 'session']);
 });
-
-// URL redirects
-// with go route
-$routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
-// Route any undefined request to Go Controller.
-$routes->add('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 
 // language route
 // filter
@@ -38,6 +34,12 @@ $routes->get('lang/{locale}', 'Language::index', ['filter' => 'afterlangchange']
 // Assist
 $routes->get('assist/newurl', 'Assist::getAddNewUrlJsAssist');
 $routes->get('assist/smartyurl', 'Assist::getSmartyUrlGlobalJsAssist');
+
+// URL redirects
+// with go route
+$routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
+// Route any undefined request to Go Controller.
+$routes->get('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 
 // testing , @TODO must be removed after testing before any production release
 $routes->get('/url/none', 'Url::none');

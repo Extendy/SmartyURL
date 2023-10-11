@@ -257,6 +257,7 @@ class Url extends BaseController
 
         // know define $data which will be passwd to the view
         $data = [
+            'UrlId'             => $url_id,
             'editUrlAction'     => site_url("/url/edit/{$url_id}"),
             'originalUrl'       => urldecode($urlData['url_targeturl']),
             'UrlTitle'          => $urlData['url_title'],

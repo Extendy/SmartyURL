@@ -1,6 +1,6 @@
 <?= $this->extend(smarty_view('layout')); ?>
 
-<?= $this->section('title') ?><?= smarty_pagetitle(isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle')); ?> <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= smarty_pagetitle(isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle')); ?>  <?= $this->endSection() ?>
 
 <?= $this->section('main') ?>
 
@@ -20,7 +20,7 @@
             <!--begin::Row-->
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0"><?= isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle'); ?></h3>
+                    <h3 class="mb-0"><?= isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.addNewURLTitle'); ?> <?= $UrlId ?? ''; ?></h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">

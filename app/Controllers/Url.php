@@ -252,9 +252,6 @@ class Url extends BaseController
         }
 
         // now i will try to know the exact conditions
-        // @TODO MSHANNAQHERE
-        // dd($urlRedirectConditions);
-
         // know define $data which will be passwd to the view
         $data = [
             'UrlId'             => $url_id,

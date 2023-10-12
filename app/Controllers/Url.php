@@ -219,29 +219,9 @@ class Url extends BaseController
                     $devicecond        = [];
                     $devicefinalurl    = [];
 
-                    foreach ($urlRedirectConditions->conditions as $conditionarray) {
-                        foreach ($conditionarray as $devicename => $devicearray) {
-                            foreach ($devicearray as $finalUrlarray) {
-                                foreach ($finalUrlarray as $device => $finalUrl) {
-                                    switch ($device) {
-                                        case 'windows':
-                                            $devicecond[]     = 'windowscomputer';
-                                            $devicefinalurl[] = $finalUrl;
-                                            break;
-
-                                        case 'andriod':
-                                            $devicecond[]     = 'andriodsmartphone';
-                                            $devicefinalurl[] = $finalUrl;
-                                            break;
-
-                                        case 'iphone':
-                                            $devicecond[]     = 'applesmartphone';
-                                            $devicefinalurl[] = $finalUrl;
-                                            break;
-                                    }
-                                }
-                            }
-                        }
+                    foreach ($urlRedirectConditions->conditions as $device => $finalUrl) {
+                        $devicecond[]     = $device;
+                        $devicefinalurl[] = $finalUrl;
                     }
                     break;
 

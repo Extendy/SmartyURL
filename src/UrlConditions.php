@@ -15,28 +15,13 @@ class UrlConditions
     {
         // device
         if ($conditions['device'] !== null) {
-            // this is a device condition
+            // this is device condition
             $device          = $conditions['device'];
             $devicefinalurl  = $conditions['devicefinalurl'];
             $devicecondition = [];
 
             for ($i = 0; $i < count($device); $i++) {
-                switch ($device[$i]) {
-                    case 'windowscomputer':
-                        $devicecondition[]['computer'][] = ['windows' => $devicefinalurl[$i]];
-                        break;
-
-                    case 'applesmartphone':
-                        $devicecondition[]['smartphone'][] = ['iphone' => $devicefinalurl[$i]];
-                        break;
-
-                    case 'andriodsmartphone':
-                        $devicecondition[]['smartphone'][] = ['andriod' => $devicefinalurl[$i]];
-                        break;
-
-                    default:
-                        break;
-                }
+                $devicecondition[$device[$i]] = $devicefinalurl[$i];
             }
             $finalarray               = [];
             $finalarray['condition']  = 'device';
@@ -85,15 +70,9 @@ class UrlConditions
                 break;
 
             case 'device':
-                foreach ($urlConditions->conditions as $devicecondition) {
-                    foreach ($devicecondition as $deviceconditionsarray) {
-                        foreach ($deviceconditionsarray as $devices) {
-                            foreach ($devices as $finalurl) {
-                                if (! $SmartyURL->isValidURL($finalurl)) {
-                                    return false;
-                                }
-                            }
-                        }
+                foreach ($urlConditions->conditions as $devicecondition_url) {
+                    if (! $SmartyURL->isValidURL($devicecondition_url)) {
+                        return false;
                     }
                 }
                 break;

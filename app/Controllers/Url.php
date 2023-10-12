@@ -202,11 +202,9 @@ class Url extends BaseController
                     $geocountry        = [];
                     $geofinalurl       = [];
 
-                    foreach ($urlRedirectConditions->conditions as $conditionarray) {
-                        foreach ($conditionarray as $country => $finalUrl) {
-                            $geocountry[]  = $country;
-                            $geofinalurl[] = $finalUrl;
-                        }
+                    foreach ($urlRedirectConditions->conditions as $country => $finalUrl) {
+                        $geocountry[]  = $country;
+                        $geofinalurl[] = $finalUrl;
                     }
                     $data['geocountry'] = $geocountry;
                     // var_dump($data['geocountry']);

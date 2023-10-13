@@ -268,9 +268,77 @@ class Url extends BaseController
         }
         $UrlModel = new UrlModel();
         $urlData  = $UrlModel->where('url_id', $url_id)->first();
-        // dd($urlData);
-        // user cannot edit others URLs unless he is can super.admin or admin.manageurls
+        /**
+         * dd($urlData);
+         * user cannot edit others URLs unless he is can super.admin or admin.manageurls
+         * ------------------------------------------------------------------
+         *
+         * @FIXME @TODO check the permissions goes here <--------------------
+         * ------------------------------------------------------------------
+         */
+        $SmartyURL = new SmartyUrl();
+        // check if original url is valid url
+        $originalUrl = esc($this->request->getPost('originalUrl'));
+        if (! $SmartyURL->isValidURL($originalUrl)) {
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlInvalidOriginal'));
+        }
+        // check the identifier is standard
+        $identifier = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
+        if (! preg_match(Config('Smartyurl')->urlIdentifierpattern, $identifier)) {
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlIdentifierPatternError', [Config('Smartyurl')->urlIdentifierpattern]));
+        }
+        // check if identifier is existing for another URL?
+        $UrlIdentifier = new UrlIdentifier();
+        if ($UrlIdentifier->CheckURLIdentifierExists($identifier, $UrlId)) {
+            // url idenitifier is exists on db
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlIdentifieralreadyExists', [$identifier]));
+        }
+        // @TODO identifier should not be exists route
 
-        return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlError'));
+        // urlTitle
+        $urlTitle          = esc($this->request->getPost('UrlTitle'));
+        $redirectCondition = esc($this->request->getPost('redirectCondition'));
+        if ($redirectCondition === 'device' || $redirectCondition === 'geolocation') {
+            // url_conditions
+            // /...................here will be conditions
+            $conditions_array = [
+                'device'         => $this->request->getPost('device'),
+                'devicefinalurl' => $this->request->getPost('devicefinalurl'),
+                'geocountry'     => $this->request->getPost('geocountry'),
+                'geofinalurl'    => $this->request->getPost('geofinalurl'),
+            ];
+            $urlConditions      = new UrlConditions();
+            $json_urlConditions = $urlConditions->josonizeUrlConditions($conditions_array);
+            // i will check all conditions final url is valid urls or not
+            if (! $urlConditions->validateConditionsFinalURls($json_urlConditions)) {
+                return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlSomeFinalURLsIsNotValid'));
+            }
+        } else {
+            // no $redirectCondition
+            $json_urlConditions = null;
+        }
+
+        // try to update the url data on db
+
+        $updatedData = [
+            'url_identifier' => $identifier,
+            'url_title'      => $urlTitle,
+            'url_targeturl'  => $originalUrl,
+            'url_conditions' => $json_urlConditions,
+            // Add more fields as needed
+        ];
+
+        $UrlModel->update($url_id, $updatedData);
+
+        if ($UrlModel->affectedRows() > 0) {
+            // updated ok
+            // return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('OK'))->with('updated',"yes");
+            return redirect()->back()->with('success', lang('Url.UpdateURLOK'));
+        }
+
+        // updated error
+        return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
+
+        return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
     }
 }

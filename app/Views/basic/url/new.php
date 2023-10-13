@@ -87,6 +87,13 @@
                                     </div>
                                 <?php endif ?>
 
+                                <?php if (session('success') !== null) : ?>
+                                    <div class="alert alert-success" role="alert" id="Message" style="">
+                                        <?= session('success') ?>
+                                    </div>
+
+                                <?php  endif ?>
+
                                 <div class="mt-2">
                                     <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
                                     <input dir="ltr" type="url" class="form-control " name="originalUrl"
@@ -196,6 +203,11 @@
                                 <div class="d-flex justify-content-end">
                                     <input type="submit" class="btn btn-primary"
                                            value=" <?= isset($editUrlAction) ? lang('Url.UpdateUrlSubmitbtn') : lang('Url.AddNewUrlSubmitbtn'); ?>">
+
+                                    <?php if (isset($editUrlAction) && (session('success') === null)): ?>
+                                        <a href="<?= site_url("url/edit/{$UrlId}"); ?>" class="btn btn-secondary ms-3"><?= lang('Url.UpdateUrlCancelbtn'); ?></a>
+                                    <?php endif; ?>
+
                                 </div>
                             </div>
                             <!-- /.card-footer-->

@@ -70,6 +70,7 @@ class Url extends BaseController
             // url idenitifier is exists on db
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifieralreadyExists', [$identifier]));
         }
+        // @TODO identifier should not be exists route
 
         // urlTitle
         $urlTitle          = esc($this->request->getPost('UrlTitle'));
@@ -202,11 +203,9 @@ class Url extends BaseController
                     $geocountry        = [];
                     $geofinalurl       = [];
 
-                    foreach ($urlRedirectConditions->conditions as $conditionarray) {
-                        foreach ($conditionarray as $country => $finalUrl) {
-                            $geocountry[]  = $country;
-                            $geofinalurl[] = $finalUrl;
-                        }
+                    foreach ($urlRedirectConditions->conditions as $country => $finalUrl) {
+                        $geocountry[]  = $country;
+                        $geofinalurl[] = urldecode($finalUrl);
                     }
                     $data['geocountry'] = $geocountry;
                     // var_dump($data['geocountry']);
@@ -219,29 +218,9 @@ class Url extends BaseController
                     $devicecond        = [];
                     $devicefinalurl    = [];
 
-                    foreach ($urlRedirectConditions->conditions as $conditionarray) {
-                        foreach ($conditionarray as $devicename => $devicearray) {
-                            foreach ($devicearray as $finalUrlarray) {
-                                foreach ($finalUrlarray as $device => $finalUrl) {
-                                    switch ($device) {
-                                        case 'windows':
-                                            $devicecond[]     = 'windowscomputer';
-                                            $devicefinalurl[] = $finalUrl;
-                                            break;
-
-                                        case 'andriod':
-                                            $devicecond[]     = 'andriodsmartphone';
-                                            $devicefinalurl[] = $finalUrl;
-                                            break;
-
-                                        case 'iphone':
-                                            $devicecond[]     = 'applesmartphone';
-                                            $devicefinalurl[] = $finalUrl;
-                                            break;
-                                    }
-                                }
-                            }
-                        }
+                    foreach ($urlRedirectConditions->conditions as $device => $finalUrl) {
+                        $devicecond[]     = $device;
+                        $devicefinalurl[] = urldecode($finalUrl);
                     }
                     break;
 

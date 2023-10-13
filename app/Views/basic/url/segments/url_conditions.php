@@ -147,8 +147,8 @@ if ($redirectCondition === 'geolocation') {
 
     <script>
 <?php
-        // set hidechoosUrlCondition if $redirectCondition !== null to hide  choosUrlCondition
-        if ($redirectCondition !== null) {
+        // set hidechoosUrlCondition if $redirectCondition != "" to hide  choosUrlCondition
+        if ($redirectCondition !== '') {
             echo 'var hidechoosUrlCondition = true';
         }
 ?>

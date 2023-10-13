@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\UrlModel;
-use Exception;
 use Extendy\Smartyurl\SmartyUrlDevice;
 use RuntimeException;
 
@@ -68,52 +67,12 @@ class Go extends BaseController
                     // sample json data
                     // {"condition": "device", "conditions": [{"computer": [{"windows": "www.microsoft.com"}, {"linux": "www.linux.com"}], "smartphone": [{"andriod": "www.andriod.com"}, {"iphone": "www.apple.com"}]}]}
                     $smartyurldevicedetect = new SmartyUrlDevice();
-                    $visitorDevice         = $smartyurldevicedetect->detectVistorDeviceType();
-                    if ($visitorDevice === 'tablet' || $visitorDevice === 'phone') {
-                        // phone and tablets called smart phones so it is 'smartphone'
-                        // we do not need to now wht it is exactly phone or tablet
-                        // So we will call it smartphone for non computer devs (which is phone and tablets)
-                        $visitorDevice = 'smartphone';
-                    }
 
-                    foreach ($url_conditions->conditions as $condition) {
-                        if (property_exists($condition, $visitorDevice)) {
-                            // final target found
-                            $finalTargetURL = $condition->{$visitorDevice};
-                            if (is_array($finalTargetURL)) {
-                                // that mean the $finalTargetURL is not a string
-                                // example 'computer' ->
-                                //        windows-> https://www.zoho.com/mail/mobile/?windowscomputer
-                                //        linux->https://www.zoho.com/mail/mobile/?linuxcomputer
-                                $thefinalURL = '';
-
-                                foreach ($finalTargetURL as $devicetype) {
-                                    $knownoperator = $smartyurldevicedetect->tryToKnowKnownOperator();
-                                    if (property_exists($devicetype, $knownoperator)) {
-                                        // final traget found
-                                        echo "operator  found {$knownoperator}";
-                                        $thefinalURL    = $devicetype->{$knownoperator};
-                                        $finalTargetURL = $thefinalURL;
-                                        // d($thefinalURL);
-                                        // exit the foreach loop while we found the condition and no need to keep searching.
-                                        break;
-                                    }
-                                    echo "operator not found {$knownoperator}";
-
-                                    // d($devicetype);
-                                }
-                                if ($thefinalURL === '') {
-                                    // $thefinalURL not found in foreach ,  we will use the default url
-                                    $finalTargetURL = null; // this will set $finalTargetURL to null .. later will be set to default
-                                }
-                            } else {
-                                // $finalTargetURL is string , and it cannot be happened in 'device' case
-                                throw new Exception('finalTargetURL is string .The finalTargetURL should be a JSON object in the devicetype stage, which is more logical than a string');
-                            }
-
-                            // exit the foreach loop while we found the condition and no need to keep searching.
-                            // @TODO do i need to break for device while it may be smartphone and andriod?!!!
-                            break;
+                    // for each device condition i will check it it equal the current visitor device type
+                    foreach ($url_conditions->conditions as $condition => $finalURL) {
+                        $verifydevicecondition = $smartyurldevicedetect->verifyDeviceCondition($condition, $finalURL);
+                        if ($verifydevicecondition !== null) {
+                            $finalTargetURL = $verifydevicecondition;
                         }
                     }
 

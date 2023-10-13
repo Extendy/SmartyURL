@@ -204,7 +204,7 @@ class Url extends BaseController
 
                     foreach ($urlRedirectConditions->conditions as $country => $finalUrl) {
                         $geocountry[]  = $country;
-                        $geofinalurl[] = $finalUrl;
+                        $geofinalurl[] = urldecode($finalUrl);
                     }
                     $data['geocountry'] = $geocountry;
                     // var_dump($data['geocountry']);
@@ -219,7 +219,7 @@ class Url extends BaseController
 
                     foreach ($urlRedirectConditions->conditions as $device => $finalUrl) {
                         $devicecond[]     = $device;
-                        $devicefinalurl[] = $finalUrl;
+                        $devicefinalurl[] = urldecode($finalUrl);
                     }
                     break;
 

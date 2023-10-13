@@ -55,19 +55,13 @@ class AuthGroups extends ShieldAuthGroups
      * If a permission is not listed here it cannot be used.
      */
     public array $permissions = [
-        'super.admin'         => 'Does he super admin',
-        'admin.access'        => 'Can access the sites admin area',
-        'admin.settings'      => 'Can access the main site settings',
-        'admin.manageurls'    => 'can manage other users URLs',
-        'users.manage-admins' => 'Can manage other admins',
-        'users.create'        => 'Can create new non-admin users',
-        'users.edit'          => 'Can edit existing non-admin users',
-        'users.delete'        => 'Can delete existing non-admin users',
+        'super.admin'      => 'Does he super admin',
+        'admin.manageurls' => 'can manage other users URLs', // not used yet
         // url
-        'url.access' => 'Can Access URLs',
+        'url.access' => 'Can Access URLs', // not used yet
         'url.new'    => 'Can Create a new URL',
-        'url.edit'   => 'Can Edit URL',
-        'url.delete' => 'Can Delete URL',
+        'url.edit'   => 'Can Edit URL', // not used yet
+        'url.delete' => 'Can Delete URL', // not used yet
     ];
 
     /**
@@ -82,22 +76,15 @@ class AuthGroups extends ShieldAuthGroups
         'superadmin' => [
             'super.*',
             'admin.*',
-            'users.*',
             'url.*',
         ],
         'admin' => [
-            'admin.access',
-            'users.create',
-            'users.edit',
-            'users.delete',
-            'beta.access',
+            'admin.manageurls',
             'url.*',
         ],
         'user' => [
             'url.access',
-        ],
-        'beta' => [
-            'beta.access',
+            'url.new',
         ],
     ];
 }

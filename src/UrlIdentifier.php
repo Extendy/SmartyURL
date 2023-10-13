@@ -15,10 +15,15 @@ class UrlIdentifier
      *
      * @return bool
      */
-    public function CheckURLIdentifierExists(string $urlidentifier)
+    public function CheckURLIdentifierExists(string $urlidentifier, int|null $except = null)
     {
         $UrlModel = new UrlModel();
-        $urlData  = $UrlModel->where('url_identifier', $urlidentifier)->first();
+        $query    = $UrlModel->where('url_identifier', $urlidentifier);
+        if ($except !== null) {
+            $query->where('url_id !=', $except);
+        }
+        $urlData = $query->first();
+
         if ($urlData === null) {
             // $urlidentifier not exisys
             $returnvalue = false;

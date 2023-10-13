@@ -18,6 +18,7 @@ return [
     'EnterSomeTags'                => 'اختر التاقات',
     'AddNewUrlSubmitbtn'           => 'انشاء الرابط الذكي',
     'UpdateUrlSubmitbtn'           => 'تحديث الرابط',
+    'UpdateUrlCancelbtn'           => 'الغاء',
 
     'GeographicalLocation'    => 'الموقع الجغرافي',
     'SelectCountry'           => 'إختر الدولة',
@@ -30,6 +31,8 @@ return [
 
     'AddNewURLAdded' => 'لقد تم انشاء الرابط بنجاح',
     'AddNewURLError' => 'حدث خطا ما اثناء اضافة الرابط',
+    'UpdateURLOK'    => 'لقد تم تحديث بيانات الرابط بنجاح',
+    'UpdateURLError' => 'حدث خطا ما أثناء تحديث بيانات الرابط',
 
     'urlsLink' => 'فهرس الراوبط',
 

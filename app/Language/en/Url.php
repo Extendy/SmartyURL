@@ -18,6 +18,7 @@ return [
     'EnterSomeTags'                => 'Choose Tags',
     'AddNewUrlSubmitbtn'           => 'Create Smarty Link',
     'UpdateUrlSubmitbtn'           => 'Update URL',
+    'UpdateUrlCancelbtn'           => 'Cancel Update',
 
     'GeographicalLocation'    => 'Geographical Location',
     'SelectCountry'           => 'Select Country',
@@ -30,6 +31,8 @@ return [
 
     'AddNewURLAdded' => 'The URL has been created successfully',
     'AddNewURLError' => 'An error occurred while adding the URL',
+    'UpdateURLOK'    => 'The URL has been successfully updated',
+    'UpdateURLError' => 'An error occurred while updating the URL',
 
     'urlsLink' => 'URLs Bucket',
 

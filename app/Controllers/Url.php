@@ -165,7 +165,7 @@ class Url extends BaseController
             return redirect()->to('url/view/' . $inserted_url_id)->with('notice', lang('Url.AddNewURLAdded'));
         }
 
-        return redirect()->to('url/new')->withInput()->with('notice', lang('Account.WrongCurrentPassword'));
+        return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlError'));
     }
 
     public function edit($UrlId)
@@ -268,9 +268,9 @@ class Url extends BaseController
         }
         $UrlModel = new UrlModel();
         $urlData  = $UrlModel->where('url_id', $url_id)->first();
-        dd($urlData);
-        // user cannot edit others URLs unless he is can super.admin
-        echo 'edit url action';
-        d($UrlId);
+        // dd($urlData);
+        // user cannot edit others URLs unless he is can super.admin or admin.manageurls
+
+        return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlError'));
     }
 }

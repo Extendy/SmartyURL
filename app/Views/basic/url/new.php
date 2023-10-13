@@ -91,13 +91,13 @@
                                     <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
                                     <input dir="ltr" type="url" class="form-control " name="originalUrl"
                                            id="UrlTitle" required
-                                           placeholder="" value="<?= $originalUrl ?? old('originalUrl'); ?>">
+                                           placeholder="" value="<?=  old('originalUrl') ?? $originalUrl ?? ''; ?>">
                                 </div>
 
 
                                 <div class="mt-2">
                                     <label class="" for="UrlTitle"><?= lang('Url.UrlTitle') . ' ' . lang('Url.UrlTitleDescription') . ' ' . lang('Common.Optional'); ?>:</label>
-                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="" value="<?= $UrlTitle ?? old('UrlTitle'); ?>" >
+                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="" value="<?= old('UrlTitle') ?? $UrlTitle ?? ''; ?>" >
                                 </div>
 
 
@@ -108,7 +108,7 @@
                                     <span class="input-group-text"
                                           id="basic-addon3"><?= smarty_detect_site_shortlinker(); ?></span>
                                         <input type="text" dir="ltr" class="form-control" name="UrlIdentifier"  id="UrlIdentifier"
-                                               aria-describedby="basic-addon3" value="<?= $UrlIdentifier ?? old('UrlIdentifier'); ?>" required>
+                                               aria-describedby="basic-addon3" value="<?= old('UrlIdentifier') ?? $UrlIdentifier ?? ''; ?>" required>
                                     </div>
                                 </div>
 
@@ -147,11 +147,11 @@
                                         $segment_form_data['redirectCondition'] = $redirectCondition ?? old('redirectCondition');
                                         // geo
 
-                                        $segment_form_data['geocountry']  = $geocountry ?? old('geocountry');
-                                        $segment_form_data['geofinalurl'] = $geofinalurl ?? old('geofinalurl');
+                                        $segment_form_data['geocountry']  = old('geocountry') ?? $geocountry ?? '';
+                                        $segment_form_data['geofinalurl'] = old('geofinalurl') ?? $geofinalurl ?? '';
                                         // device
-                                        $segment_form_data['device']         = $device ?? old('device');
-                                        $segment_form_data['devicefinalurl'] = $devicefinalurl ?? old('devicefinalurl');
+                                        $segment_form_data['device']         = old('device') ?? $device ?? '';
+                                        $segment_form_data['devicefinalurl'] = old('devicefinalurl') ?? $devicefinalurl ?? '';
 
                                         echo view(smarty_view('url/segments/url_conditions'), $segment_form_data);
                                     }
@@ -178,7 +178,7 @@
 
 
                                     <div class="input-group mb-3">
-                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= $urlTags ?? old('urlTags'); ?>'>
+                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= old('urlTags') ?? $urlTags ?? ''; ?>'>
 
 
                                         <div id="tagsContainer" class="mt-2"></div>

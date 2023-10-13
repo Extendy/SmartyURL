@@ -58,6 +58,7 @@ class AuthGroups extends ShieldAuthGroups
         'super.admin'         => 'Does he super admin',
         'admin.access'        => 'Can access the sites admin area',
         'admin.settings'      => 'Can access the main site settings',
+        'admin.manageurls'    => 'can manage other users URLs',
         'users.manage-admins' => 'Can manage other admins',
         'users.create'        => 'Can create new non-admin users',
         'users.edit'          => 'Can edit existing non-admin users',

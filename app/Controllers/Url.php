@@ -70,6 +70,7 @@ class Url extends BaseController
             // url idenitifier is exists on db
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifieralreadyExists', [$identifier]));
         }
+        // @TODO identifier should not be exists route
 
         // urlTitle
         $urlTitle          = esc($this->request->getPost('UrlTitle'));

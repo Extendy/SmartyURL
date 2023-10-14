@@ -49,6 +49,8 @@ class UrlTagsDataModel extends BaseModel
     /**
      * This function get the url tags for $urlid
      *
+     * @param mixed $urlid
+     *
      * @return array
      */
     public function getUrlTags($urlid)

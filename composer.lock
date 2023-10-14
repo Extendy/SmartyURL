@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/shield.git",
-                "reference": "f9bf1cf8c5f5bd2d42453fdbfd9d9253eedab99d"
+                "reference": "189017e8b02d9c00f5d20208b82ca27ebe54f48e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/f9bf1cf8c5f5bd2d42453fdbfd9d9253eedab99d",
-                "reference": "f9bf1cf8c5f5bd2d42453fdbfd9d9253eedab99d",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/189017e8b02d9c00f5d20208b82ca27ebe54f48e",
+                "reference": "189017e8b02d9c00f5d20208b82ca27ebe54f48e",
                 "shasum": ""
             },
             "require": {
@@ -210,7 +210,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/shield"
             },
-            "time": "2023-10-10T12:45:55+00:00"
+            "time": "2023-10-13T02:17:02+00:00"
         },
         {
             "name": "ip2location/ip2location-php",
@@ -606,21 +606,21 @@
     "packages-dev": [
         {
             "name": "codeigniter/coding-standard",
-            "version": "v1.7.10",
+            "version": "v1.7.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CodeIgniter/coding-standard.git",
-                "reference": "b875f3c68c3ff8e8b90d298787588fd1a6f29add"
+                "reference": "5eba1b2d9c0843d4f80af84ff78c30253c9ebe57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CodeIgniter/coding-standard/zipball/b875f3c68c3ff8e8b90d298787588fd1a6f29add",
-                "reference": "b875f3c68c3ff8e8b90d298787588fd1a6f29add",
+                "url": "https://api.github.com/repos/CodeIgniter/coding-standard/zipball/5eba1b2d9c0843d4f80af84ff78c30253c9ebe57",
+                "reference": "5eba1b2d9c0843d4f80af84ff78c30253c9ebe57",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "friendsofphp/php-cs-fixer": "^3.34",
+                "friendsofphp/php-cs-fixer": "^3.35",
                 "nexusphp/cs-config": "^3.6",
                 "php": "^7.4 || ^8.0"
             },
@@ -656,20 +656,20 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/CodeIgniter/coding-standard"
             },
-            "time": "2023-10-01T12:30:59+00:00"
+            "time": "2023-10-13T05:09:26+00:00"
         },
         {
             "name": "composer/pcre",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "4bff79ddd77851fe3cdd11616ed3f92841ba5bd2"
+                "reference": "00104306927c7a0919b4ced2aaa6782c1e61a3c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/4bff79ddd77851fe3cdd11616ed3f92841ba5bd2",
-                "reference": "4bff79ddd77851fe3cdd11616ed3f92841ba5bd2",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/00104306927c7a0919b4ced2aaa6782c1e61a3c9",
+                "reference": "00104306927c7a0919b4ced2aaa6782c1e61a3c9",
                 "shasum": ""
             },
             "require": {
@@ -711,7 +711,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/3.1.0"
+                "source": "https://github.com/composer/pcre/tree/3.1.1"
             },
             "funding": [
                 {
@@ -727,7 +727,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-17T09:50:14+00:00"
+            "time": "2023-10-11T07:11:09+00:00"
         },
         {
             "name": "composer/semver",
@@ -1016,16 +1016,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.34.1",
+            "version": "v3.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "98bf1b1068b4ceddbbc2a2b70b67a5e380add9e3"
+                "reference": "ec1ccc264994b6764882669973ca435cf05bab08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/98bf1b1068b4ceddbbc2a2b70b67a5e380add9e3",
-                "reference": "98bf1b1068b4ceddbbc2a2b70b67a5e380add9e3",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/ec1ccc264994b6764882669973ca435cf05bab08",
+                "reference": "ec1ccc264994b6764882669973ca435cf05bab08",
                 "shasum": ""
             },
             "require": {
@@ -1058,8 +1058,6 @@
                 "phpspec/prophecy": "^1.16",
                 "phpspec/prophecy-phpunit": "^2.0",
                 "phpunit/phpunit": "^9.5",
-                "phpunitgoodpractices/polyfill": "^1.6",
-                "phpunitgoodpractices/traits": "^1.9.2",
                 "symfony/phpunit-bridge": "^6.2.3",
                 "symfony/yaml": "^5.4 || ^6.0"
             },
@@ -1099,7 +1097,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.34.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.35.1"
             },
             "funding": [
                 {
@@ -1107,7 +1105,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-03T23:51:05+00:00"
+            "time": "2023-10-12T13:47:26+00:00"
         },
         {
             "name": "mikey179/vfsstream",
@@ -1221,21 +1219,21 @@
         },
         {
             "name": "nexusphp/cs-config",
-            "version": "v3.17.0",
+            "version": "v3.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NexusPHP/cs-config.git",
-                "reference": "e475a6a468f6ed59293faa0e9651129d238ced3f"
+                "reference": "8187fab52c7c4822579e3bbcb3c8bee0c0058b05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NexusPHP/cs-config/zipball/e475a6a468f6ed59293faa0e9651129d238ced3f",
-                "reference": "e475a6a468f6ed59293faa0e9651129d238ced3f",
+                "url": "https://api.github.com/repos/NexusPHP/cs-config/zipball/8187fab52c7c4822579e3bbcb3c8bee0c0058b05",
+                "reference": "8187fab52c7c4822579e3bbcb3c8bee0c0058b05",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "friendsofphp/php-cs-fixer": "^3.34",
+                "friendsofphp/php-cs-fixer": "^3.35",
                 "php": "^8.0.1"
             },
             "conflict": {
@@ -1286,7 +1284,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-01T10:27:10+00:00"
+            "time": "2023-10-13T04:02:43+00:00"
         },
         {
             "name": "nikic/php-parser",

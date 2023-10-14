@@ -135,3 +135,9 @@ public/tests/*
 extendytest/*
 .php-cs-fixer.cache
 /DND/*
+
+
+#-------------------------
+# MkDocs
+#-------------------------
+site/

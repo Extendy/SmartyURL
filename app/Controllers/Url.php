@@ -18,6 +18,11 @@ use Extendy\Smartyurl\UrlTags;
  */
 class Url extends BaseController
 {
+    public function __construct()
+    {
+        $this->smartyurl = new SmartyUrl();
+    }
+
     public function index()
     {
         if (! auth()->user()->can('url.access')) {
@@ -54,10 +59,9 @@ class Url extends BaseController
         if (! auth()->user()->can('url.new')) {
             return smarty_permission_error();
         }
-        $SmartyURL = new SmartyUrl();
         // check if original url is valid url
         $originalUrl = esc($this->request->getPost('originalUrl'));
-        if (! $SmartyURL->isValidURL($originalUrl)) {
+        if (! $this->smartyurl->isValidURL($originalUrl)) {
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlInvalidOriginal'));
         }
 
@@ -165,16 +169,11 @@ class Url extends BaseController
             return redirect()->to('url/view/' . $inserted_url_id)->with('notice', lang('Url.AddNewURLAdded'));
         }
 
-        return redirect()->to('url/new')->withInput()->with('notice', lang('Account.WrongCurrentPassword'));
+        return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlError'));
     }
 
     public function edit($UrlId)
     {
-        // @TODO @FIXME  user cannot edit others URLs unless he is can super.admin
-        // check permissions
-        if (! auth()->user()->can('url.edit')) {
-            return smarty_permission_error();
-        }
         $UrlModel = new UrlModel();
         $UrlTags  = new UrlTags();
         $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
@@ -187,6 +186,11 @@ class Url extends BaseController
         if ($urlData === null) {
             // url not exsists in dataase
             return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+        // i will check the user permission , does he allowed to edit this url
+        $userCanManageUrl = $this->smartyurl->userCanManageUrl($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanManageUrl) {
+            return smarty_permission_error();
         }
         $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);
         // $urlTagsCloud = '[{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}]';
@@ -255,10 +259,8 @@ class Url extends BaseController
 
     public function editAction($UrlId)
     {
-        // @TODO @FIXME  user cannot edit others URLs unless he is can super.admin
-
         // check permissions
-        if (! auth()->user()->can('url.edit')) {
+        if (! auth()->user()->can('url.manage')) {
             return smarty_permission_error();
         }
         $url_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
@@ -268,9 +270,80 @@ class Url extends BaseController
         }
         $UrlModel = new UrlModel();
         $urlData  = $UrlModel->where('url_id', $url_id)->first();
-        dd($urlData);
-        // user cannot edit others URLs unless he is can super.admin
-        echo 'edit url action';
-        d($UrlId);
+        // check if the given url id is exists or not
+        if ($urlData === null) {
+            // url not exsists in dataase
+            return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+        // i will check the user permission , does he allowed to edit this url
+        $userCanManageUrl = $this->smartyurl->userCanManageUrl($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanManageUrl) {
+            return smarty_permission_error();
+        }
+
+        // user cannot edit others URLs unless he is can super.admin or admin.manageurls
+        // check if original url is valid url
+        $originalUrl = esc($this->request->getPost('originalUrl'));
+        if (! $this->smartyurl->isValidURL($originalUrl)) {
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlInvalidOriginal'));
+        }
+        // check the identifier is standard
+        $identifier = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
+        if (! preg_match(Config('Smartyurl')->urlIdentifierpattern, $identifier)) {
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlIdentifierPatternError', [Config('Smartyurl')->urlIdentifierpattern]));
+        }
+        // check if identifier is existing for another URL?
+        $UrlIdentifier = new UrlIdentifier();
+        if ($UrlIdentifier->CheckURLIdentifierExists($identifier, $UrlId)) {
+            // url idenitifier is exists on db
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlIdentifieralreadyExists', [$identifier]));
+        }
+        // @TODO identifier should not be exists route
+
+        // urlTitle
+        $urlTitle          = esc($this->request->getPost('UrlTitle'));
+        $redirectCondition = esc($this->request->getPost('redirectCondition'));
+        if ($redirectCondition === 'device' || $redirectCondition === 'geolocation') {
+            // url_conditions
+            // /...................here will be conditions
+            $conditions_array = [
+                'device'         => $this->request->getPost('device'),
+                'devicefinalurl' => $this->request->getPost('devicefinalurl'),
+                'geocountry'     => $this->request->getPost('geocountry'),
+                'geofinalurl'    => $this->request->getPost('geofinalurl'),
+            ];
+            $urlConditions      = new UrlConditions();
+            $json_urlConditions = $urlConditions->josonizeUrlConditions($conditions_array);
+            // i will check all conditions final url is valid urls or not
+            if (! $urlConditions->validateConditionsFinalURls($json_urlConditions)) {
+                return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlSomeFinalURLsIsNotValid'));
+            }
+        } else {
+            // no $redirectCondition
+            $json_urlConditions = null;
+        }
+
+        // try to update the url data on db
+
+        $updatedData = [
+            'url_identifier' => $identifier,
+            'url_title'      => $urlTitle,
+            'url_targeturl'  => $originalUrl,
+            'url_conditions' => $json_urlConditions,
+            // Add more fields as needed
+        ];
+
+        $UrlModel->update($url_id, $updatedData);
+
+        if ($UrlModel->affectedRows() > 0) {
+            // updated ok
+            // return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('OK'))->with('updated',"yes");
+            return redirect()->back()->with('success', lang('Url.UpdateURLOK'));
+        }
+
+        // updated error
+        return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
+
+        return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
     }
 }

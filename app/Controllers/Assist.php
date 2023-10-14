@@ -15,8 +15,8 @@ class Assist extends BaseController
 
     public function getURLtags()
     {
+        //@FIXME do we need this function ???
         $this->response->setContentType('application/json', 'utf-8');
-        $arrayData = ['sam', 'aka'];
         $jsonCode  = json_encode($arrayData);
 
         return $this->response->setBody($jsonCode);
@@ -27,7 +27,7 @@ class Assist extends BaseController
      */
     public function getAddNewUrlJsAssist(): \CodeIgniter\HTTP\ResponseInterface
     {
-        $this->response->setContentType('application/json', 'utf-8');
+        $this->response->setContentType('application/javascript', 'utf-8');
 
         // this need logged in user and has url.new permission
         if (! auth()->loggedIn()) {

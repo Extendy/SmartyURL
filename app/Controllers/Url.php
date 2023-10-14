@@ -18,6 +18,11 @@ use Extendy\Smartyurl\UrlTags;
  */
 class Url extends BaseController
 {
+    public function __construct()
+    {
+        $this->smartyurl = new SmartyUrl();
+    }
+
     public function index()
     {
         if (! auth()->user()->can('url.access')) {
@@ -54,10 +59,9 @@ class Url extends BaseController
         if (! auth()->user()->can('url.new')) {
             return smarty_permission_error();
         }
-        $SmartyURL = new SmartyUrl();
         // check if original url is valid url
         $originalUrl = esc($this->request->getPost('originalUrl'));
-        if (! $SmartyURL->isValidURL($originalUrl)) {
+        if (! $this->smartyurl->isValidURL($originalUrl)) {
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlInvalidOriginal'));
         }
 
@@ -170,11 +174,6 @@ class Url extends BaseController
 
     public function edit($UrlId)
     {
-        // @TODO @FIXME  user cannot edit others URLs unless he is can super.admin
-        // check permissions
-        if (! auth()->user()->can('url.edit')) {
-            return smarty_permission_error();
-        }
         $UrlModel = new UrlModel();
         $UrlTags  = new UrlTags();
         $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
@@ -187,6 +186,11 @@ class Url extends BaseController
         if ($urlData === null) {
             // url not exsists in dataase
             return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+        // i will check the user permission , does he allowed to edit this url
+        $userCanManageUrl = $this->smartyurl->userCanManageUrl($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanManageUrl) {
+            return smarty_permission_error();
         }
         $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);
         // $urlTagsCloud = '[{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}]';
@@ -255,10 +259,8 @@ class Url extends BaseController
 
     public function editAction($UrlId)
     {
-        // @TODO @FIXME  user cannot edit others URLs unless he is can super.admin
-
         // check permissions
-        if (! auth()->user()->can('url.edit')) {
+        if (! auth()->user()->can('url.manage')) {
             return smarty_permission_error();
         }
         $url_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
@@ -268,18 +270,21 @@ class Url extends BaseController
         }
         $UrlModel = new UrlModel();
         $urlData  = $UrlModel->where('url_id', $url_id)->first();
-        /**
-         * dd($urlData);
-         * user cannot edit others URLs unless he is can super.admin or admin.manageurls
-         * ------------------------------------------------------------------
-         *
-         * @FIXME @TODO check the permissions goes here <--------------------
-         * ------------------------------------------------------------------
-         */
-        $SmartyURL = new SmartyUrl();
+        // check if the given url id is exists or not
+        if ($urlData === null) {
+            // url not exsists in dataase
+            return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+        // i will check the user permission , does he allowed to edit this url
+        $userCanManageUrl = $this->smartyurl->userCanManageUrl($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanManageUrl) {
+            return smarty_permission_error();
+        }
+
+        // user cannot edit others URLs unless he is can super.admin or admin.manageurls
         // check if original url is valid url
         $originalUrl = esc($this->request->getPost('originalUrl'));
-        if (! $SmartyURL->isValidURL($originalUrl)) {
+        if (! $this->smartyurl->isValidURL($originalUrl)) {
             return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlInvalidOriginal'));
         }
         // check the identifier is standard

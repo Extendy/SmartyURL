@@ -42,7 +42,7 @@ class AuthGroups extends ShieldAuthGroups
         ],
         'user' => [
             'title'       => 'User',
-            'description' => 'General users of the site. Often customers.',
+            'description' => 'General users of the site.',
         ],
     ];
 
@@ -55,13 +55,12 @@ class AuthGroups extends ShieldAuthGroups
      * If a permission is not listed here it cannot be used.
      */
     public array $permissions = [
-        'super.admin'      => 'Does he super admin',
-        'admin.manageurls' => 'can manage other users URLs', // not used yet
+        'super.admin'           => 'Does he super admin',
+        'admin.manageotherurls' => 'can manage other users URLs', // not used yet
         // url
         'url.access' => 'Can Access URLs', // not used yet
         'url.new'    => 'Can Create a new URL',
-        'url.edit'   => 'Can Edit URL', // not used yet
-        'url.delete' => 'Can Delete URL', // not used yet
+        'url.manage' => 'Can Manage URL (edit , delete)',
     ];
 
     /**
@@ -79,12 +78,13 @@ class AuthGroups extends ShieldAuthGroups
             'url.*',
         ],
         'admin' => [
-            'admin.manageurls',
+            'admin.manageotherurls',
             'url.*',
         ],
         'user' => [
             'url.access',
             'url.new',
+            'url.manage', // this mean his urls only
         ],
     ];
 }

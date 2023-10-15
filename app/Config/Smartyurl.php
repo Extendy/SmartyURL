@@ -76,7 +76,10 @@ class Smartyurl extends BaseConfig
      *
      * @var string
      */
-    public $urlIdentifierpattern = '/^[A-Za-z0-9][A-Za-z0-9_\-\.\s]{0,48}[A-Za-z0-9]$/';
+    // with allow of .
+    // public $urlIdentifierpattern = '/^[A-Za-z0-9][A-Za-z0-9_\-\.\s]{0,48}[A-Za-z0-9]$/';
+    // without allow of .
+    public $urlIdentifierpattern = '/^[A-Za-z0-9][A-Za-z0-9_\-\s]{0,48}[A-Za-z0-9]$/';
 
     /** -------------------------------------------------------------------------
      * Please DO NOT modify uder this line unless you know what you are doing

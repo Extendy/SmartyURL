@@ -145,13 +145,12 @@ class Url extends BaseController
                 //    [1] ['value' => "{$tag}", 'tag_id' => $UrlTagsModel->getInsertID()]
                 //    ...etc
                 // now I will insert the tags for this url in urltagsdata db table
-                $UrlTagsDataModel = new UrlTagsDataModel();
 
                 foreach ($urlTags_array as $tag) {
                     if (isset($tag->tag_id)) {
                         // $tag->tag_id is defined so it is already has its id
                         // $tag->value contains name of tag
-                        $UrlTagsDataModel->insert(
+                        $this->urltagsdatamodel->insert(
                             [
                                 'url_id' => $inserted_url_id,
                                 'tag_id' => $tag->tag_id,
@@ -162,7 +161,7 @@ class Url extends BaseController
 
                 // insert the new tags that's created on this session
                 foreach ($try_insert_tags as $newtag) {
-                    $UrlTagsDataModel->insert(
+                    $this->urltagsdatamodel->insert(
                         [
                             'url_id' => $inserted_url_id,
                             'tag_id' => $newtag['tag_id'],
@@ -369,13 +368,12 @@ class Url extends BaseController
                 //    [1] ['value' => "{$tag}", 'tag_id' => $UrlTagsModel->getInsertID()]
                 //    ...etc
                 // now I will insert the tags for this url in urltagsdata db table
-                $UrlTagsDataModel = new UrlTagsDataModel();
 
                 foreach ($urlTags_array as $tag) {
                     if (isset($tag->tag_id)) {
                         // $tag->tag_id is defined so it is already has its id
                         // $tag->value contains name of tag
-                        $UrlTagsDataModel->insert(
+                        $this->urltagsdatamodel->insert(
                             [
                                 'url_id' => $url_id,
                                 'tag_id' => $tag->tag_id,
@@ -386,7 +384,7 @@ class Url extends BaseController
 
                 // insert the new tags that's created on this session
                 foreach ($try_insert_tags as $newtag) {
-                    $UrlTagsDataModel->insert(
+                    $this->urltagsdatamodel->insert(
                         [
                             'url_id' => $url_id,
                             'tag_id' => $newtag['tag_id'],

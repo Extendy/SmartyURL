@@ -1,6 +1,10 @@
 # SmartyURL
 
-**NOT READY!! The application is currently under development and not yet ready for use. We will remove this notice once it becomes available for use.**
+
+<div style="background-color: #000; color: #ff0; padding: 10px;">
+NOT READY!! The application is currently under development and not yet ready for use. We will remove this notice once it becomes available for use.
+</div>
+
 
 SmartyURL, a powerful & open-source URL management tool, empowers businesses and individuals they need self-hosted tool to customize, track, shorten URLs, and manage their URLs for marketing, analytics, and reporting.
 

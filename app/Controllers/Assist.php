@@ -9,19 +9,6 @@ use Extendy\Smartyurl\WorldCountries;
  */
 class Assist extends BaseController
 {
-    public function index()
-    {
-    }
-
-    public function getURLtags()
-    {
-        //@FIXME do we need this function ???
-        $this->response->setContentType('application/json', 'utf-8');
-        $jsonCode  = json_encode($arrayData);
-
-        return $this->response->setBody($jsonCode);
-    }
-
     /**
      * This Controller return the new url javascriot needed codes as application/javascript response
      */

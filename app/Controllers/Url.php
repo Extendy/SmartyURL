@@ -20,7 +20,8 @@ class Url extends BaseController
 {
     public function __construct()
     {
-        $this->smartyurl = new SmartyUrl();
+        $this->smartyurl        = new SmartyUrl();
+        $this->urltagsdatamodel = new UrlTagsDataModel();
     }
 
     public function index()
@@ -345,6 +346,55 @@ class Url extends BaseController
 
         if ($UrlModel->affectedRows() > 0) {
             // updated ok
+
+            // i will check tags and update any changes
+            // samsam
+            // first of all i will delete all url tags
+            $delresult = $this->urltagsdatamodel->delUrlTags($url_id);
+            // now i will enter the tags again
+            $urlTags = $this->request->getPost('urlTags');
+            if ($urlTags !== '') {
+                $tags          = [];
+                $urlTags_array = json_decode($urlTags);
+
+                foreach ($urlTags_array as $tag) {
+                    $tags[] = $tag->value;
+                }
+                // we must deal with tag as it not ""
+                $urltabs_class   = new UrlTags();
+                $try_insert_tags = $urltabs_class->tryInsertTags($tags);
+                // if $try_insert_tags size is 0 so no new tags added to db
+                // else there is some tags added to db and $try_insert_tags is array  for 'tag_id' of the added tags
+                // as [0] ['value' => "{$tag}", 'tag_id' => $UrlTagsModel->getInsertID()]
+                //    [1] ['value' => "{$tag}", 'tag_id' => $UrlTagsModel->getInsertID()]
+                //    ...etc
+                // now I will insert the tags for this url in urltagsdata db table
+                $UrlTagsDataModel = new UrlTagsDataModel();
+
+                foreach ($urlTags_array as $tag) {
+                    if (isset($tag->tag_id)) {
+                        // $tag->tag_id is defined so it is already has its id
+                        // $tag->value contains name of tag
+                        $UrlTagsDataModel->insert(
+                            [
+                                'url_id' => $url_id,
+                                'tag_id' => $tag->tag_id,
+                            ]
+                        );
+                    }
+                }
+
+                // insert the new tags that's created on this session
+                foreach ($try_insert_tags as $newtag) {
+                    $UrlTagsDataModel->insert(
+                        [
+                            'url_id' => $url_id,
+                            'tag_id' => $newtag['tag_id'],
+                        ]
+                    );
+                }
+            }
+
             // return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('OK'))->with('updated',"yes");
             return redirect()->back()->with('success', lang('Url.UpdateURLOK'));
         }

@@ -79,7 +79,7 @@ class UrlTags
     }
 
     // This function try to insert tags if not already exists it urltags db table
-    public function tryInsertTags(array $tags)
+    public function tryInsertTags(array $tags): array
     {
         $inserted_ids      = [];
         $UrlTagsModel      = new UrlTagsModel();

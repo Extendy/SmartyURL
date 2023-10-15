@@ -3,6 +3,7 @@
 namespace Extendy\Smartyurl;
 
 use App\Models\UrlModel;
+use CodeIgniter\Config\Services;
 
 class UrlIdentifier
 {
@@ -33,5 +34,29 @@ class UrlIdentifier
         }
 
         return $returnvalue;
+    }
+
+    /**
+     * Check if the given url identifier is allowed to use or not
+     */
+    public function isURLIdentifierallowed(string $urlidentifier): bool
+    {
+        $urlidentifier = mb_strtolower($urlidentifier);
+        $allowed       = true;
+        $router        = Services::routes();
+
+        $routes_get                        = $router->getRoutes('get');
+        $urlidentifier_exists_as_route_get = array_key_exists($urlidentifier, $routes_get);
+        if ($urlidentifier_exists_as_route_get) {
+            $allowed = false;
+        }
+
+        $routes_post                        = $router->getRoutes('get');
+        $urlidentifier_exists_as_route_post = array_key_exists($urlidentifier, $routes_post);
+        if ($urlidentifier_exists_as_route_post) {
+            $allowed = false;
+        }
+
+        return $allowed;
     }
 }

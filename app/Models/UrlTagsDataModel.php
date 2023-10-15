@@ -60,4 +60,9 @@ class UrlTagsDataModel extends BaseModel
 
         return $this->findAll();
     }
+
+    public function delUrlTags($urlId)
+    {
+        return $this->where('url_id', $urlId)->delete();
+    }
 }

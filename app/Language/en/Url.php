@@ -44,4 +44,5 @@ return [
 
     'urlIdentifieralreadyExists' => 'Masked URL "{0}" Already Exists on database, choose another one',
     'urlIdentifierPatternError'  => 'Oops! The URL identifier you entered is not valid. Please make sure it is alphanumeric and should starts with alphanumeric and may contains only underscores, hyphens, and periods. It must also be between 1 and 50 characters long.',
+    'urlIdentifierNotAllowed'    => 'The URL identifier (Masked URL) is not allowed. It may already exist as a route or be a reserved word.',
 ];

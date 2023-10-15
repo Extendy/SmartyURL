@@ -74,7 +74,11 @@ class Url extends BaseController
             // url idenitifier is exists on db
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifieralreadyExists', [$identifier]));
         }
-        // @TODO identifier should not be exists route
+
+        if (! $UrlIdentifier->isURLIdentifierallowed($identifier)) {
+            // url identifier is not allowed
+            return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierNotAllowed', [$identifier]));
+        }
 
         // urlTitle
         $urlTitle          = esc($this->request->getPost('UrlTitle'));
@@ -298,7 +302,11 @@ class Url extends BaseController
             // url idenitifier is exists on db
             return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlIdentifieralreadyExists', [$identifier]));
         }
-        // @TODO identifier should not be exists route
+
+        if (! $UrlIdentifier->isURLIdentifierallowed($identifier)) {
+            // url identifier is not allowed
+            return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierNotAllowed', [$identifier]));
+        }
 
         // urlTitle
         $urlTitle          = esc($this->request->getPost('UrlTitle'));
@@ -342,8 +350,6 @@ class Url extends BaseController
         }
 
         // updated error
-        return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
-
         return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
     }
 }

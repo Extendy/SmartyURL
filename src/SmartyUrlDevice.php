@@ -145,7 +145,7 @@ class SmartyUrlDevice
      *
      * @throws MobileDetectException
      */
-    private function detectVistorDeviceType(): ?string
+    protected function detectVistorDeviceType(): ?string
     {
         $visitor_device = null;
         $detect         = new MobileDetect();

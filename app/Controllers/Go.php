@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UrlModel;
 use Extendy\Smartyurl\SmartyUrlDevice;
+use Extendy\Smartyurl\UrlHits;
 use RuntimeException;
 
 class Go extends BaseController
@@ -34,7 +35,9 @@ class Go extends BaseController
         }
 
         // the first target of the url before apply any conditions
+        $url_id         = $urlData['url_id'];
         $finalTargetURL = $urlData['url_targeturl'];
+        $visitorCountry = smarty_get_visitor_ip_country();
         if ($urlData['url_conditions'] === null) {
             // this mean return the target url as is because it does not have conditions
             $finalTargetURL = $urlData['url_targeturl'];
@@ -50,7 +53,6 @@ class Go extends BaseController
                 case 'location':
                     // sample json data
                     // {"condition": "location", "conditions": [{"JO": "https://extendy.net/?jo"}, {"SA": "https://extendy.net/?sa"}]}
-                    $visitorCountry = smarty_get_visitor_ip_country();
 
                     foreach ($url_conditions->conditions as $condition) {
                         if (property_exists($condition, $visitorCountry)) {
@@ -95,10 +97,13 @@ class Go extends BaseController
             $finalTargetURL = $urlData['url_targeturl'];
         }
 
+        // I will store this hit into urlhits
+        $urlhits                                = new UrlHits();
+        $visit_collected_data['visitorCountry'] = $visitorCountry;
+        $visit_collected_data['finalUrl']       = $finalTargetURL;
+        $urlhits->recordUrlHit($url_id, $visit_collected_data);
+
         // Use the redirect() method to redirect to the external URL
         return $response->redirect($finalTargetURL, 'auto', Config('Smartyurl')->http_response_codes_when_redirect); // You can adjust the status code and 'auto' option as needed
-        // @TODO @FIXME ***** i will do the following to url before go
-        // store the visit into url hits table
-        // then i can redirect the user
     }
 }

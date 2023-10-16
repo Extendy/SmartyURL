@@ -2,24 +2,27 @@
 
 namespace App\Models;
 
-class UrlModel extends BaseModel
+class UrlHitsModel extends BaseModel
 {
     protected $DBGroup          = 'default';
-    protected $primaryKey       = 'url_id';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'url_identifier',
-        'url_user_id',
-        'url_title',
-        'url_targeturl',
-        'url_conditions',
+        'urlhit_urlid',
+        'urlhit_at',
+        'urlhit_ip',
+        'urlhit_country',
+        'urlhit_visitordevice',
+        'urlhit_useragent',
+        'urlhit_finaltarget',
+        'urlhit_data',
     ];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
@@ -46,18 +49,6 @@ class UrlModel extends BaseModel
     {
         parent::initialize();
 
-        $this->table = $this->dbtables['urls'];
-    }
-
-    public function InsertURL()
-    {
-    }
-
-    public function increaseHitsCount($urlId)
-    {
-        $builder = $this->builder();
-        $builder->where('url_id', $urlId)
-            ->set('url_hitscounter', 'url_hitscounter + 1', false)
-            ->update();
+        $this->table = $this->dbtables['urlhits'];
     }
 }

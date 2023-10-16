@@ -103,10 +103,10 @@ class Smartyurl extends BaseConfig
      *          that number to url go will return 429 error
      *          this is to protect the go services from begin attacked.
      *
-     * @default is 100
-     * means 100 requests / minute per IP address. we think it is enough , if you need more try ti increase it.
+     * @default is 10
+     * means 10 requests / minute per IP address. we think it is enough , if you need more try ti increase it.
      */
-    public $siteRateLimit = 100;
+    public $siteRateLimit = 10;
 
     /**
      * @var string default theme folder in app/Views

@@ -170,7 +170,10 @@ email.SMTPCrypto = ssl
 # session.cookieName = 'ci_session'
 # session.expiration = 7200
 # session.savePath = null
+
+# set matchIP if you worry about session hijacking, but this will require you to login every ip change.
 # session.matchIP = false
+
 # session.timeToUpdate = 300
 # session.regenerateDestroy = false
 

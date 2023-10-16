@@ -51,7 +51,7 @@ class UrlIdentifier
             $allowed = false;
         }
 
-        $routes_post                        = $router->getRoutes('get');
+        $routes_post                        = $router->getRoutes('post');
         $urlidentifier_exists_as_route_post = array_key_exists($urlidentifier, $routes_post);
         if ($urlidentifier_exists_as_route_post) {
             $allowed = false;

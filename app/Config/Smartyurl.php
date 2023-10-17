@@ -93,20 +93,21 @@ class Smartyurl extends BaseConfig
      *          that number to url go will return 429 error
      *          this is to protect the go services from being attacked.
      *
-     * @default is 60
-     * means 60 requests / minute per IP address. we think it is enough , if you need more try ti increase it.
+     * @default is 15
+     * means 15 requests / minute per IP address.
+     * we think it is enough if you need more, try to increase it.
      */
-    public $urlWebRateLimit = 60;
+    public $urlWebRateLimit = 15;
 
     /**
      * @var int maxiumum requests are made website per minute per IP address , after
      *          that number to url go will return 429 error
      *          this is to protect the go services from begin attacked.
      *
-     * @default is 10
-     * means 10 requests / minute per IP address. we think it is enough , if you need more try ti increase it.
+     * @default is 100
+     * means 100 requests / minute per IP address. we think it is enough , if you need more try ti increase it.
      */
-    public $siteRateLimit = 10;
+    public $siteRateLimit = 100;
 
     /**
      * @var string default theme folder in app/Views

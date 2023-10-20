@@ -184,7 +184,7 @@
                 <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
                     <li class="nav-item">
-                        <a href="<?= site_url('/dashboard'); ?>" class="nav-link">
+                        <a href="<?= site_url('/dashboard'); ?>" class="nav-link <?= (url_is('/dashboard')) ? 'active' : '' ?>">
                             <i class="nav-icon bi bi-house-door"></i>
                             <p>
                                 <?= lang('Common.dashboardLnk'); ?>
@@ -194,9 +194,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/url/none" class="nav-link">
-                            <i class="nav-icon bi bi-download"></i>
-                            <p>Empty page</p>
+                        <a href="<?= site_url('/url'); ?>" class="nav-link <?= (url_is('/url')) ? 'active' : '' ?>">
+                            <i class="nav-icon bi bi-database"></i>
+                            <?= lang('Url.urlsLink'); ?>
                         </a>
                     </li>
 

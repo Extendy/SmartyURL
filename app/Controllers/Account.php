@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 // use CodeIgniter\Shield\Models\UserModel;
 use CodeIgniter\Shield\Authentication\Passwords;
-use CodeIgniter\Shield\Models\RememberModel;
 use Config\Services;
 
 /**
@@ -80,9 +79,9 @@ class Account extends BaseController
 
         $users->save($user);
 
-        $rememberModel = model(RememberModel::class);
-        $user          = auth()->user();
-        $rememberModel->purgeRememberTokens($user);
+        $user = auth()->user();
+        // Removes any remember-me tokens
+        auth()->forget($user);
 
         // if you plan to log out the user after change password then uncomment this
         /*

@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "codeigniter4/framework",
-            "version": "v4.4.1",
+            "version": "v4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/framework.git",
-                "reference": "844616ef291ca07b726c1aaca552e16aadc3ceeb"
+                "reference": "c84d3223de9320d58a770601aa427e2c1ae845d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/844616ef291ca07b726c1aaca552e16aadc3ceeb",
-                "reference": "844616ef291ca07b726c1aaca552e16aadc3ceeb",
+                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/c84d3223de9320d58a770601aa427e2c1ae845d9",
+                "reference": "c84d3223de9320d58a770601aa427e2c1ae845d9",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
-            "time": "2023-09-05T00:46:08+00:00"
+            "time": "2023-10-19T21:36:24+00:00"
         },
         {
             "name": "codeigniter4/settings",
@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/shield.git",
-                "reference": "0cd5f3f6e22b0bc7d6d18fd8e8e676db4c2cba6b"
+                "reference": "50fb634742c2b4379c51855ae7175d77c34eeac3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/0cd5f3f6e22b0bc7d6d18fd8e8e676db4c2cba6b",
-                "reference": "0cd5f3f6e22b0bc7d6d18fd8e8e676db4c2cba6b",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/50fb634742c2b4379c51855ae7175d77c34eeac3",
+                "reference": "50fb634742c2b4379c51855ae7175d77c34eeac3",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/shield"
             },
-            "time": "2023-10-17T14:52:34+00:00"
+            "time": "2023-10-19T09:48:52+00:00"
         },
         {
             "name": "ip2location/ip2location-php",
@@ -339,12 +339,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "2353cd8c345c0a36bec6213f89ca09e999a9fbb3"
+                "reference": "0a3bbb83cbb0e78a96b14cb2fd12af2878f7a912"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/2353cd8c345c0a36bec6213f89ca09e999a9fbb3",
-                "reference": "2353cd8c345c0a36bec6213f89ca09e999a9fbb3",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/0a3bbb83cbb0e78a96b14cb2fd12af2878f7a912",
+                "reference": "0a3bbb83cbb0e78a96b14cb2fd12af2878f7a912",
                 "shasum": ""
             },
             "require": {
@@ -396,7 +396,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-16T21:03:41+00:00"
+            "time": "2023-10-18T18:32:11+00:00"
         },
         {
             "name": "psr/log",

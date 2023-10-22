@@ -541,6 +541,12 @@ class Assist extends BaseController
                         "dom": 'lfrtipB',
                         "processing": true,
                         "serverSide": true,
+                        responsive: true,
+                        "columnDefs": [
+                            {
+                                "width": "25%", "targets":0,
+                            }
+                        ],
                         deferRender: true,
                         "ajax": {
                             "url": "/url/listdata", // Adjust the URL to your controller and method
@@ -592,7 +598,7 @@ class Assist extends BaseController
                         // Make the AJAX call with the debounced searchValue
                         var dataTable = $('#urlList').DataTable();
                         dataTable.search(searchValue).draw();
-                    }, 500); // Adjust the delay time (in milliseconds)
+                    }, 700); // Adjust the delay time (in milliseconds)
 
                     // Attach an event listener to the search input
                     $('#searchInput').on('keyup', function () {

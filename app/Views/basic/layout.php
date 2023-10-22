@@ -27,6 +27,10 @@
     <link rel="stylesheet" href="<?= smarty_cdn()?>css/adminlte<?= smarty_current_lang_dotdirection(); ?>.min.css">
     <link rel="stylesheet" href="<?= smarty_cdn()?>css/smarty<?= smarty_current_lang_dotdirection(); ?>.css">
     <!--end::Required Plugin(AdminLTE)-->
+    <!--BEGIN: cssheaderarea css header area contains any specific javascript files that view files may load -->
+    <?= $this->renderSection('cssheaderarea') ?>
+    <!--END: cssheaderarea css header area contains any specific javascript files that view files may load -->
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->

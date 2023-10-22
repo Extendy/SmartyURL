@@ -23,8 +23,8 @@ class Assist extends BaseController
 
             return $this->response;
         }
-        if (! auth()->user()->can('url.new')) {
-            $this->response->setBody("console.log('permissions error');");
+        if (! auth()->user()->can('url.new', 'super.admin')) {
+            $this->response->setBody('permissions error');
             $this->response->setStatusCode(500);
 
             return $this->response;
@@ -511,5 +511,122 @@ class Assist extends BaseController
             EOT;
 
         return $this->response->setBody($smaryUrlGlobaljsCode);
+    }
+
+    public function getListUrlsJsAssist(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        if (! auth()->user()->can('url.new', 'super.admin')) {
+            $this->response->setBody('permissions error');
+            $this->response->setStatusCode(500);
+
+            return $this->response;
+        }
+
+        $jsCode = '';
+        $this->response->setContentType('application/javascript', 'utf-8');
+        $lang                   = session('lang');
+        $urlsListErrorAjaxError = lang('Url.urlsListErrorAjaxError');
+        $jsCode .= <<< EOT
+
+               $(document).ready(function () {
+
+                    //var csrfToken = document.querySelector("input[name=csrf_smarty]").value;
+                    // alert(csrfToken);
+
+                    $('#urlList').DataTable({
+                        "language": {
+                            "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/{$lang}.json",
+                        },
+                        "searching": true,
+                        "dom": 'lfrtipB',
+                        "processing": true,
+                        "serverSide": true,
+                        deferRender: true,
+                        "ajax": {
+                            "url": "/url/listdata", // Adjust the URL to your controller and method
+                            "dataSrc": "data",
+                            "type": "get",
+                            "error": function (xhr, error, thrown) {
+                                var errorContainer = $('#ListUrlsErrorContainer');
+                                errorContainer.text("{$urlsListErrorAjaxError}");
+                                errorContainer.show();
+                            },
+                            /* "success": function (data) {
+                                // Your success handling code
+                                var errorContainer = $('#ListUrlsErrorContainer');
+                                 errorContainer.hide();
+                                 // Render the data in the DataTable
+                                var dataTable = $('#urlList').DataTable();
+                                dataTable.clear().rows.add(data).draw();
+                            },*/
+                        },
+                        // Add other DataTables configurations as needed
+                    });
+
+
+
+
+
+
+
+
+
+
+                    // Custom debounce function
+                    function debounce(func, wait) {
+                        let timeout;
+                        return function () {
+                            const context = this;
+                            const args = arguments;
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => {
+                                func.apply(context, args);
+                            }, wait);
+                        };
+                    }
+
+
+                    //BEING:for custom input search
+                    // Use the custom debounce function
+                    var debounceAjaxSearch = debounce(function (searchValue) {
+                        // Make the AJAX call with the debounced searchValue
+                        var dataTable = $('#urlList').DataTable();
+                        dataTable.search(searchValue).draw();
+                    }, 500); // Adjust the delay time (in milliseconds)
+
+                    // Attach an event listener to the search input
+                    $('#searchInput').on('keyup', function () {
+                        var searchValue = $(this).val();
+                        debounceAjaxSearch(searchValue);
+                    });
+
+
+
+                    $('#customSearchButton').on('click', function () {
+                        var searchValue = $('#searchInput').val(); // Get the value from your custom search input
+                        var dataTable = $('#urlList').DataTable();
+                        dataTable.search(searchValue).draw();
+                    });
+
+                    //END:for custom input search
+
+                    //BEGIN:for custom Length Selector
+                    // Event listener for the custom length control
+                     $('#customLengthSelector').on('change', function () {
+                        var newLength = $(this).val();
+                         var dataTable = $('#urlList').DataTable();
+                        dataTable.page.len(newLength).draw();
+                     });
+                     //END:for custom Length Selector
+
+
+                    //show the main
+
+                });
+
+
+            EOT;
+
+        return $this->response->setBody($jsCode);
     }
 }

@@ -53,10 +53,7 @@ class SmartyUrl
 
         // the above permissions are for superuser and admins and can deal with all urls not just there urls.
         // but url.manage permission means his own urls only
-        // dd($urlOwnerUserId);
+        // check it this url is his own url and his usergroup has url.manage permissions
         return (bool) (auth()->user()->can('url.manage') && ($urlOwnerUserId === user_id()));
-        // this url is his own url and his usergroup has url.manage permissions
-
-        // if we comes here so the logged in user does not have the correct permissions to manage the given url
     }
 }

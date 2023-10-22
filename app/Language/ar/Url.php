@@ -7,8 +7,10 @@ return [
     'UpdateURLTitle'        => 'تحديث رابط ذكي',
 
     'OriginalUrl'                  => 'الرابط الأصلي',
+    'visitOriginalUrl'             => 'زيارة الرابط',
     'UrlTitle'                     => 'العنوان',
     'UrlTitleDescription'          => '(اي وصف للرابط)',
+    'UrlTitleNoTitle'              => 'بدون عنوان',
     'MaskedShortUrl'               => 'الرابط المختصر',
     'AddRedirectConditionOptional' => 'اضافة شرط اعادة توجية (اختياري)',
     'ByvisitorsGeolocation'        => 'بالاعتماد على الموقع الجغرافي للزائر',
@@ -35,6 +37,13 @@ return [
     'UpdateURLError' => 'حدث خطا ما أثناء تحديث بيانات الرابط',
 
     'urlsLink' => 'فهرس الراوبط',
+    'urlsList' => 'استعراض فهرس الروابط',
+
+    'urlsListSearchOnUrls'          => 'البحث في الروابط عن',
+    'urlsListSearchOnUrlsSearchBtn' => 'بحث',
+    'urlsListEntriesPerPage'        => 'عدد النتائج في الصفحة:',
+    'urlsListErrorAjaxError'        => 'حدث خطأ أثناء تحميل البيانات. حاول مرة اخرى.',
+    'UrlHitsNo'                     => 'عدد الزايارات',
 
     'urlNotFoundShort'           => '404 رابط غير موجود',
     'urlNotFoundLong'            => 'أووبس ، الرابط الذي تحاول الوصول له غير موجود ربما تم حذفه او تعديله',

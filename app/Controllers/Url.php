@@ -22,18 +22,102 @@ class Url extends BaseController
     {
         $this->smartyurl        = new SmartyUrl();
         $this->urltagsdatamodel = new UrlTagsDataModel();
+        $this->urlmodel         = new UrlModel();
     }
 
     public function index()
     {
-        if (! auth()->user()->can('url.access')) {
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
             return smarty_permission_error();
-
-            exit(1);
         }
-        // also the user must own this url or he is superadmin
 
+        return view(smarty_view('url/list'));
         d('this is the index of url');
+    }
+
+    /**
+     * This function return the json data while listing urls
+     *
+     * @return void
+     */
+    public function listData()
+    {
+        // @TODO check login and permissions
+        // dd("f");
+        // @TODO @FIXME YOu must add maxiums that cannot br ovwerwritttn to avoid attacks
+
+        $searchValue = $this->request->getGet('search')['value'] ?? '';
+
+        $draw   = $this->request->getGet('draw');
+        $start  = $this->request->getGet('start');
+        $length = $this->request->getGet('length');
+
+        if ($searchValue !== '') {
+            $this->urlmodel->like('url_identifier', $searchValue)
+                ->orLike('url_id', $searchValue)
+                ->orLike('url_title', $searchValue)
+                ->orLike('url_targeturl', $searchValue);
+        }
+
+        $query = $this->urlmodel->select('*')  // Select the columns you need
+            ->limit($length, $start)  // Apply the limit and start offset
+            ->get();
+
+        // I need to know for this filter how many result will be
+        if ($searchValue !== '') {
+            $this->urlmodel->like('url_identifier', $searchValue)
+                ->orLike('url_id', $searchValue)
+                ->orLike('url_title', $searchValue)
+                ->orLike('url_targeturl', $searchValue);
+        }
+        $query2  = $this->urlmodel->select('*');
+        $numRows = $query2->countAllResults();
+
+        $records = [];
+        // Fetch the results
+        $results     = $query->getResult();
+        $query_count = count($results);
+
+        $urlAllCount = $this->urlmodel->countAll();
+
+        // print_r($results);
+        foreach ($results as $result) {
+            if ($result->url_title === '') {
+                $urlTitle = lang('Url.UrlTitleNoTitle');
+            } else {
+                $urlTitle = $result->url_title;
+            }
+
+            // $result->url_id],$result->url_title,$result->url_hitscounter
+            $records[] = [
+                "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
+                 <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil-fill'></i></a>
+                ",
+                " {$urlTitle}
+                 <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
+                ",
+                $result->url_hitscounter,
+            ];
+        }
+
+        // $totalRecords = $this->urlmodel->getTotalRecordsCount();
+        /* $records = [
+             [1, "John Doe", "john@example.com"],
+             [2, "Jane Smith", "jane@example.com"],
+             [3, "3Jane Smith", "jane@example.com"],
+             [4, "4Jane Smith", "jane@example.com"],
+             [5, "5Jane Smith", "jane@example.com"],
+             // Add more rows as needed
+         ];*/
+
+        $data = [
+            'draw'            => $draw,
+            'recordsTotal'    => $urlAllCount,
+            'recordsFiltered' => $numRows,
+            'data'            => $records,
+        ];
+
+        return $this->response->setJSON($data);
     }
 
     public function view($UrlId)
@@ -43,7 +127,7 @@ class Url extends BaseController
 
     public function new()
     {
-        if (! auth()->user()->can('url.new')) {
+        if (! auth()->user()->can('url.new', 'super.admin')) {
             // return  redirect()->route('permissions')->with('error', lang('Auth.notEnoughPrivilege'));
             return smarty_permission_error();
         }
@@ -57,7 +141,7 @@ class Url extends BaseController
 
     public function newAction()
     {
-        if (! auth()->user()->can('url.new')) {
+        if (! auth()->user()->can('url.new', 'super.admin')) {
             return smarty_permission_error();
         }
         // check if original url is valid url
@@ -263,10 +347,6 @@ class Url extends BaseController
 
     public function editAction($UrlId)
     {
-        // check permissions
-        if (! auth()->user()->can('url.manage')) {
-            return smarty_permission_error();
-        }
         $url_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
         if ($url_id === 0) {
             // url_id given is not valid id

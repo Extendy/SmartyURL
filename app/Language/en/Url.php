@@ -7,8 +7,10 @@ return [
     'UpdateURLTitle'        => 'Modify URL',
 
     'OriginalUrl'                  => 'Original URL',
+    'visitOriginalUrl'             => 'Visit Link',
     'UrlTitle'                     => 'Title',
     'UrlTitleDescription'          => '(Any description)',
+    'UrlTitleNoTitle'              => 'No Title',
     'MaskedShortUrl'               => 'Masked (or shorten) URL',
     'AddRedirectConditionOptional' => 'Add Redirect condition (Optional',
     'ByvisitorsGeolocation'        => 'By Visitor\'s Geolocation',
@@ -35,6 +37,13 @@ return [
     'UpdateURLError' => 'An error occurred while updating the URL',
 
     'urlsLink' => 'URLs Bucket',
+    'urlsList' => 'List Urls Bucket',
+
+    'urlsListSearchOnUrls'          => 'Search on URLs for',
+    'urlsListSearchOnUrlsSearchBtn' => 'Search',
+    'urlsListEntriesPerPage'        => 'Entries per page:',
+    'urlsListErrorAjaxError'        => 'An error occurred while loading data. Please try again.',
+    'UrlHitsNo'                     => 'Hits No.',
 
     'urlNotFoundShort'           => '404 URL Not Found',
     'urlNotFoundLong'            => 'Oops, the link you are trying to access is not found. It may have been deleted or modified.',

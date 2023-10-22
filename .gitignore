@@ -136,6 +136,9 @@ extendytest/*
 .php-cs-fixer.cache
 /DND/*
 
+#npm
+node_modules/
+
 
 #-------------------------
 # MkDocs

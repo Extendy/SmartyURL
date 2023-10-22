@@ -18,6 +18,7 @@ $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'session']);
 // URL
 $routes->group('url', static function ($routes) {
     $routes->get('/', 'Url::index', ['filter' => 'session']);
+    $routes->get('listdata', 'Url::listData', ['filter' => 'session']); // @FIXME @TODO need to add filter after test
     $routes->get('view/(:num)', 'Url::view/$1', ['filter' => 'session']);
     $routes->get('new', 'Url::new', ['filter' => 'session']);
     $routes->post('new', 'Url::newAction', ['filter' => 'session']);
@@ -32,8 +33,9 @@ $routes->group('url', static function ($routes) {
 $routes->get('lang/{locale}', 'Language::index', ['filter' => 'afterlangchange']);
 
 // Assist
-$routes->get('assist/newurl', 'Assist::getAddNewUrlJsAssist');
+$routes->get('assist/newurl', 'Assist::getAddNewUrlJsAssist', ['filter' => 'session']);
 $routes->get('assist/smartyurl', 'Assist::getSmartyUrlGlobalJsAssist');
+$routes->get('assist/listurls', 'Assist::getListUrlsJsAssist', ['filter' => 'session']);
 
 // URL redirects
 // with go route

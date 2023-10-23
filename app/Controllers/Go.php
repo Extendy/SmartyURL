@@ -54,10 +54,9 @@ class Go extends BaseController
                     // sample json data
                     // {"condition": "location", "conditions": [{"JO": "https://extendy.net/?jo"}, {"SA": "https://extendy.net/?sa"}]}
 
-                    foreach ($url_conditions->conditions as $condition) {
-                        if (property_exists($condition, $visitorCountry)) {
-                            // final traget found
-                            $finalTargetURL = $condition->{$visitorCountry};
+                    foreach ($url_conditions->conditions as $condition_country => $condition_url) {
+                        if ($condition_country === $visitorCountry) {
+                            $finalTargetURL = $condition_url;
                             // exit the foreach loop while we found the condition and no need to keep searching.
                             break;
                         }

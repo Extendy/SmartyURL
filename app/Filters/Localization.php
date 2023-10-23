@@ -49,9 +49,12 @@ class Localization implements FilterInterface
         if ($usercustomlocale === '') {
             // no custom lang for user , use def
             $language->setLocale(setting('App.defaultLocale'));
+            $session->set('lang', setting('App.defaultLocale'));
         } else {
             // there is cusom locale for user
+            // @TODO FIX ME , I must check to see if this workd when I deal with user settings
             $language->setLocale($usercustomlocale);
+            $session->set('lang', $usercustomlocale);
         }
     }
 

@@ -43,7 +43,10 @@ return [
     'urlsListSearchOnUrlsSearchBtn' => 'بحث',
     'urlsListEntriesPerPage'        => 'عدد النتائج في الصفحة:',
     'urlsListErrorAjaxError'        => 'حدث خطأ أثناء تحميل البيانات. حاول مرة اخرى.',
+    'urlListTags'                   => 'هاشتاجات الرابط',
     'UrlHitsNo'                     => 'عدد الزيارات',
+    'UrlId'                         => 'رقم',
+    'UrlTestUrl'                    => 'اختبار الرابط',
 
     'urlNotFoundShort'           => '404 رابط غير موجود',
     'urlNotFoundLong'            => 'أووبس ، الرابط الذي تحاول الوصول له غير موجود ربما تم حذفه او تعديله',

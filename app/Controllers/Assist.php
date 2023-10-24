@@ -560,7 +560,7 @@ class Assist extends BaseController
                             {
                                 // "width": "25%", "targets":0,
                             },
-                             { orderable: false, targets: 2 },
+                             { orderable: false, targets: 3 },
                              { className: "dt-head-center", targets: [0,1,2,3,4 ] },
                              { className: "dt-nowrap", targets: [ 2 ] },
 

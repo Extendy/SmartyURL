@@ -70,6 +70,7 @@ class UrlModel extends BaseModel
     public function getUrlsForUser(int|array|null $userIds = null, int|null $start = null, int|null $limit = null, ?string $search_string = null, string $returnType = 'data'): array|int
     {
         $builder = $this->builder();
+
         // Check if $userIds is an array or a single value
         if (isset($userIds)) {
             if (is_array($userIds)) {
@@ -82,11 +83,12 @@ class UrlModel extends BaseModel
         }
 
         if ($search_string !== null) {
-            // Add search conditions
-            $builder->like('url_identifier', $search_string)
+            $builder->groupStart()
+                ->like('url_identifier', $search_string)
                 ->orLike('url_id', $search_string)
                 ->orLike('url_title', $search_string)
-                ->orLike('url_targeturl', $search_string);
+                ->orLike('url_targeturl', $search_string)
+                ->groupEnd();
         }
 
         if ($returnType === 'count') {

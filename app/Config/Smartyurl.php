@@ -64,8 +64,6 @@ class Smartyurl extends BaseConfig
      */
     public $urlTagsCloudLimit = 500;
 
-
-
     /**
      * The default number of URLs to display on a single page when listing URLs.
      *

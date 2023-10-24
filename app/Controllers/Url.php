@@ -47,6 +47,8 @@ class Url extends BaseController
         // dd("f");
         // @TODO @FIXME YOu must add maxiums that cannot br ovwerwritttn to avoid attacks
 
+        $user_id = user_id();
+
         $searchValue = $this->request->getGet('search')['value'] ?? '';
 
         $draw   = $this->request->getGet('draw');
@@ -136,6 +138,18 @@ class Url extends BaseController
                 ->orLike('url_id', $searchValue)
                 ->orLike('url_title', $searchValue)
                 ->orLike('url_targeturl', $searchValue);
+        }
+
+        // detect the user to know the permissions
+        // the user has the ability to list his urls
+        // or if he is super.admin admin.manageotherurls he can list other users links
+        if (! auth()->user()->can('url.manage', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        // he is at least has one permissions I will check it
+        if (! auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+            // he is only can see his links
+            $this->urlmodel->where('url_user_id ', $user_id);
         }
 
         // check it there is order by

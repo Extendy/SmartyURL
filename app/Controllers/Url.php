@@ -23,6 +23,7 @@ class Url extends BaseController
         $this->smartyurl        = new SmartyUrl();
         $this->urltagsdatamodel = new UrlTagsDataModel();
         $this->urlmodel         = new UrlModel();
+        $this->urltags          = new UrlTags();
     }
 
     public function index()
@@ -51,34 +52,108 @@ class Url extends BaseController
         $draw   = $this->request->getGet('draw');
         $start  = $this->request->getGet('start');
         $length = $this->request->getGet('length');
+        // Do not think that the data that comes from the client is always correct
+        // so set force max length it  maxUrlListPerPage
+        $system_forcemax_length = setting('Smartyurl.maxUrlListPerPage');
+        if ($length > setting('Smartyurl.maxUrlListPerPage')) {
+            $length = $system_forcemax_length;
+        }
 
+        // detect the order by comes from ajax call if submitted
+        $columnOrder = $this->request->getGet('order');
+        if ($columnOrder !== null) {
+            $ajax_column_index = $columnOrder['0']['column'];
+            $order_by_dir      = $columnOrder['0']['dir'];
+
+            // Do not think that the data that comes from the client is always correct
+            // so switch it to use defaults
+            switch ($order_by_dir) {
+                case 'asc':
+                    $order_by_rule = 'asc';
+                    break;
+
+                case 'desc':
+                    $order_by_rule = 'desc';
+                    break;
+
+                default:
+                    $order_by_rule = 'desc';
+                    break;
+            }
+
+            // i will know the column name from get
+            $ajax_columns              = $this->request->getGet('columns');
+            $order_by_ajax_column_name = $ajax_columns[$ajax_column_index]['name'];
+
+            // Do not think that the data that comes from the client is always correct
+            // so switch it to use defaults
+            switch ($order_by_ajax_column_name) {
+                case 'url_identifier':
+                    $order_by = 'url_identifier';
+                    break;
+
+                case 'url_hits':
+                    $order_by = 'url_hitscounter';
+                    break;
+
+                default:
+                    $order_by = 'url_id';
+                    break;
+            }
+        } else {
+            exit('order column is null');
+        }
+
+        // first of all I want to know all urls county
+        $urlAllCount = $this->urlmodel->countAll();
+
+        // Now I wan to know if there is any filter
+        // and then know all result no for this filer
+
+        // I need to know for this filter how many result will be
         if ($searchValue !== '') {
+            // here I can search the search value contains # or @ also
+
+            // i will search the url
             $this->urlmodel->like('url_identifier', $searchValue)
                 ->orLike('url_id', $searchValue)
                 ->orLike('url_title', $searchValue)
                 ->orLike('url_targeturl', $searchValue);
         }
 
+        $query_all        = $this->urlmodel->select('*');
+        $filterAllnumRows = $query_all->countAllResults();
+
+        // now i will do the real query for pagination
+
+        // first I will make sure $length is not more than the allowed max
+
+        if ($searchValue !== '') {
+            // here I can search the search value contains # or @ also
+
+            // i will search the url
+            $this->urlmodel->like('url_identifier', $searchValue)
+                ->orLike('url_id', $searchValue)
+                ->orLike('url_title', $searchValue)
+                ->orLike('url_targeturl', $searchValue);
+        }
+
+        // check it there is order by
+        if ($order_by !== null) {
+            $this->urlmodel->orderBy($order_by, $order_by_rule);
+            /*  echo "order by $order_by";
+              echo " order rule $order_by_rule";
+              die;*/
+        }
         $query = $this->urlmodel->select('*')  // Select the columns you need
             ->limit($length, $start)  // Apply the limit and start offset
             ->get();
 
-        // I need to know for this filter how many result will be
-        if ($searchValue !== '') {
-            $this->urlmodel->like('url_identifier', $searchValue)
-                ->orLike('url_id', $searchValue)
-                ->orLike('url_title', $searchValue)
-                ->orLike('url_targeturl', $searchValue);
-        }
-        $query2  = $this->urlmodel->select('*');
-        $numRows = $query2->countAllResults();
-
         $records = [];
         // Fetch the results
-        $results     = $query->getResult();
-        $query_count = count($results);
-
-        $urlAllCount = $this->urlmodel->countAll();
+        $results         = $query->getResult();
+        $query_count     = count($results);
+        $langurlListTags = lang('Url.urlListTags');
 
         // print_r($results);
         foreach ($results as $result) {
@@ -87,16 +162,34 @@ class Url extends BaseController
             } else {
                 $urlTitle = $result->url_title;
             }
+            // i will get the url tags
+            $url_tags_json  = $this->urltags->getUrlTagsCloud($result->url_id);
+            $url_tags_array = json_decode($url_tags_json);
+            $url_tags       = '';
+            if (count($url_tags_array) > 0) {
+                foreach ($url_tags_array as $tag) {
+                    $tag_id   = $tag->tag_id;
+                    $tag_name = $tag->value;
+
+                    $url_tags .= "<a class='btn btn-sm btn-outline-dark mx-1' href='taaaaagsearchorurllist/{$tag_id}'>{$tag_name}</a>";
+                }
+                $url_tags = "<div class='mt-3'>{$langurlListTags}:" . $url_tags . '</div>';
+            }
 
             // $result->url_id],$result->url_title,$result->url_hitscounter
+            $Go_Url    = smarty_detect_site_shortlinker() . $result->url_identifier;
             $records[] = [
-                "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
-                 <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil-fill'></i></a>
-                ",
-                " {$urlTitle}
-                 <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
-                ",
-                $result->url_hitscounter,
+                'url_id_col'         => $result->url_id,
+                'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
+                    <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil'></i></a>
+                    <a target='_blank' title='" . lang('Url.UrlTestUrl') . ' ' . $result->url_identifier . "' href='{$Go_Url}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
+                    ",
+                'url_title_col' => " {$urlTitle}
+                    <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
+                    ",
+                'url_hits_col' => $result->url_hitscounter,
+                'url_id'       => $result->url_id,
+                'url_tags'     => $url_tags,
             ];
         }
 
@@ -113,7 +206,7 @@ class Url extends BaseController
         $data = [
             'draw'            => $draw,
             'recordsTotal'    => $urlAllCount,
-            'recordsFiltered' => $numRows,
+            'recordsFiltered' => $filterAllnumRows,
             'data'            => $records,
         ];
 

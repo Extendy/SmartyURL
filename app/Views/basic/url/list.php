@@ -18,6 +18,18 @@
     .listurls-link {
         text-decoration: none;
     }
+
+
+    /* Change the icon for row details to a Bootstrap 5 "plus" icon */
+    .dt-control::before {
+        content: "\F79C"; /* The Bootstrap 5 "plus" icon code */
+        font-family: 'Bootstrap Icons'; /* Specify the Bootstrap Icons font-family */
+        font-size: 16px; /* Adjust the font size as needed */
+    }
+
+
+
+
 </style>
 
 <div id="listurls" style="display: ">
@@ -105,9 +117,11 @@
                                 <thead>
                                 <tr>
                                     <!-- Define your table headers here -->
-                                    <th><?= lang('Url.MaskedShortUrl'); ?></th>
-                                    <th><?= lang('Url.UrlTitle'); ?></th>
-                                    <th><?= lang('Url.UrlHitsNo'); ?></th>
+                                    <th></th>
+                                    <th  ><?= lang('Url.UrlId'); ?></th>
+                                    <th  ><?= lang('Url.MaskedShortUrl'); ?></th>
+                                    <th ><?= lang('Url.UrlTitle'); ?></th>
+                                    <th  ><?= lang('Url.UrlHitsNo'); ?></th>
                                     <!-- Add more headers as needed -->
                                 </tr>
                                 </thead>
@@ -117,16 +131,18 @@
                             </table>
 
 
-
+                            <?php
+                            $defautltUrlListPerPage = setting('Smartyurl.defautltUrlListPerPage');
+?>
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-end">
                                     <div id="customLengthControl">
                                         <label><?= lang('Url.urlsListEntriesPerPage'); ?></label>
                                         <select id="customLengthSelector">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
+                                            <option <?= ($defautltUrlListPerPage === 10) ? 'selected' : '' ?> value="10">10</option>
+                                            <option <?= ($defautltUrlListPerPage === 25) ? 'selected' : '' ?> value="25">25</option>
+                                            <option <?= ($defautltUrlListPerPage === 50) ? 'selected' : '' ?> value="50">50</option>
+                                            <option <?= ($defautltUrlListPerPage === 100) ? 'selected' : '' ?> value="100">100</option>
                                         </select>
                                     </div>
                                 </div>

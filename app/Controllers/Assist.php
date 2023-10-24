@@ -521,8 +521,8 @@ class Assist extends BaseController
 
             return $this->response;
         }
-
-        $jsCode = '';
+        $defautltUrlListPerPage = setting('Smartyurl.defautltUrlListPerPage');
+        $jsCode                 = '';
         $this->response->setContentType('application/javascript', 'utf-8');
         $lang                   = session('lang');
         $urlsListErrorAjaxError = lang('Url.urlsListErrorAjaxError');
@@ -533,7 +533,19 @@ class Assist extends BaseController
                     //var csrfToken = document.querySelector("input[name=csrf_smarty]").value;
                     // alert(csrfToken);
 
-                    $('#urlList').DataTable({
+
+                    function format(d) {
+                        return (
+                            '' +
+                            d.url_tags +
+                            '<br>'
+                        );
+                    }
+
+
+
+
+                    const table = $('#urlList').DataTable({
                         "language": {
                             "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/{$lang}.json",
                         },
@@ -542,11 +554,30 @@ class Assist extends BaseController
                         "processing": true,
                         "serverSide": true,
                         responsive: true,
+                        order: [[0, 'desc']],
+                        "pageLength": {$defautltUrlListPerPage},
                         "columnDefs": [
                             {
-                                "width": "25%", "targets":0,
-                            }
+                                // "width": "25%", "targets":0,
+                            },
+                             { orderable: false, targets: 2 },
+                             { className: "dt-head-center", targets: [0,1,2,3,4 ] },
+                             { className: "dt-nowrap", targets: [ 2 ] },
+
                         ],
+                        "columns": [
+                            {
+                                class: 'dt-control',
+                                orderable: false,
+                                data: null,
+                                defaultContent: ''
+                            },
+                            { "data": "url_id_col", "name": "url_id" , visible: true}, //you can hide it if you want
+                            { "data": "url_identifier_col", "name": "url_identifier"},
+                            { "data": "url_title_col", "name": "url_title"},
+                            { "data": "url_hits_col", "name": "url_hits" },
+                        ],
+
                         deferRender: true,
                         "ajax": {
                             "url": "/url/listdata", // Adjust the URL to your controller and method
@@ -578,6 +609,86 @@ class Assist extends BaseController
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    //BEGIN: Show more info about url
+                    // Array to track the ids of the details displayed rows
+                    const detailRows = [];
+
+                    table.on('click', 'tbody td.dt-control', function () {
+                        let tr = event.target.closest('tr');
+                        let row = table.row(tr);
+                        let idx = detailRows.indexOf(tr.id);
+
+                        if (row.child.isShown()) {
+                            tr.classList.remove('details');
+                            row.child.hide();
+
+                            // Remove from the 'open' array
+                            detailRows.splice(idx, 1);
+                        }
+                        else {
+                            tr.classList.add('details');
+                            row.child(format(row.data())).show();
+
+                            // Add to the 'open' array
+                            if (idx === -1) {
+                                detailRows.push(tr.id);
+                            }
+                        }
+                    });
+
+                    // On each draw, loop over the `detailRows` array and show any child rows
+                    table.on('draw', () => {
+                        detailRows.forEach((id, i) => {
+                            let el = document.querySelector('#' + id + ' td.dt-control');
+
+                            if (el) {
+                                el.dispatchEvent(new Event('click', { bubbles: true }));
+                            }
+                        });
+                    });
+
+                    //END: Show more info about url
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    //BEING:for custom input search
                     // Custom debounce function
                     function debounce(func, wait) {
                         let timeout;
@@ -592,7 +703,6 @@ class Assist extends BaseController
                     }
 
 
-                    //BEING:for custom input search
                     // Use the custom debounce function
                     var debounceAjaxSearch = debounce(function (searchValue) {
                         // Make the AJAX call with the debounced searchValue
@@ -626,7 +736,7 @@ class Assist extends BaseController
                      //END:for custom Length Selector
 
 
-                    //show the main
+
 
                 });
 

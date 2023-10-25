@@ -18,6 +18,8 @@ For instance, you can create a unified link for mobile app downloads, dynamicall
 
 Likewise, you can also generate intelligent links to route visitors to specific URLs based on their location. For instance, users from the United States will be redirected to one link, while those from Saudi Arabia will be directed to another
 
+![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/0afe4a88-918e-4713-bab7-fe0d51d08433)
+
 
 In addition to shortening URLs (based on domain that you use), SmartyURL also offers a variety of other features, such as:
 

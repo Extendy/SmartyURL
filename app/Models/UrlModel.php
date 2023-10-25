@@ -67,7 +67,7 @@ class UrlModel extends BaseModel
      * - 'data' to return data as an array
      * - 'count' to return the row count as an integer without the start and limit
      */
-    public function getUrlsForUser(int|array|null $userIds = null, int|null $start = null, int|null $limit = null, ?string $search_string = null, string $returnType = 'data'): array|int
+    public function getUrlsForUser(int|array|null $userIds = null, int|null $start = null, int|null $limit = null, ?string $search_string = null, string $orderBy = 'url_id', string $orderDirection = 'asc', string $returnType = 'data'): array|int
     {
         $builder = $this->builder();
 
@@ -94,6 +94,11 @@ class UrlModel extends BaseModel
         if ($returnType === 'count') {
             // Return the count of all rows without the limit and start
             return $builder->countAllResults();
+        }
+
+        if ($orderBy !== null) {
+            // Add the ORDER BY clause
+            $builder->orderBy($orderBy, $orderDirection);
         }
 
         if ($start !== null) {

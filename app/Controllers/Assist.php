@@ -579,6 +579,7 @@ class Assist extends BaseController
                             },
                              { orderable: false, targets: 3 },
                              { className: "dt-head-center", targets: [0,1,2,3,4 ] },
+                             { "className": "dt-center", "targets": [0, 1,4] },
                              { className: "dt-nowrap", targets: [ 2 ] },
 
                         ],

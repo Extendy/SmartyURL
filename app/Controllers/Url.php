@@ -26,14 +26,74 @@ class Url extends BaseController
         $this->urltags          = new UrlTags();
     }
 
+    /**
+     * View Of List All Urls
+     *
+     * @return string
+     */
     public function index()
     {
         if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
             return smarty_permission_error();
         }
+        $user_id = user_id();
+        $data    = [];
+        if (! auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+            // that mean I must redirect the user to /url/user/{userid}
+            // i will set the filter rule to user instead of route to, but sure you can use redirect()->to
+            // if you want
+            // return redirect()->to('url/user/' . $user_id);
+            $data['filterrule']  = 'user';
+            $data['filtervalue'] = $user_id;
+        }
 
-        return view(smarty_view('url/list'));
-        d('this is the index of url');
+        return view(smarty_view('url/list'), $data);
+    }
+
+    /**
+     * View of list user urls
+     *
+     * @param mixed|null $urlOwnerUserId
+     *
+     * @return string
+     */
+    public function listuserurls($urlOwnerUserId = null)
+    {
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $user_id = user_id();
+
+        // @TODO FIX ME I must make sure user is exists
+        // @TODO and make sure from permission
+
+        $data['filterrule']  = 'user';
+        $data['filtervalue'] = $urlOwnerUserId;
+
+        if (! auth()->user()->can('admin.manageotherurls', 'super.admin') && (int) $urlOwnerUserId !== $user_id) {
+            return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), false);
+        }
+
+        return view(smarty_view('url/list'), $data);
+    }
+
+    public function listtagurls($tags)
+    {
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $user_id = user_id();
+
+        // @TODO FIX ME I must make sure user is exists
+        // @TODO and make sure from permission
+
+        $data['filterrule']  = 'tag';
+        $data['filtervalue'] = $tags;
+
+        // @FIXME , how toe listData will know for which user it will search??
+        // THINK That you can use more of filterrule or something like that. to refer for the user
+
+        return view(smarty_view('url/list'), $data);
     }
 
     /**
@@ -54,6 +114,7 @@ class Url extends BaseController
         $draw   = $this->request->getGet('draw');
         $start  = $this->request->getGet('start');
         $length = $this->request->getGet('length');
+
         // Do not think that the data that comes from the client is always correct
         // so set force max length it  maxUrlListPerPage
         $system_forcemax_length = setting('Smartyurl.maxUrlListPerPage');
@@ -106,67 +167,42 @@ class Url extends BaseController
             exit('order column is null');
         }
 
-        // first of all I want to know all urls county
-        $urlAllCount = $this->urlmodel->countAll();
+        $filterrule  = $this->request->getGet('filterrule') ?? '';
+        $filtervalue = $this->request->getGet('filtervalue') ?? '';
 
-        // Now I wan to know if there is any filter
-        // and then know all result no for this filer
+        switch ($filterrule) {
+            case 'user':
+                // list urls for single user
+                if (! auth()->user()->can('admin.manageotherurls', 'super.admin') && (int) $filtervalue !== $user_id) {
+                    return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
+                }
+                $urlAllCount      = $this->urlmodel->getUrlsForUser($filtervalue, $start, $length, null, $order_by, $order_by_rule, 'count');
+                $results          = $this->urlmodel->getUrlsForUser($filtervalue, $start, $length, $searchValue, $order_by, $order_by_rule, 'data');
+                $filterAllnumRows = $this->urlmodel->getUrlsForUser($filtervalue, $start, $length, $searchValue, $order_by, $order_by_rule, 'count');
+                break;
 
-        // I need to know for this filter how many result will be
-        if ($searchValue !== '') {
-            // here I can search the search value contains # or @ also
+            case 'tag':
+                // @TODO @FIXME you need to get the url for the given tag
+                $urlAllCount      = 0;
+                $results          = [];
+                $filterAllnumRows = 0;
+                break;
 
-            // i will search the url
-            $this->urlmodel->like('url_identifier', $searchValue)
-                ->orLike('url_id', $searchValue)
-                ->orLike('url_title', $searchValue)
-                ->orLike('url_targeturl', $searchValue);
+            default:
+                // list urls for all users
+                // this checks for permission is important to avoid anyone to call the url controller directly
+                if (! auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                    return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
+                }
+                $urlAllCount      = $this->urlmodel->getUrlsForUser(null, $start, $length, null, $order_by, $order_by_rule, 'count');
+                $results          = $this->urlmodel->getUrlsForUser(null, $start, $length, $searchValue, $order_by, $order_by_rule, 'data');
+                $filterAllnumRows = $this->urlmodel->getUrlsForUser(null, $start, $length, $searchValue, $order_by, $order_by_rule, 'count');
+                break;
         }
-
-        $query_all        = $this->urlmodel->select('*');
-        $filterAllnumRows = $query_all->countAllResults();
-
-        // now i will do the real query for pagination
-
-        // first I will make sure $length is not more than the allowed max
-
-        if ($searchValue !== '') {
-            // here I can search the search value contains # or @ also
-
-            // i will search the url
-            $this->urlmodel->like('url_identifier', $searchValue)
-                ->orLike('url_id', $searchValue)
-                ->orLike('url_title', $searchValue)
-                ->orLike('url_targeturl', $searchValue);
-        }
-
-        // detect the user to know the permissions
-        // the user has the ability to list his urls
-        // or if he is super.admin admin.manageotherurls he can list other users links
-        if (! auth()->user()->can('url.manage', 'admin.manageotherurls', 'super.admin')) {
-            return smarty_permission_error();
-        }
-        // he is at least has one permissions I will check it
-        if (! auth()->user()->can('admin.manageotherurls', 'super.admin')) {
-            // he is only can see his links
-            $this->urlmodel->where('url_user_id ', $user_id);
-        }
-
-        // check it there is order by
-        if ($order_by !== null) {
-            $this->urlmodel->orderBy($order_by, $order_by_rule);
-            /*  echo "order by $order_by";
-              echo " order rule $order_by_rule";
-              die;*/
-        }
-        $query = $this->urlmodel->select('*')  // Select the columns you need
-            ->limit($length, $start)  // Apply the limit and start offset
-            ->get();
 
         $records = [];
         // Fetch the results
-        $results         = $query->getResult();
-        $query_count     = count($results);
+
         $langurlListTags = lang('Url.urlListTags');
 
         // print_r($results);
@@ -185,9 +221,18 @@ class Url extends BaseController
                     $tag_id   = $tag->tag_id;
                     $tag_name = $tag->value;
 
-                    $url_tags .= "<a class='btn btn-sm btn-outline-dark mx-1' href='taaaaagsearchorurllist/{$tag_id}'>{$tag_name}</a>";
+                    $url_tags .= "<a class='btn btn-sm btn-outline-dark mx-1' href='" . site_url('url/tag/' . $tag_id) . "'>{$tag_name}</a>";
                 }
-                $url_tags = "<div class='mt-3'>{$langurlListTags}:" . $url_tags . '</div>';
+                $url_tags = "<div class='mt-1'>{$langurlListTags}:" . $url_tags . '</div>';
+            }
+
+            if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                // he is manager so i must let him know the url owner
+                $url_owner_id = smarty_get_user_username($result->url_user_id);
+                $url_owner    = "<div class='mt-1'>" . lang('Url.UrlOwner') . ": {$url_owner_id}</div>";
+                // samsam
+            } else {
+                $url_owner = '';
             }
 
             // $result->url_id],$result->url_title,$result->url_hitscounter
@@ -204,18 +249,9 @@ class Url extends BaseController
                 'url_hits_col' => $result->url_hitscounter,
                 'url_id'       => $result->url_id,
                 'url_tags'     => $url_tags,
+                'url_owner'    => $url_owner,
             ];
         }
-
-        // $totalRecords = $this->urlmodel->getTotalRecordsCount();
-        /* $records = [
-             [1, "John Doe", "john@example.com"],
-             [2, "Jane Smith", "jane@example.com"],
-             [3, "3Jane Smith", "jane@example.com"],
-             [4, "4Jane Smith", "jane@example.com"],
-             [5, "5Jane Smith", "jane@example.com"],
-             // Add more rows as needed
-         ];*/
 
         $data = [
             'draw'            => $draw,

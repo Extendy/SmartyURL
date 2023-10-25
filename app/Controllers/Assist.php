@@ -521,6 +521,22 @@ class Assist extends BaseController
 
             return $this->response;
         }
+        // check if there is any filterrule
+        $filterrule  = $this->request->getGet('filterrule') ?? '';
+        $filtervalue = $this->request->getGet('filtervalue') ?? '';
+        if (isset($filterrule, $filtervalue)) {
+            // there is a filter come from backend
+            // user or tag
+
+            $filter_data_segment = <<< EOT
+                        "data": function (d) {
+                                    d.filterrule = '{$filterrule}'; // Add your query string parameters here
+                                    d.filtervalue = '{$filtervalue}'; // Add more parameters if needed
+                         },
+
+                EOT;
+        }
+
         $defautltUrlListPerPage = setting('Smartyurl.defautltUrlListPerPage');
         $jsCode                 = '';
         $this->response->setContentType('application/javascript', 'utf-8');
@@ -538,6 +554,7 @@ class Assist extends BaseController
                         return (
                             '' +
                             d.url_tags +
+                            d.url_owner +
                             '<br>'
                         );
                     }
@@ -568,11 +585,11 @@ class Assist extends BaseController
                         "columns": [
                             {
                                 class: 'dt-control',
-                                orderable: false,
+                                orderable: true,
                                 data: null,
                                 defaultContent: ''
                             },
-                            { "data": "url_id_col", "name": "url_id" , visible: true}, //you can hide it if you want
+                            { "data": "url_id_col", "name": "url_id" , visible: false}, //you can hide it if you want
                             { "data": "url_identifier_col", "name": "url_identifier"},
                             { "data": "url_title_col", "name": "url_title"},
                             { "data": "url_hits_col", "name": "url_hits" },
@@ -583,6 +600,7 @@ class Assist extends BaseController
                             "url": "/url/listdata", // Adjust the URL to your controller and method
                             "dataSrc": "data",
                             "type": "get",
+                            {$filter_data_segment}
                             "error": function (xhr, error, thrown) {
                                 var errorContainer = $('#ListUrlsErrorContainer');
                                 errorContainer.text("{$urlsListErrorAjaxError}");

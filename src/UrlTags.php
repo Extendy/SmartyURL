@@ -93,7 +93,7 @@ class UrlTags
             } else {
                 // tag not exists i will add it
                 $tagdata = [
-                    'tag_name'    => esc($tag),
+                    'tag_name'    => $tag,
                     'tag_user_id' => user_id(),
                 ];
                 $UrlTagsModel->insert($tagdata);

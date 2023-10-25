@@ -288,12 +288,12 @@ class Url extends BaseController
             return smarty_permission_error();
         }
         // check if original url is valid url
-        $originalUrl = esc($this->request->getPost('originalUrl'));
+        $originalUrl = $this->request->getPost('originalUrl');
         if (! $this->smartyurl->isValidURL($originalUrl)) {
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlInvalidOriginal'));
         }
 
-        $identifier = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
+        $identifier = smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier'));
         if (! preg_match(Config('Smartyurl')->urlIdentifierpattern, $identifier)) {
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierPatternError', [Config('Smartyurl')->urlIdentifierpattern]));
         }
@@ -309,8 +309,8 @@ class Url extends BaseController
         }
 
         // urlTitle
-        $urlTitle          = esc($this->request->getPost('UrlTitle'));
-        $redirectCondition = esc($this->request->getPost('redirectCondition'));
+        $urlTitle          = $this->request->getPost('UrlTitle');
+        $redirectCondition = $this->request->getPost('redirectCondition');
         if ($redirectCondition === 'device' || $redirectCondition === 'geolocation') {
             // url_conditions
             // /...................here will be conditions
@@ -470,10 +470,10 @@ class Url extends BaseController
         $data = [
             'UrlId'             => $url_id,
             'editUrlAction'     => site_url("/url/edit/{$url_id}"),
-            'originalUrl'       => urldecode($urlData['url_targeturl']),
-            'UrlTitle'          => $urlData['url_title'],
-            'UrlIdentifier'     => $urlData['url_identifier'],
-            'urlTags'           => $urlTagsCloud, // i must get the URLTags
+            'originalUrl'       => esc(urldecode($urlData['url_targeturl'])),
+            'UrlTitle'          => esc($urlData['url_title']),
+            'UrlIdentifier'     => esc($urlData['url_identifier']),
+            'urlTags'           => esc($urlTagsCloud), // i must get the URLTags
             'redirectCondition' => $redirectCondition,
         ];
         if ($redirectCondition === 'geolocation') {

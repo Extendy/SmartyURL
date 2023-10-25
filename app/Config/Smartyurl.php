@@ -75,6 +75,7 @@ class Smartyurl extends BaseConfig
      * The maximum number of URLs to display on a single page when listing URLs.
      *
      * This limit is set to 100 by default to prevent overloading the page with too many URLs.
+     * - We advise not lower than 100 or view issues may happen
      */
     public int $maxUrlListPerPage = 100;
 

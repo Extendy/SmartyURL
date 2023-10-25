@@ -9,11 +9,17 @@
 
 <?= $this->section('main') ?>
 
+
 <!--BEGIN: listurls main section -->
 <style>
     /*hide dataTables_filter by default*/
-    .dataTables_filter  { display: none; }
-    .dataTables_length { display: none; }
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_length {
+        display: none;
+    }
 
     .listurls-link {
         text-decoration: none;
@@ -28,12 +34,9 @@
     }
 
 
-
-
 </style>
 
 <div id="listurls" style="display: ">
-
 
 
     <div class="app-content-header">
@@ -67,8 +70,6 @@
     </div>
 
 
-
-
     <div class="app-content-header">
 
         <!--begin::Container-->
@@ -97,18 +98,22 @@
                         <div class="card-body" style="box-sizing: border-box; display: block;">
 
 
-                            <div id="ListUrlsErrorContainer" class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+                            <div id="ListUrlsErrorContainer" class="alert alert-danger alert-dismissible" role="alert"
+                                 style="display: none;">
                                 <?= lang('Url.urlsListErrorAjaxError'); ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
                             </div>
 
 
                             <div class="row">
                                 <div class="col-10">
-                                    <input type="text" id="searchInput" placeholder="<?= lang('Url.urlsListSearchOnUrls'); ?>" class="form-control">
+                                    <input type="text" id="searchInput"
+                                           placeholder="<?= lang('Url.urlsListSearchOnUrls'); ?>" class="form-control">
                                 </div>
                                 <div class="col-2">
-                                    <button id="customSearchButton" class="btn btn-light"><?= lang('Url.urlsListSearchOnUrlsSearchBtn'); ?></button>
+                                    <button id="customSearchButton"
+                                            class="btn btn-light"><?= lang('Url.urlsListSearchOnUrlsSearchBtn'); ?></button>
                                 </div>
                             </div>
 
@@ -118,10 +123,10 @@
                                 <tr>
                                     <!-- Define your table headers here -->
                                     <th></th>
-                                    <th  ><?= lang('Url.UrlId'); ?></th>
-                                    <th  ><?= lang('Url.MaskedShortUrl'); ?></th>
-                                    <th ><?= lang('Url.UrlTitle'); ?></th>
-                                    <th  ><?= lang('Url.UrlHitsNo'); ?></th>
+                                    <th><?= lang('Url.UrlId'); ?></th>
+                                    <th><?= lang('Url.MaskedShortUrl'); ?></th>
+                                    <th><?= lang('Url.UrlTitle'); ?></th>
+                                    <th><?= lang('Url.UrlHitsNo'); ?></th>
                                     <!-- Add more headers as needed -->
                                 </tr>
                                 </thead>
@@ -139,10 +144,18 @@
                                     <div id="customLengthControl">
                                         <label><?= lang('Url.urlsListEntriesPerPage'); ?></label>
                                         <select id="customLengthSelector">
-                                            <option <?= ($defautltUrlListPerPage === 10) ? 'selected' : '' ?> value="10">10</option>
-                                            <option <?= ($defautltUrlListPerPage === 25) ? 'selected' : '' ?> value="25">25</option>
-                                            <option <?= ($defautltUrlListPerPage === 50) ? 'selected' : '' ?> value="50">50</option>
-                                            <option <?= ($defautltUrlListPerPage === 100) ? 'selected' : '' ?> value="100">100</option>
+                                            <option <?= ($defautltUrlListPerPage === 10) ? 'selected' : '' ?>
+                                                value="10">10
+                                            </option>
+                                            <option <?= ($defautltUrlListPerPage === 25) ? 'selected' : '' ?>
+                                                value="25">25
+                                            </option>
+                                            <option <?= ($defautltUrlListPerPage === 50) ? 'selected' : '' ?>
+                                                value="50">50
+                                            </option>
+                                            <option <?= ($defautltUrlListPerPage === 100) ? 'selected' : '' ?>
+                                                value="100">100
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -150,7 +163,6 @@
 
 
                         </div>
-
 
 
                     </div>
@@ -163,6 +175,18 @@
 
 </div>
 <?= csrf_field() ?>
+<?php
+$listurls_query_string = '';
+if (isset($filterrule)) {
+    $listurls_query_string = "?filterrule={$filterrule}&filtervalue={$filtervalue}"
+    ?>
+    <input type="hidden" id="filterrule" value="<?= $filterrule; ?>">
+    <input type="hidden" id="filtervalue" value="<?= $filtervalue; ?>">
+    <?php
+}
+?>
+
+
 <!--END: listurls main section -->
 
 <?= $this->endSection() ?>
@@ -174,5 +198,5 @@
 <?= $this->section('jsfooterarea') ?>
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/sl-1.7.0/datatables.min.js"></script>
 
-<script src="<?= site_url('assist/listurls') ?>"></script>
+<script src="<?= site_url('assist/listurls') . $listurls_query_string ?>"></script>
 <?= $this->endSection() ?>

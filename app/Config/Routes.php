@@ -18,7 +18,9 @@ $routes->get('/dashboard', 'Dashboard::index', ['filter' => 'session']);
 // URL
 $routes->group('url', static function ($routes) {
     $routes->get('/', 'Url::index', ['filter' => 'session']);
-    $routes->get('listdata', 'Url::listData', ['filter' => 'session']); // @FIXME @TODO need to add filter after test
+    $routes->get('user/(:num)', 'Url::listuserurls/$1', ['filter' => 'session']); // list user urls
+    $routes->get('tag/(:num)', 'Url::listtagurls/$1', ['filter' => 'session']); // list tag urls
+    $routes->get('listdata', 'Url::listData', ['filter' => 'session']); // json list urls
     $routes->get('view/(:num)', 'Url::view/$1', ['filter' => 'session']);
     $routes->get('new', 'Url::new', ['filter' => 'session']);
     $routes->post('new', 'Url::newAction', ['filter' => 'session']);

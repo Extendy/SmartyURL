@@ -36,8 +36,10 @@ return [
     'UpdateURLOK'    => 'The URL has been successfully updated',
     'UpdateURLError' => 'An error occurred while updating the URL',
 
-    'urlsLink' => 'URLs Bucket',
-    'urlsList' => 'List Urls Bucket',
+    'urlsLink'    => 'URLs Bucket',
+    'urlsList'    => 'List Urls Bucket',
+    'urlsMyLink'  => 'My URLs',
+    'urlsAllLink' => 'All Users URLs',
 
     'urlsListSearchOnUrls'          => 'Search on URLs for',
     'urlsListSearchOnUrlsSearchBtn' => 'Search',

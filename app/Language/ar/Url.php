@@ -36,8 +36,10 @@ return [
     'UpdateURLOK'    => 'لقد تم تحديث بيانات الرابط بنجاح',
     'UpdateURLError' => 'حدث خطا ما أثناء تحديث بيانات الرابط',
 
-    'urlsLink' => 'فهرس الراوبط',
-    'urlsList' => 'استعراض فهرس الروابط',
+    'urlsLink'    => 'فهرس الراوبط',
+    'urlsList'    => 'استعراض فهرس الروابط',
+    'urlsMyLink'  => 'فهرس روابطي',
+    'urlsAllLink' => 'روابط جميع المستخدمين',
 
     'urlsListSearchOnUrls'          => 'البحث في الروابط عن',
     'urlsListSearchOnUrlsSearchBtn' => 'بحث',

@@ -197,11 +197,29 @@
 
                     </li>
 
-                    <li class="nav-item">
-                        <a href="<?= site_url('/url'); ?>" class="nav-link <?= (url_is('/url')) ? 'active' : '' ?>">
+
+                    <li class="nav-item <?= (url_is('/url') || url_is('/url/user/*') || url_is('/url/tag/*')) ? 'menu-open' : '' ?>">
+                        <a href="#" class="nav-link <?= (url_is('/url')) ? 'active' : '' ?>">
                             <i class="nav-icon bi bi-database"></i>
-                            <?= lang('Url.urlsLink'); ?>
+                            <p>
+                                <?= lang('Url.urlsLink'); ?>
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= site_url('/url/user/' . user_id()); ?>" class="nav-link <?= (url_is('/url/user/' . user_id())) ? 'active' : '' ?>">
+                                    <i class="nav-icon bi bi-person"></i>
+                                    <p><?= lang('Url.urlsMyLink'); ?></p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('/url'); ?>" class="nav-link <?= (url_is('/url/')) ? 'active' : '' ?>">
+                                    <i class="nav-icon bi bi-people"></i>
+                                    <p><?= lang('Url.urlsAllLink'); ?></p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
 

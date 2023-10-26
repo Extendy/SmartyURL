@@ -1,6 +1,6 @@
 <?= $this->extend(smarty_view('layout')); ?>
 
-<?= $this->section('title') ?><?= smarty_pagetitle(isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.urlsList')); ?>  <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= smarty_pagetitle(isset($editUrlAction) ? lang('Url.UpdateURLTitle') : lang('Url.urlsList')); ?> <?= $filtertext !== null ? ' - ' . $filtertext : '' ?>  <?= $this->endSection() ?>
 
 <?= $this->section('cssheaderarea') ?>
 <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
@@ -84,7 +84,7 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <h3 class="card-title"><?= lang('Url.urlsList'); ?> </h3>
+                                    <h3 class="card-title"><?= lang('Url.urlsList'); ?> <?= $filtertext !== null ? ' - ' . $filtertext : '' ?></h3>
                                 </div>
                                 <div class="col-6 text-end">
 

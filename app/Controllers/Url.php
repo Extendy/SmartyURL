@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UrlModel;
 use App\Models\UrlTagsDataModel;
+use App\Models\UrlTagsModel;
 use Extendy\Smartyurl\SmartyUrl;
 use Extendy\Smartyurl\UrlConditions;
 use Extendy\Smartyurl\UrlIdentifier;
@@ -42,9 +43,13 @@ class Url extends BaseController
             // that mean I must redirect the user to /url/user/{userid}
             // i will set the filter rule to user instead of route to, but sure you can use redirect()->to
             // if you want
-            // return redirect()->to('url/user/' . $user_id);
+            return redirect()->to('url/user/' . $user_id);
+            // or sepcify the user info
             $data['filterrule']  = 'user';
             $data['filtervalue'] = $user_id;
+            $data['filtertext']  = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($user_id);
+        } else {
+            $data['filtertext'] = lang('Url.urlsAllLink');
         }
 
         return view(smarty_view('url/list'), $data);
@@ -69,9 +74,13 @@ class Url extends BaseController
 
         $data['filterrule']  = 'user';
         $data['filtervalue'] = $urlOwnerUserId;
+        $data['filtertext']  = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($user_id);
 
         if (! auth()->user()->can('admin.manageotherurls', 'super.admin') && (int) $urlOwnerUserId !== $user_id) {
             return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), false);
+        }
+        if ((int) $urlOwnerUserId === $user_id) {
+            $data['filtertext'] = lang('Url.urlsMyLink');
         }
 
         return view(smarty_view('url/list'), $data);
@@ -86,9 +95,18 @@ class Url extends BaseController
 
         // @TODO FIX ME I must make sure user is exists
         // @TODO and make sure from permission
+        $urltagsmodel  = new UrlTagsModel();
+        $tag_info      = $urltagsmodel->getTagInfoById($tags);
+        $tag_text_line = '';
+
+        foreach ($tag_info as $tag) {
+            $tag_text_line .= ($tag_text_line !== '' ? ' ' : '') . $tag->tag_name;
+        }
+        $tag_text_line = " '" . $tag_text_line . "'";
 
         $data['filterrule']  = 'tag';
         $data['filtervalue'] = $tags;
+        $data['filtertext']  = lang('Url.urlsTagsLinks') . $tag_text_line;
 
         // @FIXME , how toe listData will know for which user it will search??
         // THINK That you can use more of filterrule or something like that. to refer for the user

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UrlModel;
 use App\Models\UrlTagsDataModel;
+use App\Models\UrlTagsModel;
 use Extendy\Smartyurl\SmartyUrl;
 use Extendy\Smartyurl\UrlConditions;
 use Extendy\Smartyurl\UrlIdentifier;
@@ -23,16 +24,94 @@ class Url extends BaseController
         $this->smartyurl        = new SmartyUrl();
         $this->urltagsdatamodel = new UrlTagsDataModel();
         $this->urlmodel         = new UrlModel();
+        $this->urltags          = new UrlTags();
     }
 
+    /**
+     * View Of List All Urls
+     *
+     * @return string
+     */
     public function index()
     {
         if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
             return smarty_permission_error();
         }
+        $user_id = user_id();
+        $data    = [];
+        if (! auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+            // that mean I must redirect the user to /url/user/{userid}
+            // i will set the filter rule to user instead of route to, but sure you can use redirect()->to
+            // if you want
+            return redirect()->to('url/user/' . $user_id);
+            // or sepcify the user info
+            $data['filterrule']  = 'user';
+            $data['filtervalue'] = $user_id;
+            $data['filtertext']  = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($user_id);
+        } else {
+            $data['filtertext'] = lang('Url.urlsAllLink');
+        }
 
-        return view(smarty_view('url/list'));
-        d('this is the index of url');
+        return view(smarty_view('url/list'), $data);
+    }
+
+    /**
+     * View of list user urls
+     *
+     * @param mixed|null $urlOwnerUserId
+     *
+     * @return string
+     */
+    public function listuserurls($urlOwnerUserId = null)
+    {
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $user_id = user_id();
+
+        // @TODO FIX ME I must make sure user is exists
+        // @TODO and make sure from permission
+
+        $data['filterrule']  = 'user';
+        $data['filtervalue'] = $urlOwnerUserId;
+        $data['filtertext']  = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($user_id);
+
+        if (! auth()->user()->can('admin.manageotherurls', 'super.admin') && (int) $urlOwnerUserId !== $user_id) {
+            return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), false);
+        }
+        if ((int) $urlOwnerUserId === $user_id) {
+            $data['filtertext'] = lang('Url.urlsMyLink');
+        }
+
+        return view(smarty_view('url/list'), $data);
+    }
+
+    public function listtagurls($tags)
+    {
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $user_id = user_id();
+
+        // @TODO FIX ME I must make sure user is exists
+        // @TODO and make sure from permission
+        $urltagsmodel  = new UrlTagsModel();
+        $tag_info      = $urltagsmodel->getTagInfoById($tags);
+        $tag_text_line = '';
+
+        foreach ($tag_info as $tag) {
+            $tag_text_line .= ($tag_text_line !== '' ? ' ' : '') . $tag->tag_name;
+        }
+        $tag_text_line = " '" . $tag_text_line . "'";
+
+        $data['filterrule']  = 'tag';
+        $data['filtervalue'] = $tags;
+        $data['filtertext']  = lang('Url.urlsTagsLinks') . $tag_text_line;
+
+        // @FIXME , how toe listData will know for which user it will search??
+        // THINK That you can use more of filterrule or something like that. to refer for the user
+
+        return view(smarty_view('url/list'), $data);
     }
 
     /**
@@ -46,74 +125,165 @@ class Url extends BaseController
         // dd("f");
         // @TODO @FIXME YOu must add maxiums that cannot br ovwerwritttn to avoid attacks
 
+        $user_id = user_id();
+
         $searchValue = $this->request->getGet('search')['value'] ?? '';
 
         $draw   = $this->request->getGet('draw');
         $start  = $this->request->getGet('start');
         $length = $this->request->getGet('length');
 
-        if ($searchValue !== '') {
-            $this->urlmodel->like('url_identifier', $searchValue)
-                ->orLike('url_id', $searchValue)
-                ->orLike('url_title', $searchValue)
-                ->orLike('url_targeturl', $searchValue);
+        // Do not think that the data that comes from the client is always correct
+        // so set force max length it  maxUrlListPerPage
+        $system_forcemax_length = setting('Smartyurl.maxUrlListPerPage');
+        if ($length > setting('Smartyurl.maxUrlListPerPage')) {
+            $length = $system_forcemax_length;
         }
 
-        $query = $this->urlmodel->select('*')  // Select the columns you need
-            ->limit($length, $start)  // Apply the limit and start offset
-            ->get();
+        // detect the order by comes from ajax call if submitted
+        $columnOrder = $this->request->getGet('order');
+        if ($columnOrder !== null) {
+            $ajax_column_index = $columnOrder['0']['column'];
+            $order_by_dir      = $columnOrder['0']['dir'];
 
-        // I need to know for this filter how many result will be
-        if ($searchValue !== '') {
-            $this->urlmodel->like('url_identifier', $searchValue)
-                ->orLike('url_id', $searchValue)
-                ->orLike('url_title', $searchValue)
-                ->orLike('url_targeturl', $searchValue);
+            // Do not think that the data that comes from the client is always correct
+            // so switch it to use defaults
+            switch ($order_by_dir) {
+                case 'asc':
+                    $order_by_rule = 'asc';
+                    break;
+
+                case 'desc':
+                    $order_by_rule = 'desc';
+                    break;
+
+                default:
+                    $order_by_rule = 'desc';
+                    break;
+            }
+
+            // i will know the column name from get
+            $ajax_columns              = $this->request->getGet('columns');
+            $order_by_ajax_column_name = $ajax_columns[$ajax_column_index]['name'];
+
+            // Do not think that the data that comes from the client is always correct
+            // so switch it to use defaults
+            switch ($order_by_ajax_column_name) {
+                case 'url_identifier':
+                    $order_by = 'url_identifier';
+                    break;
+
+                case 'url_hits':
+                    $order_by = 'url_hitscounter';
+                    break;
+
+                default:
+                    $order_by = 'url_id';
+                    break;
+            }
+        } else {
+            exit('order column is null');
         }
-        $query2  = $this->urlmodel->select('*');
-        $numRows = $query2->countAllResults();
+
+        $filterrule  = $this->request->getGet('filterrule') ?? '';
+        $filtervalue = $this->request->getGet('filtervalue') ?? '';
+
+        switch ($filterrule) {
+            case 'user':
+                // list urls for single user
+                if (! auth()->user()->can('admin.manageotherurls', 'super.admin') && (int) $filtervalue !== $user_id) {
+                    return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
+                }
+                $urlAllCount      = $this->urlmodel->getUrlsForUser($filtervalue, $start, $length, null, $order_by, $order_by_rule, 'count');
+                $results          = $this->urlmodel->getUrlsForUser($filtervalue, $start, $length, $searchValue, $order_by, $order_by_rule, 'data');
+                $filterAllnumRows = $this->urlmodel->getUrlsForUser($filtervalue, $start, $length, $searchValue, $order_by, $order_by_rule, 'count');
+                break;
+
+            case 'tag':
+                // @TODO @FIXME you need to get the url for the given tag
+                if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                    // i wil return all tags urls , for all users
+                    $tag_user_id = null;
+                } else {
+                    // i will return only user urls for that tag
+                    $tag_user_id = $user_id;
+                }
+                $urlAllCount      = $this->urltagsdatamodel->getUrlInfoForTagId($filtervalue, $tag_user_id, null, $start, $length, $order_by, $order_by_rule, 'count');
+                $results          = $this->urltagsdatamodel->getUrlInfoForTagId($filtervalue, $tag_user_id, $searchValue, $start, $length, $order_by, $order_by_rule, 'data');
+                $filterAllnumRows = $this->urltagsdatamodel->getUrlInfoForTagId($filtervalue, $tag_user_id, $searchValue, $start, $length, $order_by, $order_by_rule, 'count');
+                break;
+
+            default:
+                // list urls for all users
+                // this checks for permission is important to avoid anyone to call the url controller directly
+                if (! auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                    return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
+                }
+                $urlAllCount      = $this->urlmodel->getUrlsForUser(null, $start, $length, null, $order_by, $order_by_rule, 'count');
+                $results          = $this->urlmodel->getUrlsForUser(null, $start, $length, $searchValue, $order_by, $order_by_rule, 'data');
+                $filterAllnumRows = $this->urlmodel->getUrlsForUser(null, $start, $length, $searchValue, $order_by, $order_by_rule, 'count');
+                break;
+        }
 
         $records = [];
         // Fetch the results
-        $results     = $query->getResult();
-        $query_count = count($results);
 
-        $urlAllCount = $this->urlmodel->countAll();
+        $langurlListTags = lang('Url.urlListTags');
 
-        // print_r($results);
-        foreach ($results as $result) {
-            if ($result->url_title === '') {
-                $urlTitle = lang('Url.UrlTitleNoTitle');
-            } else {
-                $urlTitle = $result->url_title;
+        // check if $results !== null before do foreach
+        if ($results !== null) {
+            foreach ($results as $result) {
+                if ($result->url_title === '') {
+                    $urlTitle = lang('Url.UrlTitleNoTitle');
+                } else {
+                    $urlTitle = $result->url_title;
+                }
+                // i will get the url tags
+                $url_tags_json  = $this->urltags->getUrlTagsCloud($result->url_id);
+                $url_tags_array = json_decode($url_tags_json);
+                $url_tags       = '';
+                if (count($url_tags_array) > 0) {
+                    foreach ($url_tags_array as $tag) {
+                        $tag_id   = $tag->tag_id;
+                        $tag_name = $tag->value;
+
+                        $url_tags .= "<a class='btn btn-sm btn-outline-dark mx-1' href='" . site_url('url/tag/' . $tag_id) . "'>{$tag_name}</a>";
+                    }
+                    $url_tags = "<div class='mt-1'>{$langurlListTags}:" . $url_tags . '</div>';
+                }
+
+                if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                    // he is manager so i must let him know the url owner
+                    $url_owner_id = smarty_get_user_username($result->url_user_id);
+                    $url_owner    = "<div class='mt-1'>" . lang('Url.UrlOwner') . ": {$url_owner_id}</div>";
+                } else {
+                    $url_owner = '';
+                }
+
+                // $result->url_id],$result->url_title,$result->url_hitscounter
+                $Go_Url    = smarty_detect_site_shortlinker() . $result->url_identifier;
+                $records[] = [
+                    'url_id_col'         => $result->url_id,
+                    'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
+                    <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil'></i></a>
+                    <a target='_blank' title='" . lang('Url.UrlTestUrl') . ' ' . $result->url_identifier . "' href='{$Go_Url}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
+                    ",
+                    'url_title_col' => " {$urlTitle}
+                    <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
+                    ",
+                    'url_hits_col' => $result->url_hitscounter,
+                    'url_id'       => $result->url_id,
+                    'url_tags'     => $url_tags,
+                    'url_owner'    => $url_owner,
+                ];
             }
-
-            // $result->url_id],$result->url_title,$result->url_hitscounter
-            $records[] = [
-                "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
-                 <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil-fill'></i></a>
-                ",
-                " {$urlTitle}
-                 <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
-                ",
-                $result->url_hitscounter,
-            ];
         }
-
-        // $totalRecords = $this->urlmodel->getTotalRecordsCount();
-        /* $records = [
-             [1, "John Doe", "john@example.com"],
-             [2, "Jane Smith", "jane@example.com"],
-             [3, "3Jane Smith", "jane@example.com"],
-             [4, "4Jane Smith", "jane@example.com"],
-             [5, "5Jane Smith", "jane@example.com"],
-             // Add more rows as needed
-         ];*/
+        // $results is null so no return value
 
         $data = [
             'draw'            => $draw,
             'recordsTotal'    => $urlAllCount,
-            'recordsFiltered' => $numRows,
+            'recordsFiltered' => $filterAllnumRows,
             'data'            => $records,
         ];
 
@@ -145,12 +315,12 @@ class Url extends BaseController
             return smarty_permission_error();
         }
         // check if original url is valid url
-        $originalUrl = esc($this->request->getPost('originalUrl'));
+        $originalUrl = $this->request->getPost('originalUrl');
         if (! $this->smartyurl->isValidURL($originalUrl)) {
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlInvalidOriginal'));
         }
 
-        $identifier = esc(smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier')));
+        $identifier = smarty_remove_whitespace_from_url_identifier($this->request->getPost('UrlIdentifier'));
         if (! preg_match(Config('Smartyurl')->urlIdentifierpattern, $identifier)) {
             return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierPatternError', [Config('Smartyurl')->urlIdentifierpattern]));
         }
@@ -166,8 +336,8 @@ class Url extends BaseController
         }
 
         // urlTitle
-        $urlTitle          = esc($this->request->getPost('UrlTitle'));
-        $redirectCondition = esc($this->request->getPost('redirectCondition'));
+        $urlTitle          = $this->request->getPost('UrlTitle');
+        $redirectCondition = $this->request->getPost('redirectCondition');
         if ($redirectCondition === 'device' || $redirectCondition === 'geolocation') {
             // url_conditions
             // /...................here will be conditions
@@ -327,10 +497,10 @@ class Url extends BaseController
         $data = [
             'UrlId'             => $url_id,
             'editUrlAction'     => site_url("/url/edit/{$url_id}"),
-            'originalUrl'       => urldecode($urlData['url_targeturl']),
-            'UrlTitle'          => $urlData['url_title'],
-            'UrlIdentifier'     => $urlData['url_identifier'],
-            'urlTags'           => $urlTagsCloud, // i must get the URLTags
+            'originalUrl'       => esc(urldecode($urlData['url_targeturl'])),
+            'UrlTitle'          => esc($urlData['url_title']),
+            'UrlIdentifier'     => esc($urlData['url_identifier']),
+            'urlTags'           => esc($urlTagsCloud), // i must get the URLTags
             'redirectCondition' => $redirectCondition,
         ];
         if ($redirectCondition === 'geolocation') {

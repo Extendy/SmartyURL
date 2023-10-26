@@ -65,6 +65,21 @@ class Smartyurl extends BaseConfig
     public $urlTagsCloudLimit = 500;
 
     /**
+     * The default number of URLs to display on a single page when listing URLs.
+     *
+     * don't set this value bigger than $maxUrlListPerPage value
+     */
+    public int $defautltUrlListPerPage = 25;
+
+    /**
+     * The maximum number of URLs to display on a single page when listing URLs.
+     *
+     * This limit is set to 100 by default to prevent overloading the page with too many URLs.
+     * - We advise not lower than 100 or view issues may happen
+     */
+    public int $maxUrlListPerPage = 100;
+
+    /**
      * The allowed pattern for Url Identifier
      *
      * @default '/^[A-Za-z0-9][A-Za-z0-9_\-\.]{0,49}$/'

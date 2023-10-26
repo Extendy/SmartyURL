@@ -7,6 +7,8 @@ declare(strict_types=1);
  * it is loadded automaticlly from Config/Autoload.php , public $helpers = [...
  */
 
+use CodeIgniter\HTTP\Response;
+use CodeIgniter\Shield\Models\UserModel;
 use Config\Services;
 use IP2Location\IpTools;
 
@@ -111,11 +113,22 @@ if (! function_exists('smarty_pagetitle')) {
 }
 
 if (! function_exists('smarty_permission_error')) {
-    function smarty_permission_error(string $error = '')
+    function smarty_permission_error(string $error = '', $json = false)
     {
+        $errorCode        = 403; // which means HTTP response Forbidden
         $data['errorMsg'] = esc($error);
+        if (! $json) {
+            $response = service('response');
+            $response->setStatusCode($errorCode);
+            $response->setBody(view(smarty_view('errors/permissions'), $data));
 
-        return view(smarty_view('errors/permissions'), $data);
+            return $response;
+        }
+        $response = service('response');
+        $response->setStatusCode($errorCode);
+        $response->setJSON(['error' => 'Permissions error ' . esc($error)]);
+
+        return $response;
     }
 }
 
@@ -166,5 +179,21 @@ if (! function_exists('smarty_get_visitor_ip_country')) {
         $visitorIp2locationcountryCode = $visitorIp2locationRecords['countryCode'];
 
         return trim($visitorIp2locationcountryCode);
+    }
+}
+
+if (! function_exists('smarty_get_user_username')) {
+    function smarty_get_user_username($userId)
+    {
+        $shieldUserModel = new UserModel();
+        $user            = $shieldUserModel->find($userId);
+        if ($user) {
+            $username = $user->username;
+        } else {
+            // User not found
+            $username = null;
+        }
+
+        return $username;
     }
 }

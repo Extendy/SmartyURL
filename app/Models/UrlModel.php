@@ -60,4 +60,54 @@ class UrlModel extends BaseModel
             ->set('url_hitscounter', 'url_hitscounter + 1', false)
             ->update();
     }
+
+    /**
+     * This function gets the URL list for a given user ID in $userIds, which can be a single user ID or an array of user IDs.
+     * $returnType can be:
+     * - 'data' to return data as an array
+     * - 'count' to return the row count as an integer without the start and limit
+     */
+    public function getUrlsForUser(int|array|null $userIds = null, int|null $start = null, int|null $limit = null, ?string $search_string = null, string $orderBy = 'url_id', string $orderDirection = 'asc', string $returnType = 'data'): array|int
+    {
+        $builder = $this->builder();
+
+        // Check if $userIds is an array or a single value
+        if (isset($userIds)) {
+            if (is_array($userIds)) {
+                // If it's an array, use WHERE IN to filter by multiple user IDs
+                $builder->whereIn('url_user_id', $userIds);
+            } else {
+                // If it's a single value, use a simple WHERE to filter by that user ID
+                $builder->where('url_user_id', $userIds);
+            }
+        }
+
+        if ($search_string !== null) {
+            $builder->groupStart()
+                ->like('url_identifier', $search_string)
+                ->orLike('url_id', $search_string)
+                ->orLike('url_title', $search_string)
+                ->orLike('url_targeturl', $search_string)
+                ->groupEnd();
+        }
+
+        if ($returnType === 'count') {
+            // Return the count of all rows without the limit and start
+            return $builder->countAllResults();
+        }
+
+        if ($orderBy !== null) {
+            // Add the ORDER BY clause
+            $builder->orderBy($orderBy, $orderDirection);
+        }
+
+        if ($start !== null) {
+            $builder->limit($limit, $start);
+        } elseif ($limit !== null) {
+            $builder->limit($limit);
+        }
+
+        // Retrieve the records
+        return $builder->get()->getResult();
+    }
 }

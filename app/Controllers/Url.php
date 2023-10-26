@@ -183,9 +183,16 @@ class Url extends BaseController
 
             case 'tag':
                 // @TODO @FIXME you need to get the url for the given tag
-                $urlAllCount      = 0;
-                $results          = [];
-                $filterAllnumRows = 0;
+                if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                    // i wil return all tags urls , for all users
+                    $tag_user_id = null;
+                } else {
+                    // i will return only user urls for that tag
+                    $tag_user_id = $user_id;
+                }
+                $urlAllCount      = $this->urltagsdatamodel->getUrlInfoForTagId($filtervalue, $tag_user_id, null, $start, $length, $order_by, $order_by_rule, 'count');
+                $results          = $this->urltagsdatamodel->getUrlInfoForTagId($filtervalue, $tag_user_id, $searchValue, $start, $length, $order_by, $order_by_rule, 'data');
+                $filterAllnumRows = $this->urltagsdatamodel->getUrlInfoForTagId($filtervalue, $tag_user_id, $searchValue, $start, $length, $order_by, $order_by_rule, 'count');
                 break;
 
             default:
@@ -205,53 +212,55 @@ class Url extends BaseController
 
         $langurlListTags = lang('Url.urlListTags');
 
-        // print_r($results);
-        foreach ($results as $result) {
-            if ($result->url_title === '') {
-                $urlTitle = lang('Url.UrlTitleNoTitle');
-            } else {
-                $urlTitle = $result->url_title;
-            }
-            // i will get the url tags
-            $url_tags_json  = $this->urltags->getUrlTagsCloud($result->url_id);
-            $url_tags_array = json_decode($url_tags_json);
-            $url_tags       = '';
-            if (count($url_tags_array) > 0) {
-                foreach ($url_tags_array as $tag) {
-                    $tag_id   = $tag->tag_id;
-                    $tag_name = $tag->value;
-
-                    $url_tags .= "<a class='btn btn-sm btn-outline-dark mx-1' href='" . site_url('url/tag/' . $tag_id) . "'>{$tag_name}</a>";
+        // check if $results !== null before do foreach
+        if ($results !== null) {
+            foreach ($results as $result) {
+                if ($result->url_title === '') {
+                    $urlTitle = lang('Url.UrlTitleNoTitle');
+                } else {
+                    $urlTitle = $result->url_title;
                 }
-                $url_tags = "<div class='mt-1'>{$langurlListTags}:" . $url_tags . '</div>';
-            }
+                // i will get the url tags
+                $url_tags_json  = $this->urltags->getUrlTagsCloud($result->url_id);
+                $url_tags_array = json_decode($url_tags_json);
+                $url_tags       = '';
+                if (count($url_tags_array) > 0) {
+                    foreach ($url_tags_array as $tag) {
+                        $tag_id   = $tag->tag_id;
+                        $tag_name = $tag->value;
 
-            if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
-                // he is manager so i must let him know the url owner
-                $url_owner_id = smarty_get_user_username($result->url_user_id);
-                $url_owner    = "<div class='mt-1'>" . lang('Url.UrlOwner') . ": {$url_owner_id}</div>";
-                // samsam
-            } else {
-                $url_owner = '';
-            }
+                        $url_tags .= "<a class='btn btn-sm btn-outline-dark mx-1' href='" . site_url('url/tag/' . $tag_id) . "'>{$tag_name}</a>";
+                    }
+                    $url_tags = "<div class='mt-1'>{$langurlListTags}:" . $url_tags . '</div>';
+                }
 
-            // $result->url_id],$result->url_title,$result->url_hitscounter
-            $Go_Url    = smarty_detect_site_shortlinker() . $result->url_identifier;
-            $records[] = [
-                'url_id_col'         => $result->url_id,
-                'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
+                if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                    // he is manager so i must let him know the url owner
+                    $url_owner_id = smarty_get_user_username($result->url_user_id);
+                    $url_owner    = "<div class='mt-1'>" . lang('Url.UrlOwner') . ": {$url_owner_id}</div>";
+                } else {
+                    $url_owner = '';
+                }
+
+                // $result->url_id],$result->url_title,$result->url_hitscounter
+                $Go_Url    = smarty_detect_site_shortlinker() . $result->url_identifier;
+                $records[] = [
+                    'url_id_col'         => $result->url_id,
+                    'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
                     <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil'></i></a>
                     <a target='_blank' title='" . lang('Url.UrlTestUrl') . ' ' . $result->url_identifier . "' href='{$Go_Url}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
                     ",
-                'url_title_col' => " {$urlTitle}
+                    'url_title_col' => " {$urlTitle}
                     <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
                     ",
-                'url_hits_col' => $result->url_hitscounter,
-                'url_id'       => $result->url_id,
-                'url_tags'     => $url_tags,
-                'url_owner'    => $url_owner,
-            ];
+                    'url_hits_col' => $result->url_hitscounter,
+                    'url_id'       => $result->url_id,
+                    'url_tags'     => $url_tags,
+                    'url_owner'    => $url_owner,
+                ];
+            }
         }
+        // $results is null sp no return value
 
         $data = [
             'draw'            => $draw,

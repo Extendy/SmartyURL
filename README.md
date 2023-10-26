@@ -8,9 +8,18 @@ SmartyURL, a powerful & open-source URL management tool, empowers businesses and
 
 You can utilize SmartyURL to generate redirect links to the final URL, considering various variables like the visitor's geographical location or user device information.
 
+
+![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/3f24ac02-d42e-413f-a2d8-5564587862f1)
+
+
 For instance, you can create a unified link for mobile app downloads, dynamically adjusting the destination URL based on the user's device, whether it runs on Android or iOS. This ensures users are directed to the appropriate download link from the official store, tailored to their operating system.
 
+![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/22b62a10-e02c-43e7-8d76-2f875f6d9230)
+
+
 Likewise, you can also generate intelligent links to route visitors to specific URLs based on their location. For instance, users from the United States will be redirected to one link, while those from Saudi Arabia will be directed to another
+
+![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/0afe4a88-918e-4713-bab7-fe0d51d08433)
 
 
 In addition to shortening URLs (based on domain that you use), SmartyURL also offers a variety of other features, such as:
@@ -29,6 +38,11 @@ You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or high
 Afterwards, you can refer to the [installation instructions](_docs/installation.md) to set up the tool on your hosting account and begin using it.
 
 Certainly, please refer to the [documentation](_docs/index.md) for detailed instructions on how to install, configure, and effectively use Smart URL for comprehensive guidance.
+
+**Visitors IP Country detection**
+
+SmartyURL uses the `ip2location/ip2location-php` library to determine visitors country based on their IP addresses. It includes the free "IP2Location™ LITE IP-COUNTRY Database" for both personal and commercial use. For enhanced geographical redirect conditions with more accurate and up-to-date IP-based country data or if you need more accuracy consider purchasing a licensed IP2Location database. Refer to [IP2Location Database Docs](_docs/ip2location.md) for more details.
+
 
 ## Documentation
 

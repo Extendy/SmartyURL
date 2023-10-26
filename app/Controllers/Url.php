@@ -260,7 +260,7 @@ class Url extends BaseController
                 ];
             }
         }
-        // $results is null sp no return value
+        // $results is null so no return value
 
         $data = [
             'draw'            => $draw,

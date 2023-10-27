@@ -37,7 +37,7 @@ class Smartyurl extends BaseConfig
      *
      * @default is $ip2location_bin_file = VENDORPATH."ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN";
      */
-    public $ip2location_bin_file = VENDORPATH . 'ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN';
+    public $ip2location_bin_file =  APPPATH . "../datastore/". 'IP2Location/IP2LOCATION-LITE-DB1.IPV6.BIN';
 
     /**
      * @var bool if url tags is shared between site users?

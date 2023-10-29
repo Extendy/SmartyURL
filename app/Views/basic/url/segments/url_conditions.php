@@ -70,7 +70,7 @@ if ($redirectCondition === 'geolocation') {
 
     </div>
     <script>
-        //set the redirectCondition
+        /*set the redirectCondition*/
         var redirectCondition = document.getElementById("redirectCondition");
         redirectCondition.value = "geolocation";
     </script>
@@ -137,7 +137,7 @@ if ($redirectCondition === 'geolocation') {
 
 
         <script>
-            //set the redirectCondition
+            /*set the redirectCondition*/
             var redirectCondition = document.getElementById("redirectCondition");
             redirectCondition.value = "device";
         </script>

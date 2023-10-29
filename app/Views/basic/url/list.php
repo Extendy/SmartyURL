@@ -271,7 +271,7 @@ if (isset($filterrule)) {
             $(this).addClass('bi-clipboard-check-fill');
 
             Swal.fire({
-                text: "<?=lang("Url.urlCopiedtoClipboard");?>",
+                text: "<?= lang('Url.urlCopiedtoClipboard'); ?>",
                 icon: "success",
                 timer: 1000, // Auto-close after 2 seconds
                 timerProgressBar: true,

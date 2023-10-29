@@ -97,7 +97,7 @@
                                 <div class="mt-2">
                                     <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
                                     <input dir="ltr" type="url" class="form-control " name="originalUrl"
-                                           id="UrlTitle" required
+                                           id="originalUrl" required
                                            placeholder="" value="<?=  old('originalUrl') ?? $originalUrl ?? ''; ?>">
                                 </div>
 
@@ -109,7 +109,7 @@
 
 
                                 <div class="mt-2">
-                                    <label for="basic-url" class="form-label"><?= lang('Url.MaskedShortUrl'); ?>
+                                    <label for="UrlIdentifier" class="form-label"><?= lang('Url.MaskedShortUrl'); ?>
                                         :</label>
                                     <div class="input-group mb-3" dir="ltr">
                                     <span class="input-group-text"

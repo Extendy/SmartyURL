@@ -33,6 +33,11 @@
         font-size: 16px; /* Adjust the font size as needed */
     }
 
+    .copy-button {
+        cursor: pointer;
+    }
+
+
 
 </style>
 
@@ -199,4 +204,94 @@ if (isset($filterrule)) {
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/sl-1.7.0/datatables.min.js"></script>
 
 <script src="<?= site_url('assist/listurls') . $listurls_query_string ?>"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        // Add event delegation to handle the hover effect for dynamically added .copy-button elements in listurls
+
+        document.getElementById('listurls').addEventListener('mouseover', function(event) {
+            const copyButton = event.target;
+            const editLinkBtn = event.target
+
+            if (copyButton.classList.contains('copy-button')) {
+                // Change the class to clipboard-fill when the mouse hovers over
+                copyButton.classList.add('bi-clipboard-fill');
+                copyButton.classList.remove('bi-clipboard');
+            }
+
+            if (copyButton.classList.contains('edit-link-btn')) {
+                // Change the class to clipboard-fill when the mouse hovers over
+                copyButton.classList.add('bi-pencil-fill');
+                copyButton.classList.remove('bi-pencil');
+            }
+
+
+
+
+
+
+        });
+
+        document.getElementById('listurls').addEventListener('mouseout', function(event) {
+            const copyButton = event.target;
+            const editLinkBtn = event.target
+
+            if (copyButton.classList.contains('copy-button')) {
+                // Change the class back to bi-clipboard when the mouse leaves
+                copyButton.classList.remove('bi-clipboard-fill');
+                copyButton.classList.add('bi-clipboard');
+            }
+
+            if (copyButton.classList.contains('edit-link-btn')) {
+                // Change the class to clipboard-fill when the mouse hovers over
+                copyButton.classList.add('bi-pencil');
+                copyButton.classList.remove('bi-pencil-fill');
+            }
+
+        });
+
+        //copy the content of data-content when .copy-btton clicked
+
+        $("#listurls").on("click", ".copy-button", function () {
+            var content = $(this).data("content");
+
+
+            var textArea = document.createElement("textarea");
+            textArea.value = content;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            //alert("Content copied to clipboard: " + content);
+
+            // Add the 'bi-clipboard-check-fill' class to the clicked button
+            $(this).removeClass('bi-clipboard-fill');
+            $(this).addClass('bi-clipboard-check-fill');
+
+            Swal.fire({
+                text: "<?=lang("Url.urlCopiedtoClipboard");?>",
+                icon: "success",
+                timer: 1000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+                position: "top-start", // Show in the top-left corner
+                allowEscapeKey: true,
+                showConfirmButton: false,
+                toast: true, // Display as a toast
+
+            });
+
+            // Use setTimeout to remove the class after a couple of seconds (e.g., 2000 milliseconds)
+            setTimeout(function () {
+                $(".copy-button").removeClass('bi-clipboard-check-fill');
+            }, 500); // 2000 milliseconds = 2 seconds
+        });
+
+
+    });
+
+
+</script>
+
 <?= $this->endSection() ?>

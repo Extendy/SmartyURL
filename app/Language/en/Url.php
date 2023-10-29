@@ -42,6 +42,7 @@ return [
     'urlsAllLink'          => 'All Users URLs',
     'urlsUserLinks'        => 'URLs of user',
     'urlsTagsLinks'        => 'Tag URLs',
+    'CopyURL'              => 'Copy URL',
     'urlCopiedtoClipboard' => 'link has been copied to clipboard',
 
     'urlsListSearchOnUrls'          => 'Search on URLs for',

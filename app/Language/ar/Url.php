@@ -42,6 +42,7 @@ return [
     'urlsAllLink'          => 'روابط جميع المستخدمين',
     'urlsUserLinks'        => 'روابط المستخدم',
     'urlsTagsLinks'        => 'روابط هاشتاج',
+    'CopyURL'              => 'نسخ الرابط',
     'urlCopiedtoClipboard' => 'تم نسخ الرابط',
 
     'urlsListSearchOnUrls'          => 'البحث في الروابط عن',

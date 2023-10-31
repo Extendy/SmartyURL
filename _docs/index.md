@@ -28,18 +28,9 @@ You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or high
 
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) , [intl](http://php.net/manual/en/intl.requirements.php) , [mbstring](http://php.net/manual/en/mbstring.installation.php) ,  [libcurl](https://www.php.net/manual/en/curl.setup.php) , [gmp](https://www.php.net/manual/en/gmp.installation.php) , [json](https://www.php.net/manual/en/json.installation.php), [bcmath](https://www.php.net/manual/en/bc.setup.php)
 
-Afterwards, you can refer to the [installation instructions](_docs/installation.md) to set up the tool on your hosting account and begin using it.
-
-Certainly, please refer to the [documentation](_docs/index.md) for detailed instructions on how to install, configure, and effectively use Smart URL for comprehensive guidance.
-
-**Visitors IP Country detection**
-
-SmartyURL uses the `ip2location/ip2location-php` library to determine visitors country based on their IP addresses. It includes the free "IP2Location™ LITE IP-COUNTRY Database" for both personal and commercial use. For enhanced geographical redirect conditions with more accurate and up-to-date IP-based country data or if you need more accuracy consider purchasing a licensed IP2Location database. Refer to [IP2Location Database Docs](_docs/ip2location.md) for more details.
-
-
 ## Installation
 
-Since SmartyURL is still in its early stages, you can find installation instructions in the [Developer's Guide](_docs/index.md). Once we release the first version of SmartyURL, we will provide detailed installation instructions.
+Since SmartyURL is still in its early stages, you can find installation instructions in the [Developer's Guide](installation.md). Once we release the first version of SmartyURL, we will provide detailed installation instructions.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

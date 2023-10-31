@@ -2,10 +2,15 @@ site_name: SmartyURL Docs
 docs_dir: _docs
 site_dir: site
 repo_url: https://github.com/Extendy/SmartyURL
+site_description: 'SmartyURL Documentation'
+site_author: 'Extendy Team'
+copyright: 'Copyrights © 2023 Extendy Team'
 edit_uri: 'blob/main/_docs'
 nav:
   - Home: index.md
   - License: license.md
   - Legal Notice: legalnotice.md
 theme: readthedocs
+extra:
+  version: 0.0.0-dev-DND
 

@@ -34,6 +34,8 @@ Ensure the user you've created is designated as a superadmin by modifying the `a
 
 Afterward, you can disable new user registration by editing the .env file. Make sure to set `Auth.allowRegistration` to 'false'. If it's not already present in your .env file, you can add it like this:
 
+When logged in, you might be prompted to verify your email to activate your account. Please check your email for a verification link. If you are unable to access your email, you can manually set the 'active' value to 1 in the 'users' database table for the user you've created.
+
 ```cli
 Auth.allowRegistration = false
 ```

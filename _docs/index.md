@@ -30,7 +30,7 @@ You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or high
 
 ## Installation
 
-Since SmartyURL is still in its early stages, you can find installation instructions in the [Developer's Guide](installation.md). Once we release the first version of SmartyURL, we will provide detailed installation instructions.
+Since SmartyURL is still in its early stages, you can find installation instructions in the [Developer's Guide](developers.md). Once we release the first version of SmartyURL, we will provide detailed installation instructions.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

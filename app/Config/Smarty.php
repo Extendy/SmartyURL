@@ -7,7 +7,7 @@ use CodeIgniter\Config\BaseConfig;
 class Smarty extends BaseConfig
 {
     public $smarty_name        = 'SmartyURL';
-    public $smarty_online_repo = 'https://extendy.net/SmartyURL';
+    public $smarty_online_repo = 'https://smartyurl.extendy.net';
     public $smarty_version     = '0.0.0-dev-DND';
 
     /**

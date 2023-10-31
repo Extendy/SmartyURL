@@ -9,7 +9,7 @@ The paid IP2Location database offers improved accuracy and regular updates. To o
 Once you've obtained the IP2Location™ IP-Country Database, download the .BIN file associated with the database and upload it to your server. Then, specify the path to the uploaded file by configuring the `$ip2location_bin_file` in `app/Config/Smartyurl.php`.
 
 ```php
-public $ip2location_bin_file = VENDORPATH . 'ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN';
+public $ip2location_bin_file =  APPPATH . "../datastore/". 'IP2Location/IP2LOCATION-LITE-DB1.IPV6.BIN';
 ```
 
 This setup ensures that SmartyURL uses the paid, more accurate, and regularly updated IP2Location database for enhanced country detection.

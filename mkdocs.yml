@@ -1,3 +1,11 @@
 site_name: SmartyURL Docs
 docs_dir: _docs
 site_dir: site
+repo_url: https://github.com/Extendy/SmartyURL
+edit_uri: 'blob/main/_docs'
+nav:
+  - Home: index.md
+  - License: license.md
+  - Legal Notice: legalnotice.md
+theme: readthedocs
+

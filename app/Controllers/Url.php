@@ -264,10 +264,9 @@ class Url extends BaseController
                 $Go_Url    = smarty_detect_site_shortlinker() . $result->url_identifier;
                 $records[] = [
                     'url_id_col'         => $result->url_id,
-                    'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "'>{$result->url_identifier}</a>
-                    <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil'></i></a>
-                    <a target='_blank' title='" . lang('Url.UrlTestUrl') . ' ' . $result->url_identifier . "' href='{$Go_Url}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
-                    ",
+                    'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
+                                            <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil edit-link-btn'></i></a>
+                                            <i title='" . lang('Url.CopyURL') . "' class='bi bi-clipboard copy-button' data-content='{$Go_Url}' data-target='link2'></i>    ",
                     'url_title_col' => " {$urlTitle}
                     <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
                     ",
@@ -555,7 +554,7 @@ class Url extends BaseController
 
         if (! $UrlIdentifier->isURLIdentifierallowed($identifier)) {
             // url identifier is not allowed
-            return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierNotAllowed', [$identifier]));
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlIdentifierNotAllowed', [$identifier]));
         }
 
         // urlTitle

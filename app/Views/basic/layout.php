@@ -317,6 +317,7 @@
 <!--begin::jsfooterarea contains any specific javascript files that view files may load -->
 <?= $this->renderSection('jsfooterarea') ?>
 <!--end::jsfooterarea contains any specific javascript files that view files may load -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--end::Script-->
 </body><!--end::Body-->
 

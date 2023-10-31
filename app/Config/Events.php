@@ -56,7 +56,7 @@ Events::on('pre_system', static function () {
 
 // minify html output on codeigniter 4 in production environment
 Events::on('post_controller_constructor', static function () {
-    if (ENVIRONMENT !== 'testing' && filter_var(setting('Smartyurl.minifyHtmloutput') ?? false, FILTER_VALIDATE_BOOLEAN)) {
+    if (ENVIRONMENT !== 'testing' && ! url_is('assist/*') && filter_var(setting('Smartyurl.minifyHtmloutput') ?? false, FILTER_VALIDATE_BOOLEAN)) {
         while (ob_get_level() > 0) {
             ob_end_flush();
         }

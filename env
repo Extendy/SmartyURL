@@ -22,11 +22,19 @@
 # APP
 #--------------------------------------------------------------------
 
+#your smartyurl website url
 app.baseURL = 'https://EXAMPLE.COM'
+
+#your default language for your app
 app.defaultLocale = 'en'
+
+#ENV type , keep it to production for production
 CI_ENVIRONMENT=production
-# If you have trouble with `.`, you could also use `_`.
+
+#Force Global Secure Requests
 app.forceGlobalSecureRequests = false
+
+#Content Security Policy
 app.CSPEnabled = false
 
 #log level - keep it 3 unless you are debuging or your log files will be large
@@ -40,8 +48,20 @@ smartyurl.siteName = "SmartyURL"
 #minify html output , default is true to reduce the size and remove html comments
 #make it false if you want to debug html output
 smartyurl.minifyHtmloutput = false
+
 # it is important to ser the cookie domain to make cookie working correctly
 cookie.domain =  .EXAMPLE.COM
+
+# If someone visits shorten URL that is not found or deleted, then a 404 page will be shown contains a link to goto
+# the main page of your website, so enter your website url here.
+# we advice you to add your main website url here not your SmartyURL website.
+
+smartyurl.mainpagefor404notfound = "http://example.com/"
+
+
+#Tags sharing between all users on the system
+#KEEP IT FALSE IF YOU DO NOT NEED SHARED TAGS BETWEEN ALL USERS
+smartyurl.urltags_shared_between_users = true
 
 
 #--------------------------------------------------------------------
@@ -53,33 +73,28 @@ cookie.domain =  .EXAMPLE.COM
  database.default.username = databaseusername
  database.default.password = database_password
  database.default.DBDriver = MySQLi
- database.default.DBPrefix =
  database.default.port = 3306
 
-# database.tests.hostname = localhost
-# database.tests.database = ci4_test
-# database.tests.username = root
-# database.tests.password = root
-# database.tests.DBDriver = MySQLi
-# database.tests.DBPrefix =
-# database.tests.port = 3306
 
 #--------------------------------------------------------------------
 # Email, The default Email configuration which used to send emails
 #--------------------------------------------------------------------
 
-#mail protocol: choose beteween mail, sendmail, smtp
-#and we advice you to choose smtp and enter emtp info below
-email.string $protocol = 'smtp';
+#mail protocol: choose between mail, sendmail, smtp
+#default it mail
+#and we advice you to choose smtp and enter smtp info below
+email.string $protocol = 'mail';
 
 #choose the default sender mail
 email.fromEmail = noreplay@example.com
 
 #choose the default sender name
 email.fromName   = 'SmartyURL'
+
 #choose html for mail type
 email.mailType = html
-#enter the SMTP info here
+
+#enter the SMTP info here if you use smtp as protocol
 email.SMTPHost = smtp.example.com
 email.SMTPUser = noreplay@example.com
 email.SMTPPass = 'SMTPuserPassword'
@@ -87,104 +102,3 @@ email.SMTPPort = 1025
 #SMTP Encryption. Either tls or ssl or none
 email.SMTPCrypto = ssl
 
-#--------------------------------------------------------------------
-# CONTENT SECURITY POLICY
-#--------------------------------------------------------------------
-
-# contentsecuritypolicy.reportOnly = false
-# contentsecuritypolicy.defaultSrc = 'none'
-# contentsecuritypolicy.scriptSrc = 'self'
-# contentsecuritypolicy.styleSrc = 'self'
-# contentsecuritypolicy.imageSrc = 'self'
-# contentsecuritypolicy.baseURI = null
-# contentsecuritypolicy.childSrc = null
-# contentsecuritypolicy.connectSrc = 'self'
-# contentsecuritypolicy.fontSrc = null
-# contentsecuritypolicy.formAction = null
-# contentsecuritypolicy.frameAncestors = null
-# contentsecuritypolicy.frameSrc = null
-# contentsecuritypolicy.mediaSrc = null
-# contentsecuritypolicy.objectSrc = null
-# contentsecuritypolicy.pluginTypes = null
-# contentsecuritypolicy.reportURI = null
-# contentsecuritypolicy.sandbox = false
-# contentsecuritypolicy.upgradeInsecureRequests = false
-# contentsecuritypolicy.styleNonceTag = '{csp-style-nonce}'
-# contentsecuritypolicy.scriptNonceTag = '{csp-script-nonce}'
-# contentsecuritypolicy.autoNonce = true
-
-#--------------------------------------------------------------------
-# COOKIE
-#--------------------------------------------------------------------
-
-# cookie.prefix = ''
-# cookie.expires = 0
-# cookie.path = '/'
-# cookie.domain = ''
-# cookie.secure = false
-# cookie.httponly = false
-# cookie.samesite = 'Lax'
-# cookie.raw = false
-
-#--------------------------------------------------------------------
-# ENCRYPTION
-#--------------------------------------------------------------------
-
-# encryption.key =
-# encryption.driver = OpenSSL
-# encryption.blockSize = 16
-# encryption.digest = SHA512
-
-#--------------------------------------------------------------------
-# HONEYPOT
-#--------------------------------------------------------------------
-
-# honeypot.hidden = 'true'
-# honeypot.label = 'Fill This Field'
-# honeypot.name = 'honeypot'
-# honeypot.template = '<label>{label}</label><input type="text" name="{name}" value=""/>'
-# honeypot.container = '<div style="display:none">{template}</div>'
-
-#--------------------------------------------------------------------
-# SECURITY
-#--------------------------------------------------------------------
-
-#It is not recommended to set csrfProtection here . Because it should be set to session in all environments.
-#You shoud set it in Config\Security::$csrfProtection
-#security.csrfProtection = 'session'
-
-# security.tokenRandomize = false
-# security.tokenName = 'csrf_token_name'
-# security.headerName = 'X-CSRF-TOKEN'
-# security.cookieName = 'csrf_cookie_name'
-# security.expires = 7200
-# security.regenerate = true
-# security.redirect = false
-# security.samesite = 'Lax'
-
-#--------------------------------------------------------------------
-# SESSION
-#--------------------------------------------------------------------
-
-# session.driver = 'CodeIgniter\Session\Handlers\FileHandler'
-# session.cookieName = 'ci_session'
-# session.expiration = 7200
-# session.savePath = null
-
-# set matchIP if you worry about session hijacking, but this will require you to login every ip change.
-# session.matchIP = false
-
-# session.timeToUpdate = 300
-# session.regenerateDestroy = false
-
-#--------------------------------------------------------------------
-# LOGGER
-#--------------------------------------------------------------------
-
-# logger.threshold = 4
-
-#--------------------------------------------------------------------
-# CURLRequest
-#--------------------------------------------------------------------
-
-# curlrequest.shareOptions = true

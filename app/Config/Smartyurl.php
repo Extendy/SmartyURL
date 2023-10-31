@@ -20,6 +20,14 @@ class Smartyurl extends BaseConfig
     public $minifyHtmloutput = false;
 
     /**
+     * If someone visits shorten URL that is not found or deleted, then a 404 page will be shown contains a link to goto
+     * main page of your website, so enter your website url here.
+     *
+     * @var string
+     */
+    public $mainpagefor404notfound = 'http://example.com/';
+
+    /**
      * @var string path of (static folder content) cdn or URL and it must end WITH a trailing slash /
      *             keep it as is if you dont have external cdn, if you want to use CDN enter the url of the cdn
      *             **** remember it must end with / ****
@@ -37,7 +45,7 @@ class Smartyurl extends BaseConfig
      *
      * @default is $ip2location_bin_file = VENDORPATH."ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN";
      */
-    public $ip2location_bin_file = VENDORPATH . 'ip2location/ip2location-php/data/IP2LOCATION-LITE-DB1.BIN';
+    public $ip2location_bin_file = APPPATH . '../datastore/IP2Location/IP2LOCATION-LITE-DB1.IPV6.BIN';
 
     /**
      * @var bool if url tags is shared between site users?

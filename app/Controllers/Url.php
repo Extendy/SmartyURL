@@ -554,7 +554,7 @@ class Url extends BaseController
 
         if (! $UrlIdentifier->isURLIdentifierallowed($identifier)) {
             // url identifier is not allowed
-            return redirect()->to('url/new')->withInput()->with('error', lang('Url.urlIdentifierNotAllowed', [$identifier]));
+            return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlIdentifierNotAllowed', [$identifier]));
         }
 
         // urlTitle

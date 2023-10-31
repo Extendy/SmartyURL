@@ -2,22 +2,38 @@
 
 ## Installation
 
-to install smartyurl:
+Currently, as SmartyURL is in its early stages, you can only install it using Composer. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.
+
+install SmartyURL using composer:
 
 ```cli
 composer create-project extendy/smartyurl myapp
 cd myapp
-composer update
+composer install
 cp env .env
 ```
 
-make sure you create mysql database then run and edit `.env` file and change the configuration of database , also change the other configuration to be right for you.
+Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements.
 
-then run the migrate all command:
+then run the migrate all command to import database:
+
 ```cli
-spark migrate --all
+php spark migrate --all
+```
+Then you need to create the first user:
+
+You can create a new user by running:
+
+```cli
+php spark shield:user create
 ```
 
-As smarty still in test mode you can now visit the site and register an account using http://example.com/dashboard then register for an account and make it admin
-in the future I will add more instructions..
+or by visiting your website and register new user
 
+Ensure the user you've created is designated as a superadmin by modifying the `auth_groups_users` database table. Set the user's group name to 'superadmin' instead of 'user' for the created user.
+
+Afterward, you can disable new user registration by editing the .env file. Make sure to set `Auth.allowRegistration` to 'false'. If it's not already present in your .env file, you can add it like this:
+
+```cli
+Auth.allowRegistration = false
+```

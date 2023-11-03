@@ -310,8 +310,8 @@ class Url extends BaseController
         }
 
         // i will check the user permission , does he allowed to access this url info
-        $userCanManageUrl = $this->smartyurl->userCanAccessUrlInfo($url_id, (int) $urlData['url_user_id']);
-        if (! $userCanManageUrl) {
+        $userCanAccessUrl = $this->smartyurl->userCanAccessUrlInfo($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanAccessUrl) {
             return smarty_permission_error('It not your URL 😉😉😉');
         }
         $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);

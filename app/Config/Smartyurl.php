@@ -90,13 +90,16 @@ class Smartyurl extends BaseConfig
     /**
      * QR code version depends on your specific requirements and use case.
      * QR codes come in various versions, ranging from Version 1 to Version 40
-     * best from 3 to 7
-     * default is 5 and if you have any error while generating QR Codes you can
+     * best from 3 to 10
+     * default is 7 and if you have any error while generating QR Codes you can
      * increase it.
+     * 7 can handle 528 bit (each utf-8 char is 8 bit)
+     *
+     * @see https://www.qrcode.com/en/about/version.html
      *
      * @var int
      */
-    public $qrCodeVersion = 5;
+    public $qrCodeVersion = 7;
 
     /**
      * The allowed pattern for Url Identifier

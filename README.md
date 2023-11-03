@@ -29,26 +29,21 @@ In addition to shortening URLs (based on domain that you use), SmartyURL also of
 * **Tracking and analytics**
 * **Customization**
 
-## Server Requirements
+## Installation
 
-- You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or higher support and the following PHP extensions (typically supported by most PHP hosting providers):
+Currently, as SmartyURL is in its early stages, you can only install it using Composer. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.
 
-  - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) , [intl](http://php.net/manual/en/intl.requirements.php) , [mbstring](http://php.net/manual/en/mbstring.installation.php) ,  [libcurl](https://www.php.net/manual/en/curl.setup.php) , [gmp](https://www.php.net/manual/en/gmp.installation.php) , [json](https://www.php.net/manual/en/json.installation.php), [bcmath](https://www.php.net/manual/en/bc.setup.php)
- 
-- Your web hosting account should have MySQL 8.0+ support
+see [Developers Guide](_docs/developers.md#installation) for more information about how to install SmartyURL.
 
-Afterwards, you can refer to the [installation instructions](_docs/installation.md) to set up the tool on your hosting account and begin using it.
-
-Certainly, please refer to the [documentation](_docs/index.md) for detailed instructions on how to install, configure, and effectively use Smart URL for comprehensive guidance.
-
-**Visitors IP Country detection**
-
-SmartyURL uses the `ip2location/ip2location-php` library to determine visitors country based on their IP addresses. It includes the free "IP2Location™ LITE IP-COUNTRY Database" for both personal and commercial use. For enhanced geographical redirect conditions with more accurate and up-to-date IP-based country data or if you need more accuracy consider purchasing a licensed IP2Location database. Refer to [IP2Location Database Docs](_docs/ip2location.md) for more details.
-
+Certainly, please refer to the [documentation](_docs/index.md) for detailed instructions How configure, and effectively use SmartyURL for comprehensive guidance.
 
 ## Documentation
 
 Please take a look to SmartyURL [documentation](_docs/index.md) for detailed installation, configuration, and usage instructions.
+
+**Visitors IP Country detection**
+
+SmartyURL uses the `ip2location/ip2location-php` library to determine visitors country based on their IP addresses. It includes the free "IP2Location™ LITE IP-COUNTRY Database" for both personal and commercial use. For enhanced geographical redirect conditions with more accurate and up-to-date IP-based country data or if you need more accuracy consider purchasing a licensed IP2Location database. Refer to [IP2Location Database Docs](_docs/ip2location.md) for more details.
 
 
 ## License

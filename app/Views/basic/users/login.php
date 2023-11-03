@@ -31,6 +31,16 @@
 <!--begin::Body-->
 
 <body class="login-page bg-body-secondary">
+
+<noscript>
+    <div class="col-5 container mt-5">
+        <!-- Alert Box for noscript -->
+        <div class="alert alert-danger" role="alert">
+            <?= lang('Common.javascriptNotEnabledNotice'); ?>
+        </div>
+    </div>
+</noscript>
+
 <div class="login-box">
     <div class="card card-outline card-primary">
         <div class="card-header">

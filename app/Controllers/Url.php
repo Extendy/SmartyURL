@@ -291,7 +291,39 @@ class Url extends BaseController
 
     public function view($UrlId)
     {
-        d($UrlId);
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+
+        $UrlModel = new UrlModel();
+        $UrlTags  = new UrlTags();
+        $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        if ($url_id === 0) {
+            // url_id given is not valid id
+            return redirect()->to('dashboard')->with('notice', lang('Url.urlError'));
+        }
+        $urlData = $UrlModel->where('url_id', $url_id)->first();
+
+        if ($urlData === null) {
+            // url not exsists in dataase
+            return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+
+        // i will check the user permission , does he allowed to access this url info
+        $userCanManageUrl = $this->smartyurl->userCanAccessUrlInfo($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanManageUrl) {
+            return smarty_permission_error('It not your URL 😉😉😉');
+        }
+        $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);
+        // $urlTagsCloud = '[{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}]';
+
+        d($urlData);
+        dd($urlTagsCloud);
+        // i will also get the last 25 hits
+
+        $data = [];
+
+        return view(smarty_view('url/urlinfo'), $data);
     }
 
     public function new()

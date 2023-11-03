@@ -12,7 +12,7 @@
 
 Currently, as SmartyURL is in its early stages, you can only install it using `Composer`. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.
 
-install SmartyURL using composer:
+### install SmartyURL using `Composer`:
 
 ```cli
 composer create-project extendy/smartyurl:dev-main myapp
@@ -21,6 +21,8 @@ composer install
 cp env .env
 ```
 When using Composer, you can update SmartyURL dependencies in the future using `composer update`. However, for updating SmartyURL itself, manual updates or reinitializing the Composer project **are necessary**.
+
+### Or install with `git`
 
 For Extendy developers or Developers who prefer to keep SmartyURL up to date using `Git` rather than `Composer`, you can install it by running::
 
@@ -31,11 +33,11 @@ composer install
 cp env .env
 ```
 
-> [!IMPORTANT]
-> When installing SmartyURL with `git`, you gain the flexibility to easily update SmartyURL in the future using `git fetch` and `git pull`. However, it's worth noting that using `git` may provide bleeding-edge releases, which might not be as stable or thoroughly tested.
-> Therefore Installing SmartyURL using `git` is recommended for experienced or Extendy developers only.
+!!! note
+    When installing SmartyURL with `git`, you gain the flexibility to easily update SmartyURL in the future using `git fetch` and `git pull`. However, it's worth noting that using `git` may provide bleeding-edge releases, which might not be as stable or thoroughly tested.
+    Therefore Installing SmartyURL using `git` is recommended for experienced or Extendy developers only.
 
-
+### After installing the files
 
 Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements.
 
@@ -63,4 +65,5 @@ Auth.allowRegistration = false
 ```
 
 When logged in, you might be prompted to verify your email to activate your account. Please check your email for a verification link. If you are unable to access your email or SmartyURL unable to send emails, you can manually set the 'active' value to 1 in the 'users' database table for the user you've created.
+
 

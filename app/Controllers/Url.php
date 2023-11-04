@@ -236,7 +236,7 @@ class Url extends BaseController
                 if ($result->url_title === '') {
                     $urlTitle = lang('Url.UrlTitleNoTitle');
                 } else {
-                    $urlTitle = $result->url_title;
+                    $urlTitle = esc($result->url_title);
                 }
                 // i will get the url tags
                 $url_tags_json  = $this->urltags->getUrlTagsCloud($result->url_id);
@@ -259,9 +259,9 @@ class Url extends BaseController
                 } else {
                     $url_owner = '';
                 }
-
+                $result->url_identifier = esc($result->url_identifier);
                 // $result->url_id],$result->url_title,$result->url_hitscounter
-                $Go_Url    = smarty_detect_site_shortlinker() . $result->url_identifier;
+                $Go_Url    = esc(smarty_detect_site_shortlinker() . $result->url_identifier);
                 $records[] = [
                     'url_id_col'         => $result->url_id,
                     'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
@@ -317,11 +317,29 @@ class Url extends BaseController
         $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);
         // $urlTagsCloud = '[{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}]';
 
-        d($urlData);
-        dd($urlTagsCloud);
+        // d($urlData);
+        // d($urlTagsCloud);
+        // samsam @TODO SAM
         // i will also get the last 25 hits
+        $Go_Url             = esc(smarty_detect_site_shortlinker() . $urlData['url_identifier']);
+        $url_owner_username = smarty_get_user_username($urlData['url_user_id']);
 
-        $data = [];
+        $data           = [];
+        $data['url_id'] = $urlData['url_id'];
+        if ($urlData['url_title'] === '') {
+            $urlData['url_title'] = lang('Url.UrlTitleNoTitle');
+        }
+        $data['url_owner_username'] = $url_owner_username;
+        $data['url_title']          = esc($urlData['url_title']);
+        $data['url_targeturl']      = esc($urlData['url_targeturl']);
+        $data['url_identifier']     = esc($urlData['url_identifier']);
+        $data['url_hitscounter']    = $urlData['url_hitscounter'];
+
+        $data['created_at'] = $urlData['created_at'];
+        $data['updated_at'] = $urlData['updated_at'];
+        $data['go_url']     = $Go_Url;
+
+        $data['url_tags'] = json_decode($urlTagsCloud);
 
         return view(smarty_view('url/urlinfo'), $data);
     }
@@ -590,7 +608,7 @@ class Url extends BaseController
         }
 
         // urlTitle
-        $urlTitle          = esc($this->request->getPost('UrlTitle'));
+        $urlTitle          = $this->request->getPost('UrlTitle');
         $redirectCondition = esc($this->request->getPost('redirectCondition'));
         if ($redirectCondition === 'device' || $redirectCondition === 'geolocation') {
             // url_conditions
@@ -675,7 +693,7 @@ class Url extends BaseController
             }
 
             // return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('OK'))->with('updated',"yes");
-            return redirect()->back()->with('success', lang('Url.UpdateURLOK'));
+            return redirect()->to("url/view/{$UrlId}")->with('success', lang('Url.UpdateURLOK'));
         }
 
         // updated error

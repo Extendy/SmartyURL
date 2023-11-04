@@ -52,8 +52,10 @@
 <body style="background-color: #f8f9fa;">
 
 <div class="container text-center py-5">
-    <h1 class="display-4 text-primary">
+    <h1 class="display-4 text-danger">
         <i class="bi bi-emoji-dizzy"></i>
+    </h1>
+
 
 </div>
 
@@ -65,6 +67,7 @@
         <br />
         <?= lang('Url.urlNotFoundLong'); ?>
     </p>
+    <p class="" style="font-family: Helvetica, sans-serif;text-align: center;font-size: 300%;}">&macr;\_(&#12484;)_/&macr;</p>
 </section>
 
 <footer class="d-flex justify-content-center align-items-center">

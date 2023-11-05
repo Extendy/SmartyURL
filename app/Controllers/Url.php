@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\UrlHitsModel;
 use App\Models\UrlModel;
 use App\Models\UrlTagsDataModel;
 use App\Models\UrlTagsModel;
@@ -25,6 +26,7 @@ class Url extends BaseController
         $this->urltagsdatamodel = new UrlTagsDataModel();
         $this->urlmodel         = new UrlModel();
         $this->urltags          = new UrlTags();
+        $this->urlhitsmodel     = new UrlHitsModel();
     }
 
     /**
@@ -317,10 +319,6 @@ class Url extends BaseController
         $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);
         // $urlTagsCloud = '[{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}]';
 
-        // d($urlData);
-        // d($urlTagsCloud);
-        // samsam @TODO SAM
-        // i will also get the last 25 hits
         $Go_Url             = esc(smarty_detect_site_shortlinker() . $urlData['url_identifier']);
         $url_owner_username = smarty_get_user_username($urlData['url_user_id']);
 
@@ -340,6 +338,39 @@ class Url extends BaseController
         $data['go_url']     = $Go_Url;
 
         $data['url_tags'] = json_decode($urlTagsCloud);
+
+        // i will get the redirect conditions
+        $redirectConditions     = json_decode($urlData['url_conditions']);
+        $data['condition']      = null;
+        $data['condition_text'] = null;
+
+        if ($redirectConditions !== null) {
+            // there is a url redirect condition
+            $data['condition'] = $redirectConditions->condition;
+
+            switch ($data['condition']) {
+                case 'location':
+                    $data['condition_text'] = lang('Url.ByvisitorsGeolocation');
+                    break;
+
+                case 'device':
+                    $data['condition_text'] = lang('Url.ByvisitorsDevice');
+                    break;
+
+                default:
+                    $data['condition_text'] = $data['condition'];
+            }
+
+            $data['conditions'] = $redirectConditions->conditions;
+        } else {
+            $data['condition_text'] = lang('Url.urlInfoNoRecdirectCondition');
+        }
+
+        // dd($redirectConditions);
+
+        // i will try to get the last 25 hits of the url
+        $lasthits         = $this->urlhitsmodel->getLast25Hits($urlData['url_id']);
+        $data['lasthits'] = $lasthits;
 
         return view(smarty_view('url/urlinfo'), $data);
     }
@@ -698,5 +729,10 @@ class Url extends BaseController
 
         // updated error
         return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
+    }
+
+    public function hitslist($UrlId)
+    {
+        echo 'URL HITS OF.' . $UrlId;
     }
 }

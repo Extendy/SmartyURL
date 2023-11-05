@@ -51,4 +51,19 @@ class UrlHitsModel extends BaseModel
 
         $this->table = $this->dbtables['urlhits'];
     }
+
+    /**
+     * get the last 25 hits for URL
+     *
+     * @return mixed
+     */
+    public function getLast25Hits($UrlId)
+    {
+        // Using Query Builder to retrieve the last 25 rows
+        return $this->where('urlhit_urlid', $UrlId)
+            ->orderBy('urlhit_id', 'DESC')
+            ->limit(25)
+            ->get()
+            ->getResult();
+    }
 }

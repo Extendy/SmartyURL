@@ -135,7 +135,7 @@
 
                             <div class="mb-2">
                                 <div class="pb-2">
-                                <?= lang('Url.urlListTags'); ?>:
+                                    <?= lang('Url.urlListTags'); ?>:
                                 </div>
                                 <?php
                                 $url_tags_string = '';
@@ -156,54 +156,166 @@ echo $url_tags_string;
 
                             <hr class="bg-dark border-2 border-top border-dark"/>
 
-                            <div class="mb-2">
-                                <div class="pb-2">
-                                    URL Redirect Conditions
-                                    <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                       title='<?= lang('Url.UpdateUrlConditionsTooltip'); ?>'
-                                       href='<?= site_url("url/edit/{$url_id}"); ?>' class='link-dark edit-link'><i
-                                            class='bi bi-pencil edit-link-btn'></i></a>
+                            <?php
+                            if ($condition !== null) { ?>
+
+                                <div class="mb-2">
+                                    <div class="pb-2">
+                                        <?= lang('Url.urlInfoRecdirectCondition'); ?>: <?= $condition_text; ?>
+                                        <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title='<?= lang('Url.UpdateUrlConditionsTooltip'); ?>'
+                                           href='<?= site_url("url/edit/{$url_id}"); ?>' class='link-dark edit-link'><i
+                                                class='bi bi-pencil edit-link-btn'></i></a>
+                                    </div>
+                                    <div class="center-table">
+                                        <table class="table table-bordered" style="width: 100%;">
+                                            <tbody>
+                                            <?php
+            foreach ($conditions as $cond => $link) {
+                ?>
+
+                                                <tr>
+                                                    <td class="text-center"><?php
+                        switch ($cond) {
+                            case 'applesmartphone':
+                                $cond_text = lang('Url.DeviceAppleSmartPhone');
+                                break;
+
+                            case 'andriodsmartphone':
+                                $cond_text = lang('Url.DeviceAndroidSmartPhone');
+                                break;
+
+                            case 'windowscomputer':
+                                $cond_text = lang('Url.DeviceWindowsComputer');
+                                break;
+
+                            default:
+                                $cond_text = $cond;
+                                break;
+                        }
+
+                ?>
+                                                   <?=  $cond_text; ?>
+                                                    </td>
+                                                    <td class="text-nowrap" dir="ltr">
+                                                        <?= esc($link); ?>
+                                                        <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                                           target='_blank'
+                                                           title='<?= lang('Url.visitOriginalUrl'); ?>'
+                                                           href='<?= $link ?>'
+                                                           class='link-dark edit-link'><i
+                                                                class='bi bi-box-arrow-up-right'></i></a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+            }
+                                ?>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
 
-                                <div class="center-table">
-                                    <table class="table table-bordered" style="width: 100%;">
-                                        <tbody>
-                                        <tr>
-                                            <td>Condition 1</td>
-                                            <td class="text-nowrap">
-                                                https://link1.test
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Condition 2</td>
-                                            <td class="text-nowrap">
-                                                https://link1.test?anothercondition
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                            <?php } else { ?>
+
+                                <div class="mb-2">
+
+                                    <div class="pb-2">
+                                        <?= lang('Url.urlInfoRecdirectCondition'); ?>: <?= $condition_text; ?>
+                                        <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title='<?= lang('Url.UpdateUrlConditionsTooltip'); ?>'
+                                           href='<?= site_url("url/edit/{$url_id}"); ?>' class='link-dark edit-link'><i
+                                                class='bi bi-pencil edit-link-btn'></i></a>
+                                    </div>
+
                                 </div>
+
+                            <?php } ?>
+
+                            <hr class="bg-dark border-2 border-top border-dark"/>
+                            <div class="mb-2">
+                                <div class="pb-2">
+                                    <?= lang('Url.urlInfoLast25Hits'); ?>:
+                                    <a href="<?= site_url("url/hits/{$url_id}"); ?>"
+                                       class="btn btn-sm btn-outline-dark"><?= lang('Url.urlInfoSeeAllHits'); ?></a>
+                                </div>
+                                <?php
+                                if (isset($lasthits) && count($lasthits) > 0) {
+                                    ?>
+
+                                    <div class="container">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th><?= lang('Url.urlInfoVisitDate'); ?></th>
+                                                <th><?= lang('Url.urlInfoVisitorIP'); ?></th>
+                                                <th><?= lang('Url.urlInfoVisitorCountry'); ?></th>
+                                                <th><?= lang('Url.urlInfoVisitorDevice'); ?></th>
+                                                <th><?= lang('Url.urlInfoVisitorUserAgent'); ?></th>
+                                                <th><?= lang('Url.urlInfoFinalTarget'); ?></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            foreach ($lasthits as $hit) {
+                                                ?>
+                                                <tr>
+                                                    <td><?= esc($hit->urlhit_at); ?></td>
+                                                    <td><?= esc($hit->urlhit_ip); ?></td>
+                                                    <td><?= esc($hit->urlhit_country); ?></td>
+                                                    <td><?= esc($hit->urlhit_visitordevice); ?></td>
+                                                    <td><?= esc($hit->urlhit_useragent); ?></td>
+                                                    <td dir="ltr"><?= esc($hit->urlhit_finaltarget); ?>
+                                                        <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                                           target='_blank'
+                                                           title='<?= lang('Url.visitOriginalUrl'); ?>'
+                                                           href='<?= $hit->urlhit_finaltarget; ?>'
+                                                           class='link-dark edit-link'><i
+                                                                class='bi bi-box-arrow-up-right'></i></a>
+
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            } // foreach ($lasthits as $hit)
+                                    ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <?php
+                                } else {
+                                    // no hits
+                                    ?>
+
+                                    <div class="container">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center" style="font-weight: normal;">
+                                                    <?= lang('Url.urlInfoNoHitsYet'); ?>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+
+                                    <?php
+                                } // else of   if (isset($lasthits) && count($lasthits) > 0) {
+?>
+
 
                             </div>
 
 
-
-
-                        <hr class="bg-dark border-2 border-top border-dark"/>
-                        <div class="mb-2">
-                            Last hits
-
-                        </div>
-
-
-                    </div> <!-- class="card-body" -->
-                </div> <!-- class="card" -->
+                        </div> <!-- class="card-body" -->
+                    </div> <!-- class="card" -->
+                </div>
             </div>
         </div>
-    </div>
 
 
-</div> <!-- class app-content-header -->
+    </div> <!-- class app-content-header -->
 
 
 </div>

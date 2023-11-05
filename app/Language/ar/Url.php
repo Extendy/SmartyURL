@@ -69,5 +69,16 @@ return [
     'urlIdentifierPatternError'  => 'عفوا! معرف الرابط المختصر الذي أدخلته غير صالح. يرجى التأكد من أنه أبجدي (انجليزي فقط) او رقمي ، ييدا بحرف او رقم  يمكن ان يحتوي فقط على _ او - يجب أن يتكون  أيضًا بين 1 و 50 خانة فقط. ',
     'urlIdentifierNotAllowed'    => 'المعرف المخصر المختصر غير مسموح به. قد يكون موجودًا بالفعل كمسار أو يكون كلمة محجوزة.',
 
-    'urlInfoTitle' => 'صفحة الرابط',
+    'urlInfoTitle'                => 'صفحة الرابط',
+    'urlInfoRecdirectCondition'   => 'شرط اعادة التوجيه',
+    'urlInfoNoRecdirectCondition' => 'لم يتم تعريف شروط اعادة توجيه',
+    'urlInfoLast25Hits'           => 'اخر 25 زيارة للرابط',
+    'urlInfoSeeAllHits'           => 'استعراض جميع الزيارات',
+    'urlInfoVisitDate'            => 'التاريخ',
+    'urlInfoVisitorIP'            => 'عنوان الاي بي',
+    'urlInfoVisitorCountry'       => 'الدولة',
+    'urlInfoVisitorDevice'        => 'الجهاز',
+    'urlInfoVisitorUserAgent'     => 'الوكيل',
+    'urlInfoFinalTarget'          => 'الرابط النهائي',
+    'urlInfoNoHitsYet'            => 'لا يوجد زيارات للرابط حتى الان!',
 ];

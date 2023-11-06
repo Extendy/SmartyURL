@@ -167,7 +167,7 @@ echo $url_tags_string;
                                            href='<?= site_url("url/edit/{$url_id}"); ?>' class='link-dark edit-link'><i
                                                 class='bi bi-pencil edit-link-btn'></i></a>
                                     </div>
-                                    <div class="center-table">
+                                    <div class="center-table table-responsive">
                                         <table class="table table-bordered" style="width: 100%;">
                                             <tbody>
                                             <?php
@@ -244,7 +244,7 @@ echo $url_tags_string;
                                 if (isset($lasthits) && count($lasthits) > 0) {
                                     ?>
 
-                                    <div class="container">
+                                    <div class="container table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>

@@ -735,4 +735,9 @@ class Url extends BaseController
     {
         echo 'URL HITS OF.' . $UrlId;
     }
+
+    public function generateQRCode($UrlId)
+    {
+        echo 'Generate QR Code for.' . $UrlId;
+    }
 }

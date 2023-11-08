@@ -6,6 +6,9 @@ use App\Models\UrlHitsModel;
 use App\Models\UrlModel;
 use App\Models\UrlTagsDataModel;
 use App\Models\UrlTagsModel;
+use chillerlan\QRCode\Output\QROutputInterface;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use Extendy\Smartyurl\SmartyUrl;
 use Extendy\Smartyurl\UrlConditions;
 use Extendy\Smartyurl\UrlIdentifier;
@@ -738,6 +741,71 @@ class Url extends BaseController
 
     public function generateQRCode($UrlId)
     {
-        echo 'Generate QR Code for.' . $UrlId;
+        // set response type
+        $response = service('response');
+        $response->setContentType('image/svg+xml');
+
+        $error = '';
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            $error = 'Permission error';
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+
+        $UrlModel = new UrlModel();
+        $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+
+        if ($url_id === 0) {
+            // url_id given is not valid id
+            $error = lang('Url.urlError');
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+        $urlData = $UrlModel->where('url_id', $url_id)->first();
+
+        if ($urlData === null) {
+            // url not exsists in dataase
+            $error = lang('Url.urlNotFoundShort');
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+
+        // i will check the user permission , does he allowed to access this url info
+        $userCanAccessUrl = $this->smartyurl->userCanAccessUrlInfo($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanAccessUrl) {
+            $error = 'not your URL 😉';
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+
+        $Go_Url = esc(smarty_detect_site_shortlinker() . $urlData['url_identifier']);
+
+        // prepare for the filename
+        // remove any special chars and white spaces will be _
+        $pattern  = '/[^\w\d\.,;!?@#$%^&*()_+-=:<>"\'\/\\\[\]{}|`~]+/u';
+        $filename = setting('Smartyurl.siteName') . "_{$UrlId}.svg";
+        $filename = str_replace(' ', '_', $filename);
+        $filename = preg_replace($pattern, '', $filename);
+
+        // if query download i will set Content Disposition to attachment
+        $download = (int) $this->request->getGet('download'); // Access the 'download' parameter
+        if ($download === 1) {
+            $response->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '"');
+        } else {
+            $response->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"');
+        }
+
+        // now I will generate QR Code
+        $options = new QROptions();
+        // i will  smarty detect qr version by text length
+        $options->version          = smarty_smart_detect_qrversion($Go_Url);
+        $options->outputType       = QROutputInterface::MARKUP_SVG;
+        $options->outputBase64     = false;
+        $options->drawLightModules = true;
+        $options->circleRadius     = 0.4;
+        $out                       = (new QRCode($options))->render($Go_Url);
+
+        // now i will return the image
+        return $response->setBody($out);
     }
 }

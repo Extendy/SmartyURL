@@ -98,38 +98,62 @@
 
                             <?php endif ?>
 
-                            <div class="mb-2">
-                                <?= lang('Url.UrlTitle'); ?>: <?= $url_title; ?>
-                            </div>
+
+                            <!-- -->
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="child-div">
+
+                                        <div class="mb-2">
+                                            <?= lang('Url.UrlTitle'); ?>: <?= $url_title; ?>
+                                        </div>
 
 
-                            <div class="mb-2">
-                                <?= lang('Url.OriginalUrl'); ?>: <?= $url_targeturl; ?>
-                                <a data-bs-toggle="tooltip" data-bs-placement="top" target='_blank'
-                                   title='<?= lang('Url.visitOriginalUrl') . ' ' . $url_targeturl; ?>'
-                                   href='<?= $url_targeturl; ?>' class='link-dark edit-link'><i
-                                        class='bi bi-box-arrow-up-right'></i></a>
-                            </div>
+                                        <div class="mb-2">
+                                            <?= lang('Url.OriginalUrl'); ?>: <?= $url_targeturl; ?>
+                                            <a data-bs-toggle="tooltip" data-bs-placement="top" target='_blank'
+                                               title='<?= lang('Url.visitOriginalUrl') . ' ' . $url_targeturl; ?>'
+                                               href='<?= $url_targeturl; ?>' class='link-dark edit-link'><i
+                                                    class='bi bi-box-arrow-up-right'></i></a>
+                                        </div>
 
 
-                            <div class="mb-2">
-                                <?= lang('Url.UrlHitsNo'); ?>: <?= $url_hitscounter; ?>
-                            </div>
+                                        <div class="mb-2">
+                                            <?= lang('Url.UrlHitsNo'); ?>: <?= $url_hitscounter; ?>
+                                        </div>
 
 
-                            <div class="mb-2">
-                                <?= lang('Url.UrlOwner'); ?>: <?= $url_owner_username; ?>
-                            </div>
+                                        <div class="mb-2">
+                                            <?= lang('Url.UrlOwner'); ?>: <?= $url_owner_username; ?>
+                                        </div>
 
 
-                            <div class="row col-8 mb-2">
-                                <div class="col-6">
-                                    <?= lang('Url.UrlCreateDate'); ?>: <?= $created_at; ?>
+                                        <div class="row col-8 mb-2">
+                                            <div class="col-6">
+                                                <?= lang('Url.UrlCreateDate'); ?>: <?= $created_at; ?>
+                                            </div>
+                                            <div class="col-6">
+                                                <?= lang('Url.UrlUpdateDate'); ?>: <?= $updated_at; ?>
+                                            </div>
+                                        </div>
+
+                                        <!-- -->
+
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <?= lang('Url.UrlUpdateDate'); ?>: <?= $updated_at; ?>
+                                <div class="col-sm-6">
+                                    <div style="" class="child-div child-div text-center d-flex flex-column align-items-center">
+                                        <!-- Content for the second child div -->
+                                        <img width=250 src="<?= site_url("url/qrcode/{$url_id}"); ?>" alt="Your SVG Image" class="pb-1">
+                                        <a href="<?= site_url("url/qrcode/{$url_id}"); ?>?download=1" class="btn btn-sm btn-outline-dark">
+                                            Download QR
+                                            <i class="pt-1 bi bi-cloud-download"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+
 
                             <hr class="bg-dark border-2 border-top border-dark"/>
 
@@ -195,7 +219,7 @@ echo $url_tags_string;
                         }
 
                 ?>
-                                                   <?=  $cond_text; ?>
+                                                        <?= $cond_text; ?>
                                                     </td>
                                                     <td class="text-nowrap" dir="ltr">
                                                         <?= esc($link); ?>

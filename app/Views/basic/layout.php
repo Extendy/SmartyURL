@@ -246,6 +246,16 @@
 
     <!--begin::App Main-->
     <main class="app-main">
+        <!--begin: noscript -->
+        <noscript>
+            <div class="col-12 container mt-2">
+                <!-- Alert Box for noscript -->
+                <div class="alert alert-danger" role="alert">
+                    <?= lang('Common.javascriptNotEnabledNotice'); ?>
+                </div>
+            </div>
+        </noscript>
+        <!--end: noscript -->
 
         <?= $this->renderSection('main') ?>
 

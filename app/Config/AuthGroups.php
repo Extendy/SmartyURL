@@ -58,9 +58,9 @@ class AuthGroups extends ShieldAuthGroups
         'super.admin'           => 'Does he super admin',
         'admin.manageotherurls' => 'can manage other users URLs', // not used yet
         // url
-        'url.access' => 'Can Access URLs', // not used yet
+        'url.access' => 'Can Access URLs',
         'url.new'    => 'Can Create a new URL',
-        'url.manage' => 'Can Manage URL (edit , delete)',
+        'url.manage' => 'Can Manage his/her URLs only (edit , delete)',
     ];
 
     /**

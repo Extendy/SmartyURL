@@ -197,3 +197,20 @@ if (! function_exists('smarty_get_user_username')) {
         return $username;
     }
 }
+
+if (! function_exists('smarty_smart_detect_qrversion')) {
+    function smarty_smart_detect_qrversion($url)
+    {
+        return setting('Smartyurl.qrCodeVersion');
+    }
+}
+
+if (! function_exists('smarty_svg_error')) {
+    function smarty_svg_error($text)
+    {
+        return '<svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="black" />
+  <text x="50%" y="50%" fill="white" font-size="20" text-anchor="middle" alignment-baseline="middle">' . $text . '</text>
+</svg>';
+    }
+}

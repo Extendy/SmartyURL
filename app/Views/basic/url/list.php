@@ -38,7 +38,6 @@
     }
 
 
-
 </style>
 
 <div id="listurls" style="display: ">
@@ -111,7 +110,7 @@
                             </div>
 
 
-                            <div class="row">
+                            <div class="row pb-3">
                                 <div class="col-10">
                                     <input type="text" id="searchInput"
                                            placeholder="<?= lang('Url.urlsListSearchOnUrls'); ?>" class="form-control">
@@ -123,22 +122,26 @@
                             </div>
 
 
-                            <table id="urlList" class="display" style="width:100%">
-                                <thead>
-                                <tr>
-                                    <!-- Define your table headers here -->
-                                    <th></th>
-                                    <th><?= lang('Url.UrlId'); ?></th>
-                                    <th><?= lang('Url.MaskedShortUrl'); ?></th>
-                                    <th><?= lang('Url.UrlTitle'); ?></th>
-                                    <th><?= lang('Url.UrlHitsNo'); ?></th>
-                                    <!-- Add more headers as needed -->
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!-- DataTable will populate the rows here -->
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table id="urlList"
+                                       class="display table table-bordered table-striped table-hover dt-responsive"
+                                       style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <!-- Define your table headers here -->
+                                        <th></th>
+                                        <th><?= lang('Url.UrlId'); ?></th>
+                                        <th><?= lang('Url.MaskedShortUrl'); ?></th>
+                                        <th><?= lang('Url.UrlTitle'); ?></th>
+                                        <th><?= lang('Url.UrlHitsNo'); ?></th>
+                                        <!-- Add more headers as needed -->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- DataTable will populate the rows here -->
+                                    </tbody>
+                                </table>
+                            </div>
 
 
                             <?php
@@ -210,8 +213,7 @@ if (isset($filterrule)) {
     $(document).ready(function () {
 
 
-
-        document.getElementById('listurls').addEventListener('mouseover', function(event) {
+        document.getElementById('listurls').addEventListener('mouseover', function (event) {
             const copyButton = event.target;
             const editLinkBtn = event.target;
 
@@ -228,13 +230,9 @@ if (isset($filterrule)) {
             }
 
 
-
-
-
-
         });
 
-        document.getElementById('listurls').addEventListener('mouseout', function(event) {
+        document.getElementById('listurls').addEventListener('mouseout', function (event) {
             const copyButton = event.target;
             const editLinkBtn = event.target;
 
@@ -253,7 +251,6 @@ if (isset($filterrule)) {
         });
 
 
-
         $("#listurls").on("click", ".copy-button", function () {
             var content = $(this).data("content");
 
@@ -264,7 +261,6 @@ if (isset($filterrule)) {
             textArea.select();
             document.execCommand("copy");
             document.body.removeChild(textArea);
-
 
 
             $(this).removeClass('bi-clipboard-fill');

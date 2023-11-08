@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'javascriptNotEnabledNotice'     => 'JavaScript is disabled in your browser, impacting the application performance. Please enable JavaScript or switch to a JavaScript-supported browser for optimal functionality.',
     'dashboardTitle'                 => 'Dashboard',
     'dashboardLnk'                   => 'Dashboard',
     'accountSettingsLnk'             => 'Account Settings',

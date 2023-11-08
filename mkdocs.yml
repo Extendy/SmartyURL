@@ -1,5 +1,5 @@
 site_name: SmartyURL Docs
-docs_dir: _docs
+docs_dir: docs
 site_dir: site
 repo_url: https://github.com/Extendy/SmartyURL
 site_description: 'SmartyURL Documentation'
@@ -13,4 +13,5 @@ nav:
 theme: readthedocs
 extra:
   version: 0.0.0-dev-DND
-
+markdown_extensions:
+  - admonition

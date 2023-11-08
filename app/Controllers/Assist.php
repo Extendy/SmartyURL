@@ -570,7 +570,7 @@ class Assist extends BaseController
                         "dom": 'lfrtipB',
                         "processing": true,
                         "serverSide": true,
-                        responsive: true,
+                        "responsive": true,
                         order: [[0, 'desc']],
                         "pageLength": {$defautltUrlListPerPage},
                         "columnDefs": [

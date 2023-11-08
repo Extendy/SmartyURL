@@ -16,7 +16,8 @@
         "ip2location/ip2location-php": "^9.7",
         "mobiledetect/mobiledetectlib": "4.8.x-dev",
         "sokil/php-isocodes": "^4.2",
-        "sokil/php-isocodes-db-i18n": "^4.0"
+        "sokil/php-isocodes-db-i18n": "^4.0",
+        "chillerlan/php-qrcode": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

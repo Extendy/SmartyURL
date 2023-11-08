@@ -26,6 +26,8 @@ $routes->group('url', static function ($routes) {
     $routes->post('new', 'Url::newAction', ['filter' => 'session']);
     $routes->get('edit/(:num)', 'Url::edit/$1', ['filter' => 'session']);
     $routes->post('edit/(:num)', 'Url::editAction/$1', ['filter' => 'session']);
+    $routes->get('hits/(:num)', 'Url::hitslist/$1', ['filter' => 'session']);
+    $routes->get('qrcode/(:num)', 'Url::generateQRCode/$1', ['filter' => 'session']);
 });
 
 // language route

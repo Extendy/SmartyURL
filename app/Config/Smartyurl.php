@@ -88,6 +88,20 @@ class Smartyurl extends BaseConfig
     public int $maxUrlListPerPage = 100;
 
     /**
+     * QR code version depends on your specific requirements and use case.
+     * QR codes come in various versions, ranging from Version 1 to Version 40
+     * best from 3 to 10
+     * default is 7 and if you have any error while generating QR Codes you can
+     * increase it.
+     * 7 can handle 528 bit (each utf-8 char is 8 bit)
+     *
+     * @see https://www.qrcode.com/en/about/version.html
+     *
+     * @var int
+     */
+    public $qrCodeVersion = 7;
+
+    /**
      * The allowed pattern for Url Identifier
      *
      * @default '/^[A-Za-z0-9][A-Za-z0-9_\-\.]{0,49}$/'

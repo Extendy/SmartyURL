@@ -2,9 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Models\UrlHitsModel;
 use App\Models\UrlModel;
 use App\Models\UrlTagsDataModel;
 use App\Models\UrlTagsModel;
+use chillerlan\QRCode\Output\QROutputInterface;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use Extendy\Smartyurl\SmartyUrl;
 use Extendy\Smartyurl\UrlConditions;
 use Extendy\Smartyurl\UrlIdentifier;
@@ -25,6 +29,7 @@ class Url extends BaseController
         $this->urltagsdatamodel = new UrlTagsDataModel();
         $this->urlmodel         = new UrlModel();
         $this->urltags          = new UrlTags();
+        $this->urlhitsmodel     = new UrlHitsModel();
     }
 
     /**
@@ -236,7 +241,7 @@ class Url extends BaseController
                 if ($result->url_title === '') {
                     $urlTitle = lang('Url.UrlTitleNoTitle');
                 } else {
-                    $urlTitle = $result->url_title;
+                    $urlTitle = esc($result->url_title);
                 }
                 // i will get the url tags
                 $url_tags_json  = $this->urltags->getUrlTagsCloud($result->url_id);
@@ -259,9 +264,9 @@ class Url extends BaseController
                 } else {
                     $url_owner = '';
                 }
-
+                $result->url_identifier = esc($result->url_identifier);
                 // $result->url_id],$result->url_title,$result->url_hitscounter
-                $Go_Url    = smarty_detect_site_shortlinker() . $result->url_identifier;
+                $Go_Url    = esc(smarty_detect_site_shortlinker() . $result->url_identifier);
                 $records[] = [
                     'url_id_col'         => $result->url_id,
                     'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
@@ -291,7 +296,86 @@ class Url extends BaseController
 
     public function view($UrlId)
     {
-        d($UrlId);
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+
+        $UrlModel = new UrlModel();
+        $UrlTags  = new UrlTags();
+        $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        if ($url_id === 0) {
+            // url_id given is not valid id
+            return redirect()->to('dashboard')->with('notice', lang('Url.urlError'));
+        }
+        $urlData = $UrlModel->where('url_id', $url_id)->first();
+
+        if ($urlData === null) {
+            // url not exsists in dataase
+            return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+
+        // i will check the user permission , does he allowed to access this url info
+        $userCanAccessUrl = $this->smartyurl->userCanAccessUrlInfo($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanAccessUrl) {
+            return smarty_permission_error('It not your URL 😉😉😉');
+        }
+        $urlTagsCloud = $UrlTags->getUrlTagsCloud($url_id);
+        // $urlTagsCloud = '[{"value":"tag1","tag_id":"3"},{"value":"tag2","tag_id":"27"},{"value":"tag3","tag_id":"24"}]';
+
+        $Go_Url             = esc(smarty_detect_site_shortlinker() . $urlData['url_identifier']);
+        $url_owner_username = smarty_get_user_username($urlData['url_user_id']);
+
+        $data           = [];
+        $data['url_id'] = $urlData['url_id'];
+        if ($urlData['url_title'] === '') {
+            $urlData['url_title'] = lang('Url.UrlTitleNoTitle');
+        }
+        $data['url_owner_username'] = $url_owner_username;
+        $data['url_title']          = esc($urlData['url_title']);
+        $data['url_targeturl']      = esc($urlData['url_targeturl']);
+        $data['url_identifier']     = esc($urlData['url_identifier']);
+        $data['url_hitscounter']    = $urlData['url_hitscounter'];
+
+        $data['created_at'] = $urlData['created_at'];
+        $data['updated_at'] = $urlData['updated_at'];
+        $data['go_url']     = $Go_Url;
+
+        $data['url_tags'] = json_decode($urlTagsCloud);
+
+        // i will get the redirect conditions
+        $redirectConditions     = json_decode($urlData['url_conditions']);
+        $data['condition']      = null;
+        $data['condition_text'] = null;
+
+        if ($redirectConditions !== null) {
+            // there is a url redirect condition
+            $data['condition'] = $redirectConditions->condition;
+
+            switch ($data['condition']) {
+                case 'location':
+                    $data['condition_text'] = lang('Url.ByvisitorsGeolocation');
+                    break;
+
+                case 'device':
+                    $data['condition_text'] = lang('Url.ByvisitorsDevice');
+                    break;
+
+                default:
+                    $data['condition_text'] = $data['condition'];
+            }
+
+            $data['conditions'] = $redirectConditions->conditions;
+        } else {
+            $data['condition_text'] = lang('Url.urlInfoNoRecdirectCondition');
+        }
+
+        // dd($redirectConditions);
+
+        // i will try to get the last 25 hits of the url
+        $lasthits         = $this->urlhitsmodel->getLast25Hits($urlData['url_id']);
+        $data['lasthits'] = $lasthits;
+
+        return view(smarty_view('url/urlinfo'), $data);
     }
 
     public function new()
@@ -558,7 +642,7 @@ class Url extends BaseController
         }
 
         // urlTitle
-        $urlTitle          = esc($this->request->getPost('UrlTitle'));
+        $urlTitle          = $this->request->getPost('UrlTitle');
         $redirectCondition = esc($this->request->getPost('redirectCondition'));
         if ($redirectCondition === 'device' || $redirectCondition === 'geolocation') {
             // url_conditions
@@ -643,10 +727,85 @@ class Url extends BaseController
             }
 
             // return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('OK'))->with('updated',"yes");
-            return redirect()->back()->with('success', lang('Url.UpdateURLOK'));
+            return redirect()->to("url/view/{$UrlId}")->with('success', lang('Url.UpdateURLOK'));
         }
 
         // updated error
         return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.UpdateURLError'));
+    }
+
+    public function hitslist($UrlId)
+    {
+        echo 'URL HITS OF.' . $UrlId;
+    }
+
+    public function generateQRCode($UrlId)
+    {
+        // set response type
+        $response = service('response');
+        $response->setContentType('image/svg+xml');
+
+        $error = '';
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            $error = 'Permission error';
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+
+        $UrlModel = new UrlModel();
+        $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+
+        if ($url_id === 0) {
+            // url_id given is not valid id
+            $error = lang('Url.urlError');
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+        $urlData = $UrlModel->where('url_id', $url_id)->first();
+
+        if ($urlData === null) {
+            // url not exsists in dataase
+            $error = lang('Url.urlNotFoundShort');
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+
+        // i will check the user permission , does he allowed to access this url info
+        $userCanAccessUrl = $this->smartyurl->userCanAccessUrlInfo($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanAccessUrl) {
+            $error = 'not your URL 😉';
+
+            return $response->setBody(smarty_svg_error($error));
+        }
+
+        $Go_Url = esc(smarty_detect_site_shortlinker() . $urlData['url_identifier']);
+
+        // prepare for the filename
+        // remove any special chars and white spaces will be _
+        $pattern  = '/[^\w\d\.,;!?@#$%^&*()_+-=:<>"\'\/\\\[\]{}|`~]+/u';
+        $filename = setting('Smartyurl.siteName') . "_{$UrlId}.svg";
+        $filename = str_replace(' ', '_', $filename);
+        $filename = preg_replace($pattern, '', $filename);
+
+        // if query download i will set Content Disposition to attachment
+        $download = (int) $this->request->getGet('download'); // Access the 'download' parameter
+        if ($download === 1) {
+            $response->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '"');
+        } else {
+            $response->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"');
+        }
+
+        // now I will generate QR Code
+        $options = new QROptions();
+        // i will  smarty detect qr version by text length
+        $options->version          = smarty_smart_detect_qrversion($Go_Url);
+        $options->outputType       = QROutputInterface::MARKUP_SVG;
+        $options->outputBase64     = false;
+        $options->drawLightModules = true;
+        $options->circleRadius     = 0.4;
+        $out                       = (new QRCode($options))->render($Go_Url);
+
+        // now i will return the image
+        return $response->setBody($out);
     }
 }

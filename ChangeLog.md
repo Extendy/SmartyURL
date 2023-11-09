@@ -1,1 +1,0 @@
-# SmartyURL ChangeLog

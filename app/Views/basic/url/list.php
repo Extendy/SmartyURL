@@ -86,15 +86,15 @@
                         <div class="card-header">
 
 
-                            <div class="row">
-                                <div class="col-6">
-                                    <h3 class="card-title"><?= lang('Url.urlsList'); ?> <?= $filtertext !== null ? ' - ' . $filtertext : '' ?></h3>
-                                </div>
-                                <div class="col-6 text-end">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="card-title"><?= lang('Url.urlsList'); ?> <?= $filtertext !== null ? ' - ' . $filtertext : '' ?></h3>
+                                    </div>
+                                    <div class="col-6 text-end">
 
-                                    <i class="fas fa-question-circle"></i>
+                                        <i class="fas fa-question-circle"></i>
+                                    </div>
                                 </div>
-                            </div>
 
 
                         </div>

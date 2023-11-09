@@ -1,0 +1,20 @@
+changelog:
+  exclude:
+    authors:
+      - dependabot
+  categories:
+    - title: Breaking Changes
+      labels:
+        - 'breaking change'
+    - title: Fixed Bugs
+      labels:
+        - bug
+    - title: Enhancements
+      labels:
+        - enhancement
+    - title: Translations
+      labels:
+        - lang
+    - title: New Features
+      labels:
+        - 'new feature'

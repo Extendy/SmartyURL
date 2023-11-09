@@ -5,13 +5,23 @@ repo_url: https://github.com/Extendy/SmartyURL
 site_description: 'SmartyURL Documentation'
 site_author: 'Extendy Team'
 copyright: 'Copyrights © 2023 Extendy Team'
-edit_uri: 'blob/main/_docs'
 nav:
   - Home: index.md
+  - Developer's Guide: developers.md
   - License: license.md
   - Legal Notice: legalnotice.md
-theme: readthedocs
+theme:
+    name: material
+    language: en
+    direction: ltr
 extra:
   version: v0.0.0-dev-dnd.2
+  alternate:
+    - name: English
+      link: ./
+      lang: en
+    - name: عربي
+      link: /ar/
+      lang: ar
 markdown_extensions:
   - admonition

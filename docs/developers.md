@@ -1,4 +1,4 @@
-# SmartyURL Developer Guide
+# SmartyURL Developer's Guide
 
 ## Server Requirements
 

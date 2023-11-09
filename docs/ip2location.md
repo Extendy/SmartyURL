@@ -18,12 +18,13 @@ public $ip2location_bin_file =  APPPATH . "../datastore/". 'IP2Location/IP2LOCAT
 
 The uploaded BIN file should be the standard version provided by IP2Location.
 
-> [!IMPORTANT]
-> When uploading your custom IP2Location BIN file, please refrain from overwriting the default 'IP2LOCATION-LITE-DB1.BIN' file. Instead, upload it with a new filename and adjust the `ip2location_bin_file` setting accordingly. This will ensures that your file won't be overwritten when SmartyURL is updated to a new version in the future.
+!!! warning
+    When uploading your custom IP2Location BIN file, please do not overwrite the default 'IP2LOCATION-LITE-DB1.BIN' file. Instead, upload it with a new filename and adjust the `ip2location_bin_file` setting accordingly. This will ensures that your file won't be overwritten when SmartyURL is updated to a new version in the future.
 
 This setup ensures that SmartyURL uses the paid, more accurate, and regularly updated IP2Location database for enhanced country detection.
 
-**Please note that:**  When using the paid version of IP2Location, please remember to manually update the database (.BIN) file regularly whenever IP2Location announces a database update. This process is not handled automaticlly by SmartyURL, so it's important to stay informed about IP2Location announcements.
+!!! note
+    When using the paid version of IP2Location, please remember to manually update the database (.BIN) file regularly whenever IP2Location announces a database update. This process is not handled automaticlly by SmartyURL, so it's important to stay informed about IP2Location announcements.
 
 
 

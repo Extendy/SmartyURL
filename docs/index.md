@@ -24,7 +24,7 @@ In addition to shortening URLs (based on domain that you use), SmartyURL also of
 
 ## Server Requirements
 
-- You need a web hosting account (for a domain or sub-domain) with PHP 7.4 or higher support and the following PHP extensions (typically supported by most PHP hosting providers):
+- You need a web hosting account (for a domain or sub-domain) with PHP 8.1 or higher support and the following PHP extensions (typically supported by most PHP hosting providers):
 
     - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) , [intl](http://php.net/manual/en/intl.requirements.php) , [mbstring](http://php.net/manual/en/mbstring.installation.php) ,  [libcurl](https://www.php.net/manual/en/curl.setup.php) , [gmp](https://www.php.net/manual/en/gmp.installation.php) , [json](https://www.php.net/manual/en/json.installation.php), [bcmath](https://www.php.net/manual/en/bc.setup.php)
 
@@ -34,6 +34,12 @@ In addition to shortening URLs (based on domain that you use), SmartyURL also of
 
 Since SmartyURL is still in its early stages, you can find installation instructions in the [Developer's Guide](developers.md). Once we release the first version of SmartyURL, we will provide detailed installation instructions.
 
+## Documentation
+
+- [Developer's Guide](developers.md)
+- [Accuracy of Geographical Location of IPs](ip2location.md)
+- [License](license.md)
+- [Legal Notice](legalnotice.md)
 
 ## Acknowledgments
 

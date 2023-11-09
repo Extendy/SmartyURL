@@ -17,11 +17,8 @@ theme:
 extra:
   version: v0.0.0-dev-dnd.2
   alternate:
-    - name: English
-      link: ./
-      lang: en
     - name: عربي
-      link: /ar/
+      link: ar/
       lang: ar
 markdown_extensions:
   - admonition

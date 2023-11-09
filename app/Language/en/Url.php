@@ -74,6 +74,7 @@ return [
     'urlInfoNoRecdirectCondition' => 'No redirect conditions defined',
     'urlInfoLast25Hits'           => 'URl Last 25 visits',
     'urlInfoSeeAllHits'           => 'Show all visits',
+    'urlInfoSeeAllHitsforURL'     => 'Show URL visits',
     'urlInfoVisitDate'            => 'Date',
     'urlInfoVisitorIP'            => 'IP',
     'urlInfoVisitorCountry'       => 'Country',

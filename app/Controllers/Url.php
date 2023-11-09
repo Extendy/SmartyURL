@@ -680,7 +680,6 @@ class Url extends BaseController
             // updated ok
 
             // i will check tags and update any changes
-            // samsam
             // first of all i will delete all url tags
             $delresult = $this->urltagsdatamodel->delUrlTags($url_id);
             // now i will enter the tags again
@@ -736,10 +735,138 @@ class Url extends BaseController
 
     public function hitslist($UrlId)
     {
-        echo 'URL HITS OF.' . $UrlId;
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+
+        $url_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        if ($url_id === 0) {
+            // url_id given is not valid id
+            return redirect()->to('dashboard')->with('notice', lang('Url.urlError'));
+        }
+        $urlData = $this->urlmodel->where('url_id', $url_id)->first();
+
+        if ($urlData === null) {
+            // url not exsists in dataase
+            return redirect()->to('dashboard')->with('error', lang('Url.urlNotFoundShort'));
+        }
+
+        // i will check the user permission , does he allowed to access this url info
+        $userCanAccessUrl = $this->smartyurl->userCanAccessUrlInfo($url_id, (int) $urlData['url_user_id']);
+        if (! $userCanAccessUrl) {
+            return smarty_permission_error('It not your URL 😉😉😉');
+        }
+        $Go_Url = esc(smarty_detect_site_shortlinker() . $urlData['url_identifier']);
+
+        $data = [];
+
+        $data['lang']            = session('lang');
+        $data['url_id']          = (int) $urlData['url_id'];
+        $data['url_identifier']  = esc($urlData['url_identifier']);
+        $data['url_hitscounter'] = $urlData['url_hitscounter'];
+        $data['go_url']          = $Go_Url;
+
+        return view(smarty_view('url/hitslist'), $data);
     }
 
-    public function generateQRCode($UrlId)
+    public function hitslistData($urlId)
+    {
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
+        }
+
+        $url_id           = (int) $urlId;
+        $userCanAccessUrl = $this->smartyurl->userCanAccessUrlInfo($url_id);
+        if (! $userCanAccessUrl) {
+            return smarty_permission_error('It is not your URL 😉😉😉', true);
+        }
+
+        $draw   = $this->request->getGet('draw');
+        $start  = $this->request->getGet('start');
+        $length = $this->request->getGet('length');
+
+        // Do not think that the data that comes from the client is always correct
+        // so set force max length it  maxUrlListPerPage
+        $system_forcemax_length = setting('Smartyurl.maxUrlListPerPage');
+        if ($length > setting('Smartyurl.maxUrlListPerPage')) {
+            $length = $system_forcemax_length;
+        }
+
+        $columnOrder = $this->request->getGet('order');
+        if ($columnOrder !== null) {
+            $ajax_column_index = $columnOrder['0']['column'];
+            $order_by_dir      = $columnOrder['0']['dir'];
+
+            // Do not think that the data that comes from the client is always correct
+            // so switch it to use defaults
+            switch ($order_by_dir) {
+                case 'asc':
+                    $order_by_rule = 'asc';
+                    break;
+
+                case 'desc':
+                    $order_by_rule = 'desc';
+                    break;
+
+                default:
+                    $order_by_rule = 'desc';
+                    break;
+            }
+
+            // i will know the column name from get
+            $ajax_columns              = $this->request->getGet('columns');
+            $order_by_ajax_column_name = $ajax_columns[$ajax_column_index]['name'];
+
+            // echo $order_by_ajax_column_name;
+            // echo $order_by_rule;
+
+            switch ($order_by_ajax_column_name) {
+                case 'hit_date':
+                    $order_by = 'urlhit_at';
+                    break;
+
+                default:
+                    $order_by = 'urlhit_urlid';
+                    break;
+            }
+        } else {
+            $order_by      = 'urlhit_id';
+            $order_by_rule = 'desc';
+        }
+
+        $urlAllCount      = $this->urlhitsmodel->getHitsByUrlId($url_id, null, null, 'urlhit_urlid', 'desc', false);
+        $filterAllnumRows = $urlAllCount;
+        $results          = $this->urlhitsmodel->getHitsByUrlId($url_id, $start, $length, $order_by, $order_by_rule, true);
+        $records          = [];
+        if ($results !== null) {
+            foreach ($results as $result) {
+                $records[] = [
+                    'hit_date_col'      => $result->urlhit_at,
+                    'hit_ip_col'        => $result->urlhit_ip,
+                    'hit_country_col'   => $result->urlhit_country,
+                    'hit_device_col'    => $result->urlhit_visitordevice,
+                    'hit_useragent_col' => esc($result->urlhit_useragent),
+                    'hit_finalurl_col'  => esc($result->urlhit_finaltarget),
+                ];
+            }
+        }
+
+        $data = [
+            'draw'            => $draw,
+            'recordsTotal'    => $urlAllCount, // $urlAllCount
+            'recordsFiltered' => $filterAllnumRows, // $filterAllnumRows
+            'data'            => $records,
+        ];
+
+        return $this->response->setJSON($data);
+    }
+
+    /**
+     * This function generates QR Code for tge given URL id
+     *
+     * @return mixed
+     */
+    public function generateQRCode(int $UrlId)
     {
         // set response type
         $response = service('response');

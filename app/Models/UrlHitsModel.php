@@ -5,7 +5,7 @@ namespace App\Models;
 class UrlHitsModel extends BaseModel
 {
     protected $DBGroup          = 'default';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'urlhit_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
@@ -55,6 +55,8 @@ class UrlHitsModel extends BaseModel
     /**
      * get the last 25 hits for URL
      *
+     * @param mixed $UrlId
+     *
      * @return mixed
      */
     public function getLast25Hits($UrlId)
@@ -65,5 +67,34 @@ class UrlHitsModel extends BaseModel
             ->limit(25)
             ->get()
             ->getResult();
+    }
+
+    /**
+     * This function gets the URL visit list for a given $urlId which can be a single Url ID or an array of Url IDs.
+     * $returnType can be:
+     * - true to return data as an array
+     * - false to return the row count as an integer without the start and limit
+     */
+    public function getHitsByUrlId(int|array $urlId, int|null $start = null, int|null $length = null, string $orderBy = 'urlhit_urlid', string $orderDirection = 'DESC', bool $returnData = true)
+    {
+        $builder = $this->builder();
+
+        $builder->orderBy($orderBy, $orderDirection);
+
+        if (is_array($urlId)) {
+            $builder->whereIn('urlhit_urlid', $urlId);
+        } else {
+            $builder->where('urlhit_urlid', $urlId);
+        }
+
+        if ($start !== null && $length !== null) {
+            $builder->limit($length, $start);
+        }
+
+        if ($returnData) {
+            return $builder->get()->getResult();
+        }
+
+        return $builder->countAllResults();
     }
 }

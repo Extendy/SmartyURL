@@ -275,7 +275,7 @@ class Url extends BaseController
                     'url_title_col' => " {$urlTitle}
                     <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
                     ",
-                    'url_hits_col' => $result->url_hitscounter,
+                    'url_hits_col' => "<a class='text-secondary' href='" . site_url("url/hits/{$result->url_id}") . "'>" . $result->url_hitscounter . '</a>',
                     'url_id'       => $result->url_id,
                     'url_tags'     => $url_tags,
                     'url_owner'    => $url_owner,

@@ -846,7 +846,7 @@ class Url extends BaseController
                     'hit_country_col'   => $result->urlhit_country,
                     'hit_device_col'    => $result->urlhit_visitordevice,
                     'hit_useragent_col' => esc($result->urlhit_useragent),
-                    'hit_finalurl_col'  => esc($result->urlhit_finaltarget),
+                    'hit_finalurl_col'  => urldecode($result->urlhit_finaltarget),
                 ];
             }
         }

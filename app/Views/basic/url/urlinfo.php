@@ -111,7 +111,7 @@
 
 
                                         <div class="mb-2">
-                                            <?= lang('Url.OriginalUrl'); ?>: <?= $url_targeturl; ?>
+                                            <?= lang('Url.OriginalUrl'); ?>: <?= urldecode($url_targeturl); ?>
                                             <a data-bs-toggle="tooltip" data-bs-placement="top" target='_blank'
                                                title='<?= lang('Url.visitOriginalUrl') . ' ' . $url_targeturl; ?>'
                                                href='<?= $url_targeturl; ?>' class='link-dark edit-link'><i
@@ -290,7 +290,7 @@ echo $url_tags_string;
                                                     <td><?= esc($hit->urlhit_country); ?></td>
                                                     <td><?= esc($hit->urlhit_visitordevice); ?></td>
                                                     <td><?= esc($hit->urlhit_useragent); ?></td>
-                                                    <td dir="ltr"><?= esc($hit->urlhit_finaltarget); ?>
+                                                    <td dir="ltr"><?= esc(urldecode($hit->urlhit_finaltarget)); ?>
                                                         <a data-bs-toggle="tooltip" data-bs-placement="top"
                                                            target='_blank'
                                                            title='<?= lang('Url.visitOriginalUrl'); ?>'

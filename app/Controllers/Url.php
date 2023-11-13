@@ -550,7 +550,7 @@ class Url extends BaseController
 
                     foreach ($urlRedirectConditions->conditions as $country => $finalUrl) {
                         $geocountry[]  = $country;
-                        $geofinalurl[] = urldecode($finalUrl);
+                        $geofinalurl[] = $finalUrl;
                     }
                     $data['geocountry'] = $geocountry;
                     // var_dump($data['geocountry']);
@@ -565,7 +565,7 @@ class Url extends BaseController
 
                     foreach ($urlRedirectConditions->conditions as $device => $finalUrl) {
                         $devicecond[]     = $device;
-                        $devicefinalurl[] = urldecode($finalUrl);
+                        $devicefinalurl[] = $finalUrl;
                     }
                     break;
 
@@ -580,7 +580,7 @@ class Url extends BaseController
         $data = [
             'UrlId'             => $url_id,
             'editUrlAction'     => site_url("/url/edit/{$url_id}"),
-            'originalUrl'       => esc(urldecode($urlData['url_targeturl'])),
+            'originalUrl'       => esc($urlData['url_targeturl']),
             'UrlTitle'          => esc($urlData['url_title']),
             'UrlIdentifier'     => esc($urlData['url_identifier']),
             'urlTags'           => esc($urlTagsCloud), // i must get the URLTags
@@ -620,7 +620,7 @@ class Url extends BaseController
 
         // user cannot edit others URLs unless he is can super.admin or admin.manageurls
         // check if original url is valid url
-        $originalUrl = esc($this->request->getPost('originalUrl'));
+        $originalUrl = $this->request->getPost('originalUrl');
         if (! $this->smartyurl->isValidURL($originalUrl)) {
             return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlInvalidOriginal'));
         }

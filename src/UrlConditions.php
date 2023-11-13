@@ -21,7 +21,7 @@ class UrlConditions
             $devicecondition = [];
 
             for ($i = 0; $i < count($device); $i++) {
-                $devicecondition[esc($device[$i])] = esc($devicefinalurl[$i]);
+                $devicecondition[$device[$i]] = $devicefinalurl[$i];
             }
             $finalarray               = [];
             $finalarray['condition']  = 'device';
@@ -32,8 +32,8 @@ class UrlConditions
         // geolocation
         if ($conditions['geocountry'] !== null) {
             // this is geocountry condition
-            $geocountry   = esc($conditions['geocountry']);
-            $geofinalurl  = esc($conditions['geofinalurl']);
+            $geocountry   = $conditions['geocountry'];
+            $geofinalurl  = $conditions['geofinalurl'];
             $geocondition = [];
 
             for ($i = 0; $i < count($geocountry); $i++) {

@@ -8,6 +8,7 @@ copyright: 'Copyrights © 2023 Extendy Team'
 nav:
   - Home: index.md
   - Developer's Guide: developers.md
+  - IP Geolocation: ip2location.md
   - License: license.md
   - Legal Notice: legalnotice.md
 theme:

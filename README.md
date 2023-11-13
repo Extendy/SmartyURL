@@ -33,21 +33,21 @@ In addition to shortening URLs (based on domain that you use), SmartyURL also of
 
 Currently, as SmartyURL is in its early stages, you can only install it using Composer. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.
 
-see [Developers Guide](docs/developers.md#installation) for more information about how to install SmartyURL.
+see [Developers Guide](http://extendy.github.io/SmartyURL/developers) for more information about how to install SmartyURL.
 
-Certainly, please refer to the [documentation](docs/index.md) for detailed instructions How configure, and effectively use SmartyURL for comprehensive guidance.
+Certainly, please refer to the [documentation](http://extendy.github.io/SmartyURL) for detailed instructions How configure, and effectively use SmartyURL for comprehensive guidance.
 
 ## Documentation
 
-Please take a look to SmartyURL [documentation](docs/index.md) for detailed installation, configuration, and usage instructions.
+Please take a look to SmartyURL [documentation](http://extendy.github.io/SmartyURL) for detailed installation, configuration, and usage instructions.
 
 **Visitors IP Country detection**
 
-SmartyURL uses the `ip2location/ip2location-php` library to determine visitors country based on their IP addresses. It includes the free "IP2Location™ LITE IP-COUNTRY Database" for both personal and commercial use. For enhanced geographical redirect conditions with more accurate and up-to-date IP-based country data or if you need more accuracy consider purchasing a licensed IP2Location database. Refer to [IP2Location Database Docs](docs/ip2location.md) for more details.
+SmartyURL uses the `ip2location/ip2location-php` library to determine visitors country based on their IP addresses. It includes the free "IP2Location™ LITE IP-COUNTRY Database" for both personal and commercial use. For enhanced geographical redirect conditions with more accurate and up-to-date IP-based country data or if you need more accuracy consider purchasing a licensed IP2Location database. Refer to [IP2Location Database Docs](http://extendy.github.io/SmartyURL/ip2location/) for more details.
 
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](http://extendy.github.io/SmartyURL/license) file for details.
 
 ## Acknowledgments
 
@@ -63,4 +63,4 @@ Also We would like to acknowledge the following resources and contributors for t
 
 ## SmartyURL Legal Notice
 
-For more information, please refer to the [Legal Notice](docs/legalnotice.md).
+For more information, please refer to the [Legal Notice](http://extendy.github.io/SmartyURL/legalnotice).

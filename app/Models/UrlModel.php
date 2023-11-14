@@ -110,4 +110,18 @@ class UrlModel extends BaseModel
         // Retrieve the records
         return $builder->get()->getResult();
     }
+
+    public function deleteUrlById(int|array $urlId)
+    {
+        if (is_array($urlId)) {
+            // If $urlId is an array, delete multiple records
+            $this->whereIn('url_id', $urlId)->delete();
+        } else {
+            // If $urlId is a single value, delete a single record
+            $this->where('url_id', $urlId)->delete();
+        }
+
+        // Check the affected rows to determine if the deletion was successful
+        return $this->db->affectedRows() > 0;
+    }
 }

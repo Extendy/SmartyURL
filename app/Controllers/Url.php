@@ -935,4 +935,45 @@ class Url extends BaseController
         // now i will return the image
         return $response->setBody($out);
     }
+
+    public function delUrl(int $UrlId)
+    {
+        $response = [];
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setJSON($response);
+        }
+        $url_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        if ($url_id === 0) {
+            $response['error'] = lang('Url.urlDelInvalidURL');
+        }
+        // i will check if the url id is exists or not
+        $urlData = $this->urlmodel->where('url_id', $url_id)->first();
+        if ($urlData === null) {
+            // url not exsists in dataase
+            $response['error'] = lang('Url.urlNotFoundShort');
+
+            return $this->response->setJSON($response);
+        }
+        // i will see if the current user can manage this url
+        $userManageUrl = $this->smartyurl->userCanManageUrl($url_id);
+        if (! $userManageUrl) {
+            $response['error'] = lang('Url.urlDelCannotDelthisUrlDuePermissions');
+
+            return $this->response->setJSON($response);
+        }
+        // i will try to delete the url
+
+        $delurl = $this->urlmodel->deleteUrlById($url_id);
+        if ($delurl > 0) {
+            // deleted
+            $response['status'] = 'deleted';
+        } else {
+            // not deleted or error
+            $response['error'] = lang('Url.urlDelError');
+        }
+
+        return $this->response->setJSON($response);
+    }
 }

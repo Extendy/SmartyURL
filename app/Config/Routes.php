@@ -29,6 +29,7 @@ $routes->group('url', static function ($routes) {
     $routes->get('hits/(:num)', 'Url::hitslist/$1', ['filter' => 'session']);
     $routes->get('hitslistdata/(:num)', 'Url::hitslistData/$1', ['filter' => 'session']); // json hits list for url
     $routes->get('qrcode/(:num)', 'Url::generateQRCode/$1', ['filter' => 'session']);
+    $routes->post('del/(:num)', 'Url::delUrl/$1', ['filter' => 'session']); // json del url
 });
 
 // language route

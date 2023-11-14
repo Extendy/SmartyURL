@@ -82,4 +82,11 @@ return [
     'urlInfoVisitorUserAgent'     => 'User-Agent',
     'urlInfoFinalTarget'          => 'Final Target',
     'urlInfoNoHitsYet'            => 'No visits for the URL yet!',
+
+    'urlDelConfrim'                        => 'Are you sure you want delete this',
+    'urlDelYes'                            => 'Yes, Delete',
+    'urlDelInvalidURL'                     => 'Invalid URL',
+    'urlDelCannotDelthisUrlDuePermissions' => 'You cannot delete this URL because you do not have sufficient permissions to do so.',
+    'urlDelError'                          => 'Cannot delete this URL now , please try again later',
+    'urlDelOK'                             => 'The URL has been successfully deleted',
 ];

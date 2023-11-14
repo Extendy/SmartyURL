@@ -13,4 +13,9 @@ return [
 
     'btnDelete' => 'حذف',
     'Optional'  => 'اختياري',
+    'btnOK'     => 'موافق',
+    'btnNo'     => 'لا',
+
+    'ajaxErrorTitle' => 'خطا',
+    'ajaxCallError1' => 'لا يمكن اتمام طلبك الان ، تاكد من اتصالك بالانترنت وحاول مجددا',
 ];

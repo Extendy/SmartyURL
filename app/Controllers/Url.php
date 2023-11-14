@@ -939,7 +939,7 @@ class Url extends BaseController
     public function delUrl(int $UrlId)
     {
         $response = [];
-        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+        if (! auth()->user()->can('url.manage', 'admin.manageotherurls', 'super.admin')) {
             $response['error'] = lang('Common.permissionsNoenoughpermissions');
 
             return $this->response->setJSON($response);

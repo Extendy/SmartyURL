@@ -80,6 +80,9 @@
                                        href='<?= site_url("url/edit/{$url_id}"); ?>' class='link-dark edit-link'><i
                                             class='bi bi-pencil edit-link-btn'></i></a>
 
+                                    <button id="deleteButton" type="button" class="ms-2 btn btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
 
                                 </div>
                             </div>
@@ -143,10 +146,13 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div style="" class="child-div child-div text-center d-flex flex-column align-items-center">
+                                    <div style=""
+                                         class="child-div child-div text-center d-flex flex-column align-items-center">
                                         <!-- Content for the second child div -->
-                                        <img width=250 src="<?= site_url("url/qrcode/{$url_id}"); ?>" alt="Your SVG Image" class="pb-1">
-                                        <a href="<?= site_url("url/qrcode/{$url_id}"); ?>?download=1" class="btn btn-sm btn-outline-dark">
+                                        <img width=250 src="<?= site_url("url/qrcode/{$url_id}"); ?>"
+                                             alt="Your SVG Image" class="pb-1">
+                                        <a href="<?= site_url("url/qrcode/{$url_id}"); ?>?download=1"
+                                           class="btn btn-sm btn-outline-dark">
                                             Download QR
                                             <i class="pt-1 bi bi-cloud-download"></i>
                                         </a>
@@ -343,6 +349,7 @@ echo $url_tags_string;
 
 
 </div>
+<meta name="csrf-token" content="<?= csrf_hash() ?>">
 
 
 <?= $this->endSection() ?> <!-- main -->
@@ -428,6 +435,80 @@ echo $url_tags_string;
 
     });
 
+
+    /* delete url */
+    $(document).ready(function () {
+
+        $('#deleteButton').on('click', function () {
+            /* Get CSRF token from meta tag */
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            /* Show SweetAlert2 confirmation dialog */
+            Swal.fire({
+                title: '<?=lang('Url.urlDelConfrim'); ?>',
+                text: '<?=$go_url; ?>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#065e01',
+                confirmButtonText: '<?=lang('Url.urlDelYes'); ?>',
+                cancelButtonText: '<?=lang('Common.btnNo'); ?>',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    /* If user clicks "Yes", make AJAX request with CSRF token*/
+                    $.ajax({
+                        url: '/url/del/<?=$url_id; ?>', /* Replace with your actual server endpoint*/
+                        type: 'POST',
+                        data: {
+                            /* Any data you want to send for deletion*/
+                            /* Include CSRF token in the data*/
+
+                            /* ... other data ...*/
+                        },
+                        headers: {
+                            /*/ Include CSRF token in the request headers */
+                            'X-CSRF-Token': csrfToken,
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            /* Check if the server response indicates success*/
+                            if (response.status === 'deleted') {
+                                Swal.fire({
+                                    title: '<?=lang('Url.urlDelOK'); ?>',
+                                    icon: 'success'
+                                });
+                                window.location.href = '<?=site_url('url'); ?>';
+                                /* You can also perform additional actions based on the response*/
+                            } else {
+                                Swal.fire('Error', response.error, 'error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            /*/ Handle errors*/
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                /* json error */
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: xhr.responseJSON.message,
+                                    icon: 'error',
+                                    confirmButtonText: '<?=lang('Common.btnOK'); ?>',
+                                });
+                            } else {
+                                /* not json error may be network error*/
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: '<?= lang('Common.ajaxCallError1'); ?>',
+                                    icon: 'error',
+                                    confirmButtonText: '<?=lang('Common.btnOK'); ?>',
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+    });
 
 </script>
 <?= $this->endSection() ?>

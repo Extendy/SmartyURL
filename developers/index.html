@@ -569,6 +569,7 @@ cp env .env
 </code></pre>
 <p>or by visiting your website and register new user</p>
 <p>Ensure the user you've created is designated as a superadmin by modifying the <code>auth_groups_users</code> database table. Set the user's group name to 'superadmin' instead of 'user' for the created user using phpMyAdmin or any mysql client and make sure the user status is active by set <code>active</code> to <code>1</code> in <code>users</code> tables. or you have to verify the email next time you login.</p>
+<p>if you create the user using <code>php spark shield:user create</code> then you must add a new row into database tabele <code>auth_groups_users</code> for the that user with group <code>superadmin</code></p>
 <p>Afterward, you can disable new user registration by editing the .env file. Make sure to set <code>Auth.allowRegistration</code> to 'false'. If it's not already present in your .env file, you can add it like this:</p>
 <pre><code class="language-cli">Auth.allowRegistration = false
 </code></pre>

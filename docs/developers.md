@@ -62,7 +62,7 @@ When logged in, you might be prompted to verify your email to activate your acco
 During SmartyURL's development stage, it is not advisable for developers to attempt installation using git.
 
 !!! note
-If you planning to install SmartyURL with `git`, you gain the flexibility to easily update SmartyURL in the future using `git fetch` and `git pull`. However, **noting that** using `git` may provide bleeding-edge releases, which might not be as stable or thoroughly tested or may contains breaking changes.
-Therefore Installing SmartyURL using `git` is recommended for Extendy Team developers only.
+    If you planning to install SmartyURL with `git`, you gain the flexibility to easily update SmartyURL in the future using `git fetch` and `git pull`. However, **noting that** using `git` may provide bleeding-edge releases, which might not be as stable or thoroughly tested or may contains breaking changes.
+    Therefore Installing SmartyURL using `git` is recommended for Extendy Team developers only.
 
 

@@ -361,14 +361,7 @@
         
           <li class="md-nav__item">
   <a href="#install-smartyurl-using-composer" class="md-nav__link">
-    install SmartyURL using Composer:
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#or-install-with-git" class="md-nav__link">
-    Or install with git
+    install SmartyURL  using Composer:
   </a>
   
 </li>
@@ -382,6 +375,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-git" class="md-nav__link">
+    using git
+  </a>
   
 </li>
       
@@ -493,14 +493,7 @@
         
           <li class="md-nav__item">
   <a href="#install-smartyurl-using-composer" class="md-nav__link">
-    install SmartyURL using Composer:
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#or-install-with-git" class="md-nav__link">
-    Or install with git
+    install SmartyURL  using Composer:
   </a>
   
 </li>
@@ -514,6 +507,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-git" class="md-nav__link">
+    using git
+  </a>
   
 </li>
       
@@ -550,25 +550,15 @@
 </ul>
 <h2 id="installation">Installation</h2>
 <p>Currently, as SmartyURL is in its early stages, you can only install it using <code>Composer</code>. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.</p>
-<h3 id="install-smartyurl-using-composer">install SmartyURL using <code>Composer</code>:</h3>
+<h3 id="install-smartyurl-using-composer">install SmartyURL  using <code>Composer</code>:</h3>
+<p>This is the best way for now.</p>
+<p>Login to your web hosting account using SSH and run the following commands:</p>
 <pre><code class="language-cli">composer create-project extendy/smartyurl:dev-main myapp
 cd myapp
 composer install
 cp env .env
 </code></pre>
-<p>When using Composer, you can update SmartyURL dependencies in the future using <code>composer update</code>. However, for updating SmartyURL itself, manual updates or reinitializing the Composer project <strong>are necessary</strong>.</p>
-<h3 id="or-install-with-git">Or install with <code>git</code></h3>
-<p>For Extendy developers or Developers who prefer to keep SmartyURL up to date using <code>Git</code> rather than <code>Composer</code>, you can install it by running::</p>
-<pre><code class="language-bash">git clone https://github.com/Extendy/SmartyURL.git myapp
-cd myapp
-composer install
-cp env .env
-</code></pre>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When installing SmartyURL with <code>git</code>, you gain the flexibility to easily update SmartyURL in the future using <code>git fetch</code> and <code>git pull</code>. However, it's worth noting that using <code>git</code> may provide bleeding-edge releases, which might not be as stable or thoroughly tested.
-Therefore Installing SmartyURL using <code>git</code> is recommended for experienced or Extendy developers only.</p>
-</div>
+<p>When using <code>composer</code>, you can update SmartyURL dependencies in the future using <code>composer update</code>. However, for updating SmartyURL itself, manual updates or reinitializing the Composer project <strong>are necessary</strong>.</p>
 <h3 id="after-installing-the-files">After installing the files</h3>
 <p>Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements.</p>
 <p>Next, execute the 'migrate' command to import the database structure into your created database using:</p>
@@ -585,6 +575,13 @@ Therefore Installing SmartyURL using <code>git</code> is recommended for experie
 </code></pre>
 <p>Afterward, you can access SmartyURL using any web browser by directing the URL to the installation domain where you have SmartyURL installed.</p>
 <p>When logged in, you might be prompted to verify your email to activate your account. Please check your email for a verification link. If you are unable to access your email or SmartyURL unable to send emails, you can manually set the 'active' value to 1 in the 'users' database table for the user you've created.</p>
+<h2 id="using-git">using <code>git</code></h2>
+<p>During SmartyURL's development stage, it is not advisable for developers to attempt installation using git.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>If you planning to install SmartyURL with <code>git</code>, you gain the flexibility to easily update SmartyURL in the future using <code>git fetch</code> and <code>git pull</code>. However, <strong>noting that</strong> using <code>git</code> may provide bleeding-edge releases, which might not be as stable or thoroughly tested or may contains breaking changes.
+Therefore Installing SmartyURL using <code>git</code> is recommended for Extendy Team developers only.</p>
 
 
 

@@ -27,7 +27,7 @@ cp env .env
 
 ### After installing the files
 
-Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements.
+Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements, including `app.baseUR` and `cookie.domain` and other options.
 
 Next, execute the 'migrate' command to import the database structure into your created database using:
 

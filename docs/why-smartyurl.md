@@ -1,4 +1,4 @@
-# Why to use SmartyURL
+# Why to use SmartyURL?
 
 Beyond URL Management: Unleashing the Power of SmartyURL. With SmartyURL you control everything.
 

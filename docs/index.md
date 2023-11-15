@@ -17,8 +17,6 @@ Getting started with SmartyURL is quick and straightforward:
 * [Introduction to SmartyURL](introduction.md).
 * [Installation of SmartyURL](installation.md).
 
-[Why to use SmartyURL](why-smartyurl.md)
-
 ## Acknowledgments
 
 Every open-source project depends on its contributors to be a success. Thanks to:

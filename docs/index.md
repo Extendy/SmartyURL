@@ -13,8 +13,9 @@ In addition to shortening URLs (based on domain that you use), SmartyURL also of
 
 ## Getting Started
 Getting started with SmartyURL is quick and straightforward:
-- [Introduction to SmartyURL](introduction.md).
-- [Installation of SmartyURL](installation.md).
+
+* [Introduction to SmartyURL](introduction.md).
+* [Installation of SmartyURL](installation.md).
 
 [Why to use SmartyURL](why-smartyurl.md)
 

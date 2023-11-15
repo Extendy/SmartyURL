@@ -24,7 +24,6 @@ cd myapp
 composer install
 cp env .env
 ```
-When using `composer`, you can update SmartyURL dependencies in the future using `composer update`. However, for updating SmartyURL itself, manual updates or reinitializing the Composer project **are necessary**.
 
 ### After installing the files
 

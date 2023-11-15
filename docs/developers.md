@@ -64,6 +64,8 @@ Afterward, you can disable new user registration by editing the .env file. Make 
 Auth.allowRegistration = false
 ```
 
+Afterward, you can access SmartyURL using any web browser by directing the URL to the installation domain where you have SmartyURL installed.
+
 When logged in, you might be prompted to verify your email to activate your account. Please check your email for a verification link. If you are unable to access your email or SmartyURL unable to send emails, you can manually set the 'active' value to 1 in the 'users' database table for the user you've created.
 
 

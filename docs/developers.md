@@ -46,6 +46,8 @@ or by visiting your website and register new user
 
 Ensure the user you've created is designated as a superadmin by modifying the `auth_groups_users` database table. Set the user's group name to 'superadmin' instead of 'user' for the created user using phpMyAdmin or any mysql client and make sure the user status is active by set `active` to `1` in `users` tables. or you have to verify the email next time you login.
 
+if you create the user using `php spark shield:user create` then you must add a new row into database tabele `auth_groups_users` for the that user with group `superadmin`
+
 Afterward, you can disable new user registration by editing the .env file. Make sure to set `Auth.allowRegistration` to 'false'. If it's not already present in your .env file, you can add it like this:
 
 ```cli

@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../developers/">
+        <link rel="prev" href="../introduction/">
       
       
-        <link rel="next" href="../license/">
+        <link rel="next" href="../developers/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>IP Geolocation - SmartyURL Docs</title>
+        <title>Why Using SmartyURL? - SmartyURL Docs</title>
       
     
     
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ip2location-database" class="md-skip">
+        <a href="#why-to-use-smartyurl" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              IP Geolocation
+              Why Using SmartyURL?
             
           </span>
         </div>
@@ -278,9 +278,18 @@
       
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../why-smartyurl/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -289,6 +298,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -316,18 +326,9 @@
       
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../ip2location/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -336,7 +337,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -415,25 +415,29 @@
   
 
 
-<h1 id="ip2location-database">IP2Location Database</h1>
-<p>SmartyURL utilizes the <code>ip2location/ip2location-php</code> library to determine the country of visitors based on their IP addresses. This functionality relies on the IP2Location database provided by IP2Location.com. Since SmartyURL is open-source and freely distributed, we include the "IP2Location™ LITE IP-COUNTRY Database," which is free for both personal and commercial use.</p>
-<p><strong>It's important to note that</strong> while the IP2Location™ LITE IP-COUNTRY Database is a valuable resource, it's essential to be aware that it may not consistently offer the highest degree of accuracy or the most up-to-date information. If you have plans to extensively employ geographical redirect conditions and demand a more precise and current dataset for IP-based country information, we strongly advise considering the purchase of a licensed version of the IP2Location database from ip2location.com. This paid version ensures you have access to the most accurate and regularly updated data for your geographical redirection needs.</p>
-<p><strong>Alternatively, you can continue with the included free LITE version, although it's not fully accurate, it can still be helpful.</strong></p>
-<p><strong>If you want to use the paid version of IP2Location database:</strong></p>
-<p>The paid IP2Location database offers improved accuracy and regular updates. To obtain your license and database, please visit <a href="https://www.ip2location.com/database/ip2location">ip2location.com/database/ip2location</a>.</p>
-<p>Once you've obtained the IP2Location™ IP-Country Database, download the .BIN file associated with the database and upload it to your server. Then, specify the path to the uploaded file by configuring the <code>$ip2location_bin_file</code> in <code>app/Config/Smartyurl.php</code>.</p>
-<pre><code class="language-php">public $ip2location_bin_file =  APPPATH . &quot;../datastore/&quot;. 'IP2Location/IP2LOCATION-LITE-DB1.IPV6.BIN';
-</code></pre>
-<p>The uploaded BIN file should be the standard version provided by IP2Location.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>When uploading your custom IP2Location BIN file, please do not overwrite the default 'IP2LOCATION-LITE-DB1.BIN' file. Instead, upload it with a new filename and adjust the <code>ip2location_bin_file</code> setting accordingly. This will ensures that your file won't be overwritten when SmartyURL is updated to a new version in the future.</p>
-</div>
-<p>This setup ensures that SmartyURL uses the paid, more accurate, and regularly updated IP2Location database for enhanced country detection.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When using the paid version of IP2Location, please remember to manually update the database (.BIN) file regularly whenever IP2Location announces a database update. This process is not handled automaticlly by SmartyURL, so it's important to stay informed about IP2Location announcements.</p>
-</div>
+<h1 id="why-to-use-smartyurl">Why to use SmartyURL</h1>
+<p>Beyond URL Management: Unleashing the Power of SmartyURL. With SmartyURL you control everything.</p>
+<p>Unlock control and cost savings with SmartyURL, your self-hosted URL management service. Host it on your server with no monthly payments , it is free and opensource, no free trials ends with deleting your data, which mean No fear of link deletion. Smart, secure, and all in your hands.</p>
+<p>Increase users confidence in your shortened URLs by using SmartyURL, your personalized URL managment self-hosted service. Unlike public shortening services, SmartyURL allows you to create and manage your own shortened links with your branded domain, offering enhanced control and security features. Trust in your links with SmartyURL.</p>
+<p>Users may be hesitant to trust shortened URLs created through public shortening services for several reasons:</p>
+<ol>
+<li>
+<p><strong>Security Concerns:</strong> Shortened URLs hide the original destination, making it easier for malicious actors to disguise harmful links. Users may be cautious about clicking on links when they can't see where they lead. Especially those links known to be associated with domains belonging to companies specialized in link shortening.</p>
+</li>
+<li>
+<p><strong>Phishing Risks:</strong> Shortened URLs can be used in phishing attacks to trick users into visiting fake websites that mimic legitimate ones. This lack of transparency raises concerns about the authenticity of the destination.</p>
+</li>
+<li>
+<p><strong>Link Longevity:</strong> Public URL shortening services may shut down or change their policies, leading to broken or expired links. Users may worry about the reliability and longevity of the links they click.</p>
+</li>
+<li>
+<p><strong>Lack of Information:</strong> Shortened URLs typically do not provide information about the destination website, making it challenging for users to assess the trustworthiness of the link.</p>
+</li>
+<li>
+<p><strong>Privacy Concerns:</strong> Users might be uncomfortable with the tracking capabilities often associated with public URL shorteners. These services can collect data on users' clicking behavior, raising privacy concerns.</p>
+</li>
+</ol>
+<p>Gain peace of mind when shortening URLs by hosting your own service with SmartyURL. Take control, ensure transparency, and enhance security. SmartyURL is your solution for worry-free link management.</p>
 
 
 

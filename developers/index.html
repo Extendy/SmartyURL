@@ -559,7 +559,7 @@ composer install
 cp env .env
 </code></pre>
 <h3 id="after-installing-the-files">After installing the files</h3>
-<p>Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements.</p>
+<p>Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements, including <code>app.baseUR</code> and <code>cookie.domain</code> and other options.</p>
 <p>Next, execute the 'migrate' command to import the database structure into your created database using:</p>
 <pre><code class="language-cli">php spark migrate --all
 </code></pre>

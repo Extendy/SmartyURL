@@ -18,7 +18,10 @@ theme:
     language: en
     direction: ltr
 extra:
-  version: v0.0.0-dev-dnd.2
+  version: v0.0.0-dev-dnd.3
+  analytics:
+    provider: google
+    property: G-M7YCSNSJLJ
   alternate:
     - name: عربي
       link: https://smartyurl.extendy.net/docs/ar/

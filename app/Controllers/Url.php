@@ -9,6 +9,7 @@ use App\Models\UrlTagsModel;
 use chillerlan\QRCode\Output\QROutputInterface;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
+use CodeIgniter\Shield\Models\UserModel;
 use Extendy\Smartyurl\SmartyUrl;
 use Extendy\Smartyurl\UrlConditions;
 use Extendy\Smartyurl\UrlIdentifier;
@@ -74,9 +75,6 @@ class Url extends BaseController
         }
         $user_id = user_id();
 
-        // @TODO FIX ME I must make sure user is exists
-        // @TODO and make sure from permission
-
         $data['filterrule']  = 'user';
         $data['filtervalue'] = $urlOwnerUserId;
         $data['filtertext']  = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($user_id);
@@ -86,6 +84,17 @@ class Url extends BaseController
         }
         if ((int) $urlOwnerUserId === $user_id) {
             $data['filtertext'] = lang('Url.urlsMyLink');
+        }
+
+        // make sure user $urlOwnerUserId is exists user
+        // I place it after the permission check to prevent any potential data bypass.
+        $usermodel = new UserModel();
+        if ($urlOwnerUserId !== null) {
+            $user = $usermodel->find($urlOwnerUserId);
+            if (! $user) {
+                // user is not exists
+                return redirect()->to('dashboard')->with('notice', lang('Users.UserNotFound'));
+            }
         }
 
         return view(smarty_view('url/list'), $data);

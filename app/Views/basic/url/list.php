@@ -86,15 +86,15 @@
                         <div class="card-header">
 
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h3 class="card-title"><?= lang('Url.urlsList'); ?> <?= $filtertext !== null ? ' - ' . $filtertext : '' ?></h3>
-                                    </div>
-                                    <div class="col-6 text-end">
-
-                                        <i class="fas fa-question-circle"></i>
-                                    </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3 class="card-title"><?= lang('Url.urlsList'); ?> <?= $filtertext !== null ? ' - ' . $filtertext : '' ?></h3>
                                 </div>
+                                <div class="col-6 text-end">
+
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                            </div>
 
 
                         </div>
@@ -286,6 +286,94 @@ if (isset($filterrule)) {
 
 
     });
+
+    /* delete url */
+    function delUrl(urlId) {
+
+    }
+
+
+    /* delete url button */
+    $("#listurls").on("click", "#deleteurlButton", function () {
+        /* Store the reference to the button element*/
+
+        var deleteButton = this;
+        var urlId = this.dataset.urlId;
+        var urlGo = this.dataset.urlGo;
+
+        var csrfToken = $("input[name='csrf_smarty']").val();
+        /* Show SweetAlert2 confirmation dialog */
+        Swal.fire({
+            title: '<?= lang('Url.urlDelConfrim'); ?>',
+            text: urlGo,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#073600',
+            confirmButtonText: '<?= lang('Url.urlDelYes'); ?>',
+            cancelButtonText: '<?= lang('Common.btnNo'); ?>',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                /* If user clicks "Yes", make AJAX request with CSRF token*/
+                $.ajax({
+                    url: '/url/del/'+urlId, /* Replace with your actual server endpoint*/
+                    type: 'POST',
+                    data: {
+                        /* Any data you want to send for deletion*/
+                        /* Include CSRF token in the data*/
+
+                        /* ... other data ...*/
+                    },
+                    headers: {
+                        /*/ Include CSRF token in the request headers */
+                        'X-CSRF-Token': csrfToken,
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        /* Check if the server response indicates success*/
+                        if (response.status === 'deleted') {
+                            /*delete the tr which contains the delete button and the previous ta lso becuase it is a parent*/
+                            var closestTr = $(deleteButton).closest('tr');
+                            var prevTr = closestTr.prev('tr');
+                            closestTr.remove();
+                            prevTr.remove();
+                            Swal.fire({
+                                title: '<?= lang('Url.urlDelOK'); ?>',
+                                icon: 'success'
+                            });
+                            /* You can also perform additional actions based on the response*/
+
+                        } else {
+                            Swal.fire('Error', response.error, 'error');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        /*/ Handle errors*/
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            /* json error */
+                            Swal.fire({
+                                title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                text: xhr.responseJSON.message,
+                                icon: 'error',
+                                confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                            });
+                        } else {
+                            /* not json error may be network error*/
+                            Swal.fire({
+                                title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                text: '<?= lang('Common.ajaxCallError1'); ?>',
+                                icon: 'error',
+                                confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+
+
 
 
 </script>

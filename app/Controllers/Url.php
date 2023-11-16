@@ -264,9 +264,16 @@ class Url extends BaseController
                 } else {
                     $url_owner = '';
                 }
+
                 $result->url_identifier = esc($result->url_identifier);
                 // $result->url_id],$result->url_title,$result->url_hitscounter
-                $Go_Url    = esc(smarty_detect_site_shortlinker() . $result->url_identifier);
+                $Go_Url = esc(smarty_detect_site_shortlinker() . $result->url_identifier);
+
+                // addtional options for the url
+                $url_addtionaloptions = '<div class="d-flex justify-content-end"><button id="deleteurlButton" data-url-go="' . $Go_Url . '"  data-url-id="' . $result->url_id . '" type="button" class=" btn btn-outline-danger flex-shrink-0">
+                                        <i class="bi bi-trash"></i>
+                                    </button></div>';
+
                 $records[] = [
                     'url_id_col'         => $result->url_id,
                     'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
@@ -275,10 +282,11 @@ class Url extends BaseController
                     'url_title_col' => " {$urlTitle}
                     <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
                     ",
-                    'url_hits_col' => "<a class='text-secondary' href='" . site_url("url/hits/{$result->url_id}") . "'>" . $result->url_hitscounter . '</a>',
-                    'url_id'       => $result->url_id,
-                    'url_tags'     => $url_tags,
-                    'url_owner'    => $url_owner,
+                    'url_hits_col'         => "<a class='text-secondary' href='" . site_url("url/hits/{$result->url_id}") . "'>" . $result->url_hitscounter . '</a>',
+                    'url_id'               => $result->url_id,
+                    'url_tags'             => $url_tags,
+                    'url_owner'            => $url_owner,
+                    'url_addtionaloptions' => $url_addtionaloptions,
                 ];
             }
         }

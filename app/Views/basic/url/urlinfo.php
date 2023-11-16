@@ -450,7 +450,7 @@ echo $url_tags_string;
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
-                cancelButtonColor: '#065e01',
+                cancelButtonColor: '#073600FF',
                 confirmButtonText: '<?=lang('Url.urlDelYes'); ?>',
                 cancelButtonText: '<?=lang('Common.btnNo'); ?>',
             }).then((result) => {

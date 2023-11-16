@@ -12,7 +12,7 @@
 
 Currently, as SmartyURL is in its early stages, you can only install it using `Composer`. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.
 
-### install SmartyURL  using `Composer`:
+### Install SmartyURL  using `Composer`:
 
 This is the best way for now.
 

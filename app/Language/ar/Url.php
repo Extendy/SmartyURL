@@ -82,4 +82,11 @@ return [
     'urlInfoVisitorUserAgent'     => 'الوكيل',
     'urlInfoFinalTarget'          => 'الرابط النهائي',
     'urlInfoNoHitsYet'            => 'لا يوجد زيارات للرابط حتى الان!',
+
+    'urlDelConfrim'                        => 'هل انت متاكد من انك تود حذف الرابط',
+    'urlDelYes'                            => 'نعم ، احذف',
+    'urlDelInvalidURL'                     => 'رابط غير صحيح',
+    'urlDelCannotDelthisUrlDuePermissions' => 'لا يمكنك حذف هذا الرابط لكونك لا تمتلك الصلاحيات الكافية لحذفه',
+    'urlDelError'                          => 'لا يمكن حذف هذا الرابط الان ، حاول مرة اخرى لاحقا',
+    'urlDelOK'                             => 'لقم تم حذف الرابط بنجاح',
 ];

@@ -555,6 +555,7 @@ class Assist extends BaseController
                             '' +
                             d.url_tags +
                             d.url_owner +
+                            d.url_addtionaloptions +
                             '<br>'
                         );
                     }

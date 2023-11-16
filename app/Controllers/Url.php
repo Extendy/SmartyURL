@@ -9,6 +9,7 @@ use App\Models\UrlTagsModel;
 use chillerlan\QRCode\Output\QROutputInterface;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
+use CodeIgniter\Shield\Models\UserModel;
 use Extendy\Smartyurl\SmartyUrl;
 use Extendy\Smartyurl\UrlConditions;
 use Extendy\Smartyurl\UrlIdentifier;
@@ -74,9 +75,6 @@ class Url extends BaseController
         }
         $user_id = user_id();
 
-        // @TODO FIX ME I must make sure user is exists
-        // @TODO and make sure from permission
-
         $data['filterrule']  = 'user';
         $data['filtervalue'] = $urlOwnerUserId;
         $data['filtertext']  = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($user_id);
@@ -86,6 +84,17 @@ class Url extends BaseController
         }
         if ((int) $urlOwnerUserId === $user_id) {
             $data['filtertext'] = lang('Url.urlsMyLink');
+        }
+
+        // make sure user $urlOwnerUserId is exists user
+        // I place it after the permission check to prevent any potential data bypass.
+        $usermodel = new UserModel();
+        if ($urlOwnerUserId !== null) {
+            $user = $usermodel->find($urlOwnerUserId);
+            if (! $user) {
+                // user is not exists
+                return redirect()->to('dashboard')->with('notice', lang('Users.UserNotFound'));
+            }
         }
 
         return view(smarty_view('url/list'), $data);
@@ -264,9 +273,16 @@ class Url extends BaseController
                 } else {
                     $url_owner = '';
                 }
+
                 $result->url_identifier = esc($result->url_identifier);
                 // $result->url_id],$result->url_title,$result->url_hitscounter
-                $Go_Url    = esc(smarty_detect_site_shortlinker() . $result->url_identifier);
+                $Go_Url = esc(smarty_detect_site_shortlinker() . $result->url_identifier);
+
+                // addtional options for the url
+                $url_addtionaloptions = '<div class="d-flex justify-content-end"><button id="deleteurlButton" data-url-go="' . $Go_Url . '"  data-url-id="' . $result->url_id . '" type="button" class=" btn btn-outline-danger flex-shrink-0">
+                                        <i class="bi bi-trash"></i>
+                                    </button></div>';
+
                 $records[] = [
                     'url_id_col'         => $result->url_id,
                     'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
@@ -275,10 +291,11 @@ class Url extends BaseController
                     'url_title_col' => " {$urlTitle}
                     <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
                     ",
-                    'url_hits_col' => $result->url_hitscounter,
-                    'url_id'       => $result->url_id,
-                    'url_tags'     => $url_tags,
-                    'url_owner'    => $url_owner,
+                    'url_hits_col'         => "<a class='text-secondary' href='" . site_url("url/hits/{$result->url_id}") . "'>" . $result->url_hitscounter . '</a>',
+                    'url_id'               => $result->url_id,
+                    'url_tags'             => $url_tags,
+                    'url_owner'            => $url_owner,
+                    'url_addtionaloptions' => $url_addtionaloptions,
                 ];
             }
         }
@@ -550,7 +567,7 @@ class Url extends BaseController
 
                     foreach ($urlRedirectConditions->conditions as $country => $finalUrl) {
                         $geocountry[]  = $country;
-                        $geofinalurl[] = urldecode($finalUrl);
+                        $geofinalurl[] = $finalUrl;
                     }
                     $data['geocountry'] = $geocountry;
                     // var_dump($data['geocountry']);
@@ -565,7 +582,7 @@ class Url extends BaseController
 
                     foreach ($urlRedirectConditions->conditions as $device => $finalUrl) {
                         $devicecond[]     = $device;
-                        $devicefinalurl[] = urldecode($finalUrl);
+                        $devicefinalurl[] = $finalUrl;
                     }
                     break;
 
@@ -580,7 +597,7 @@ class Url extends BaseController
         $data = [
             'UrlId'             => $url_id,
             'editUrlAction'     => site_url("/url/edit/{$url_id}"),
-            'originalUrl'       => esc(urldecode($urlData['url_targeturl'])),
+            'originalUrl'       => esc($urlData['url_targeturl']),
             'UrlTitle'          => esc($urlData['url_title']),
             'UrlIdentifier'     => esc($urlData['url_identifier']),
             'urlTags'           => esc($urlTagsCloud), // i must get the URLTags
@@ -620,7 +637,7 @@ class Url extends BaseController
 
         // user cannot edit others URLs unless he is can super.admin or admin.manageurls
         // check if original url is valid url
-        $originalUrl = esc($this->request->getPost('originalUrl'));
+        $originalUrl = $this->request->getPost('originalUrl');
         if (! $this->smartyurl->isValidURL($originalUrl)) {
             return redirect()->to("url/edit/{$UrlId}")->withInput()->with('error', lang('Url.urlInvalidOriginal'));
         }
@@ -846,7 +863,7 @@ class Url extends BaseController
                     'hit_country_col'   => $result->urlhit_country,
                     'hit_device_col'    => $result->urlhit_visitordevice,
                     'hit_useragent_col' => esc($result->urlhit_useragent),
-                    'hit_finalurl_col'  => esc($result->urlhit_finaltarget),
+                    'hit_finalurl_col'  => urldecode($result->urlhit_finaltarget),
                 ];
             }
         }
@@ -934,5 +951,46 @@ class Url extends BaseController
 
         // now i will return the image
         return $response->setBody($out);
+    }
+
+    public function delUrl(int $UrlId)
+    {
+        $response = [];
+        if (! auth()->user()->can('url.manage', 'admin.manageotherurls', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setJSON($response);
+        }
+        $url_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        if ($url_id === 0) {
+            $response['error'] = lang('Url.urlDelInvalidURL');
+        }
+        // i will check if the url id is exists or not
+        $urlData = $this->urlmodel->where('url_id', $url_id)->first();
+        if ($urlData === null) {
+            // url not exsists in dataase
+            $response['error'] = lang('Url.urlNotFoundShort');
+
+            return $this->response->setJSON($response);
+        }
+        // i will see if the current user can manage this url
+        $userManageUrl = $this->smartyurl->userCanManageUrl($url_id);
+        if (! $userManageUrl) {
+            $response['error'] = lang('Url.urlDelCannotDelthisUrlDuePermissions');
+
+            return $this->response->setJSON($response);
+        }
+        // i will try to delete the url
+
+        $delurl = $this->urlmodel->deleteUrlById($url_id);
+        if ($delurl > 0) {
+            // deleted
+            $response['status'] = 'deleted';
+        } else {
+            // not deleted or error
+            $response['error'] = lang('Url.urlDelError');
+        }
+
+        return $this->response->setJSON($response);
     }
 }

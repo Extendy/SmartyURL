@@ -7,7 +7,10 @@ site_author: 'Extendy Team'
 copyright: 'Copyrights © 2023 Extendy Team'
 nav:
   - Home: index.md
+  - Introduction: introduction.md
+  - Why Using SmartyURL?: why-smartyurl.md
   - Developer's Guide: developers.md
+  - IP Geolocation: ip2location.md
   - License: license.md
   - Legal Notice: legalnotice.md
 theme:
@@ -15,10 +18,13 @@ theme:
     language: en
     direction: ltr
 extra:
-  version: v0.0.0-dev-dnd.2
+  version: v0.0.0-dev-dnd.3
+  analytics:
+    provider: google
+    property: G-M7YCSNSJLJ
   alternate:
     - name: عربي
-      link: ar/
+      link: https://smartyurl.extendy.net/docs/ar/
       lang: ar
 markdown_extensions:
   - admonition

@@ -240,26 +240,32 @@
                     if (auth()->user()->can('users.list', 'users.manage', 'super.admin')) {
                         ?>
 
-                    <li class="nav-item <?= (url_is('/users') || url_is('/users/*')) ? 'menu-open' : '' ?>">
-                        <a href="#" class="nav-link ">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>
-                                <?= lang('Users.SystemUserMenu'); ?>
-                                <i class="nav-arrow bi bi-chevron-right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="<?= site_url('/users'); ?>"
-                                   class="nav-link <?= (url_is('/users')) ? 'active' : '' ?>">
-                                    <i class="nav-icon bi bi-people"></i>
-                                    <p><?= lang('Users.SystemUsersList'); ?></p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="nav-item <?= (url_is('/users') || url_is('/users/*')) ? 'menu-open' : '' ?>">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon bi bi-people"></i>
+                                <p>
+                                    <?= lang('Users.SystemUserMenu'); ?>
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+                            <?php
+                            if (auth()->user()->can('users.list', 'super.admin')) {
+                                ?>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?= site_url('/users'); ?>"
+                                           class="nav-link <?= (url_is('/users')) ? 'active' : '' ?>">
+                                            <i class="nav-icon bi bi-people"></i>
+                                            <p><?= lang('Users.SystemUsersList'); ?></p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <?php
+                            }
+                        ?>
+                        </li>
 
-                    <?php
+                        <?php
                     }
 ?>
 

@@ -8,7 +8,7 @@ class Smarty extends BaseConfig
 {
     public $smarty_name        = 'SmartyURL';
     public $smarty_online_repo = 'https://smartyurl.extendy.net';
-    public $smarty_version     = '0.0.0-dev-dnd.3';
+    public $smarty_version     = '0.0.0-dev-dnd.4';
 
     /**
      * @var string contain the file name of jquery supported version eg jquery-3.7.1 without js

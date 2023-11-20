@@ -32,6 +32,11 @@ $routes->group('url', static function ($routes) {
     $routes->post('del/(:num)', 'Url::delUrl/$1', ['filter' => 'session']); // json del url
 });
 
+// Users
+$routes->group('users', static function ($routes) {
+    $routes->get('/', 'Users::index', ['filter' => 'session']);
+});
+
 // language route
 // filter
 // https://codeigniter.com/user_guide/incoming/routing.html#applying-filters

@@ -61,6 +61,11 @@ class AuthGroups extends ShieldAuthGroups
         'url.access' => 'Can Access URLs',
         'url.new'    => 'Can Create a new URL',
         'url.manage' => 'Can Manage his/her URLs only (edit , delete)',
+        // users
+        'users.list'   => 'List system users',
+        'users.manage' => 'Manage system users including delete users',
+        // usergroups
+        'usergroups.manage' => 'Manage User Groups (Add , Modify permissions, edit , delete)',
     ];
 
     /**
@@ -73,13 +78,20 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $matrix = [
         'superadmin' => [
-            'super.*',
-            'admin.*',
-            'url.*',
+            'super.admin',
+            'admin.manageotherurls',
+            'url.access',
+            'url.new',
+            'url.manage',
+            'users.list',
+            'users.manage',
+            'usergroups.manage',
         ],
         'admin' => [
             'admin.manageotherurls',
-            'url.*',
+            'url.access',
+            'url.new',
+            'url.manage',
         ],
         'user' => [
             'url.access',

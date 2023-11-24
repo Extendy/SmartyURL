@@ -31,19 +31,3 @@ By default, only superadmin users can manage other users. To create new users, m
 SmartyURL is designed with the assumption that it's typically used by a single company, a team, or a group of users. That's why, by default, SmartyURL starts as a closed application. Users can't create new accounts without authorization from the superadmin, who is responsible for creating new user accounts.
 
 If you wish to enable public registration (while it's **not recommended**), you can do so by adjusting certain configurations.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

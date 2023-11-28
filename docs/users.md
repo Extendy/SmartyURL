@@ -18,7 +18,7 @@ Website visitors can visit created URLs without needing an account. They simply 
 
 ## Creating Users
 
-By default, SmartyURL is designed to operate within a closed application. This means that new user registrations cannot be done without authorization from the superadmin. Users are unable to create new accounts on their own; instead, a superadmin must create an account for them.
+By default, SmartyURL is designed to operate as A closed application. This means that new user registrations cannot be done without authorization from the superadmin. Users are unable to create new accounts on their own; instead, a superadmin must create an account for them.
 
 If you're a superadmin,and you need to create new user account you can add new users by logging into your account. Simply go to the sidebar, select 'Add New User' from the System Users dropdown menu. Enter the new user's information, select their user group and password. After that, you can share the login details with the user for them to access their account.
 

@@ -37,6 +37,7 @@ $routes->group('users', static function ($routes) {
     $routes->get('/', 'Users::index', ['filter' => 'session']);
     $routes->get('listusers', 'Users::listUsersData', ['filter' => 'session']); // json list users
     $routes->get('addnew', 'Users::addNew', ['filter' => 'session']);
+    $routes->post('del/(:num)', 'Users::delUser/$1', ['filter' => 'session']); // json del user
 });
 
 // language route

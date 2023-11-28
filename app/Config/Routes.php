@@ -32,6 +32,13 @@ $routes->group('url', static function ($routes) {
     $routes->post('del/(:num)', 'Url::delUrl/$1', ['filter' => 'session']); // json del url
 });
 
+// Users
+$routes->group('users', static function ($routes) {
+    $routes->get('/', 'Users::index', ['filter' => 'session']);
+    $routes->get('listusers', 'Users::listUsersData', ['filter' => 'session']); // json list users
+    $routes->get('addnew', 'Users::addNew', ['filter' => 'session']);
+});
+
 // language route
 // filter
 // https://codeigniter.com/user_guide/incoming/routing.html#applying-filters
@@ -48,8 +55,3 @@ $routes->get('assist/listurls', 'Assist::getListUrlsJsAssist', ['filter' => 'ses
 $routes->get('go/(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
 // Route any undefined request to Go Controller.
 $routes->get('(:any)', 'Go::go/$1', ['filter' => 'webratelimit']);
-
-// testing , @TODO must be removed after testing before any production release
-$routes->get('/url/none', 'Url::none');
-$routes->get('/tests/1', 'Tests::index');
-$routes->get('/tests/testCountry', 'Tests::testCountry');

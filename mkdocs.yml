@@ -10,6 +10,7 @@ nav:
   - Introduction: introduction.md
   - Why Using SmartyURL?: why-smartyurl.md
   - Developer's Guide: developers.md
+  - SmartyURL Users: users.md
   - IP Geolocation: ip2location.md
   - License: license.md
   - Legal Notice: legalnotice.md

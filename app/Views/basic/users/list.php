@@ -141,7 +141,7 @@
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/sl-1.7.0/datatables.min.js"></script>
 
 <script>
-    /* samsam @TODO the order by not working */
+
     $(document).ready(function () {
 
         const table = $('#usersList').DataTable({
@@ -169,7 +169,7 @@
                     errorContainer.show();
                 },
             },
-            "searching": true,
+            "searching": false,
             "dom": 'lfrtipB',
             "lengthChange": false,
             "processing": true,
@@ -180,11 +180,11 @@
             order: [[0, 'desc']],
             "columns": [
                 {"data": "user_id_col", "name": "user_id", orderable: true,"className": "dt-body-center"},
-                {"data": "user_username_col", "name": "user_username", orderable: false},
-                {"data": "user_email_col", "name": "user_email", orderable: false},
+                {"data": "user_username_col", "name": "user_username", orderable: true},
+                {"data": "user_email_col", "name": "user_email"},
                 {"data": "user_active_col", "name": "user_active", orderable: false},
                 {"data": "user_userroup_col", "name": "user_userroup", orderable: false},
-                {"data": "user_lastactive_col", "name": "user_lastactive", orderable: false,"className": "dt-body-center"},
+                {"data": "user_lastactive_col", "name": "user_lastactive", orderable: true,"className": "dt-body-center"},
                 {"data": "user_urlcounts_col", "name": "user_urlcounts", orderable: false,"className": "dt-body-center"},
                 {"data": "user_useractions_col", "name": "user_useractions_col", orderable: false},
             ],

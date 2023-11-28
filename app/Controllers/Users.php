@@ -35,9 +35,59 @@ class Users extends BaseController
             return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
         }
 
-        $draw   = $this->request->getGet('draw');
-        $start  = $this->request->getGet('start');
-        $length = $this->request->getGet('length');
+        $draw        = $this->request->getGet('draw');
+        $start       = $this->request->getGet('start');
+        $length      = $this->request->getGet('length');
+        $columnOrder = $this->request->getGet('order');
+
+        if ($columnOrder !== null) {
+            $ajax_column_index = $columnOrder['0']['column'];
+            $order_by_dir      = $columnOrder['0']['dir'];
+
+            // Do not think that the data that comes from the client is always correct
+            // so switch it to use defaults
+            switch ($order_by_dir) {
+                case 'asc':
+                    $order_by_rule = 'asc';
+                    break;
+
+                case 'desc':
+                    $order_by_rule = 'desc';
+                    break;
+
+                default:
+                    $order_by_rule = 'desc';
+                    break;
+            }
+
+            // i will know the column name from get
+            $ajax_columns              = $this->request->getGet('columns');
+            $order_by_ajax_column_name = $ajax_columns[$ajax_column_index]['name'];
+
+            // echo $order_by_ajax_column_name;
+            // echo $order_by_rule;
+
+            switch ($order_by_ajax_column_name) {
+                case 'user_id':
+                    $order_by = 'id';
+                    break;
+
+                case 'user_username':
+                    $order_by = 'username';
+                    break;
+
+                case 'user_lastactive':
+                    $order_by = 'last_active';
+                    break;
+
+                default:
+                    $order_by = 'id';
+                    break;
+            }
+        } else {
+            $order_by      = 'id';
+            $order_by_rule = 'desc';
+        }
 
         $data = [];
 
@@ -49,19 +99,19 @@ class Users extends BaseController
 
         $all_users_count = $this->usermodel
             ->where($conditions)
-            ->orderBy('created_at', 'desc')
+            ->orderBy($order_by, $order_by_dir)
             ->countAllResults();
 
         $users = $this->usermodel
             ->where($conditions)
             ->limit($length, $start)
-            ->orderBy('created_at', 'desc')
-            ->findAll();
+            ->orderBy($order_by, $order_by_dir)
+            ->find();
 
         // $users is CodeIgniter\Shield\Entities\User
         // now i will deal with each user yo define its record
         $users_data           = [];
-        $recordsFiltered      = count($users);
+        $recordsFiltered      = $all_users_count; // no need fot counder while not used filter count($users);
         $user_useractions_col = 'edit - delete';
 
         foreach ($users as $user) {

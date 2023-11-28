@@ -80,6 +80,10 @@ class Users extends BaseController
                     $order_by = 'last_active';
                     break;
 
+                case 'user_active':
+                    $order_by = 'active';
+                    break;
+
                 default:
                     $order_by = 'id';
                     break;
@@ -110,14 +114,23 @@ class Users extends BaseController
 
         // $users is CodeIgniter\Shield\Entities\User
         // now i will deal with each user yo define its record
-        $users_data           = [];
-        $recordsFiltered      = $all_users_count; // no need fot counder while not used filter count($users);
+        $users_data      = [];
+        $recordsFiltered = $all_users_count; // no need fot counder while not used filter count($users);
+
         $user_useractions_col = 'edit - delete';
 
         foreach ($users as $user) {
             // get the user usergroups
             $userGroups = $user->getGroups();
             $user_group = '';
+
+            $delete_user_button = "
+            <button id='deleteUserButton' data-user-id='{$user->id}' type='button' class=' btn btn-outline-danger'>
+                        <i class='bi bi-trash'></i>
+            </button>
+            ";
+
+            $user_useractions_col = 'edit - ' . $delete_user_button;
 
             if ($user->active) {
                 $userActive = '' . lang('Users.ListUsersEmailVerifiedStatusActiveYes') . " <a class='btn btn-sm btn-outline-danger' href='#deactivate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusDeActivate') . '</a>';
@@ -158,5 +171,18 @@ class Users extends BaseController
     {
         echo 'Add new user procedures';
         dd('Add New Users form here in future'); // TODO Need work @FIXME
+    }
+
+    public function delUser(int $UserId)
+    {
+        $response = [];
+
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
+        // samsam @TODO iam here
     }
 }

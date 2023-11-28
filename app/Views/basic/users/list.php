@@ -182,7 +182,7 @@
                 {"data": "user_id_col", "name": "user_id", orderable: true,"className": "dt-body-center"},
                 {"data": "user_username_col", "name": "user_username", orderable: true},
                 {"data": "user_email_col", "name": "user_email"},
-                {"data": "user_active_col", "name": "user_active", orderable: false},
+                {"data": "user_active_col", "name": "user_active", orderable: true},
                 {"data": "user_userroup_col", "name": "user_userroup", orderable: false},
                 {"data": "user_lastactive_col", "name": "user_lastactive", orderable: true,"className": "dt-body-center"},
                 {"data": "user_urlcounts_col", "name": "user_urlcounts", orderable: false,"className": "dt-body-center"},
@@ -191,6 +191,22 @@
             "initComplete": function () {
                 this.api().columns().header().to$().css('text-align', 'center');
             }
+        });
+
+
+    });
+
+
+    $(document).ready(function () {
+        /* delete url button */
+        $("#usersList").on("click", "#deleteUserButton", function () {
+            /* Store the reference to the button element*/
+
+            var deleteButton = this;
+            var userId = this.dataset.userId;
+            /* samsam @TODO here */
+            alert ("I will try to del " + userId);
+
         });
 
 

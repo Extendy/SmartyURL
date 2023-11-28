@@ -21,3 +21,9 @@ changelog:
     - title: Database Changes
       labels:
         - 'database changed'
+    - title: Documentation
+      labels:
+        - 'documentation'
+    - title: Update a dependencies
+      labels:
+        - 'dependencies'

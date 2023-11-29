@@ -263,6 +263,21 @@
                                 <?php
                             }
                         ?>
+                            <?php
+                        if (auth()->user()->can('users.list', 'super.admin')) {
+                            ?>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?= site_url('/users/addnew'); ?>"
+                                           class="nav-link <?= (url_is('/users/addnew')) ? 'active' : '' ?>">
+                                            <i class="nav-icon bi bi-person-plus"></i>
+                                            <p><?= lang('Users.UsersAddNewUser'); ?></p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <?php
+                        }
+                        ?>
                         </li>
 
                         <?php

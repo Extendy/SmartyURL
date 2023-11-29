@@ -15,6 +15,7 @@ return [
     'Optional'  => 'اختياري',
     'btnOK'     => 'موافق',
     'btnNo'     => 'لا',
+    'btnYes'    => 'نعم',
 
     'ajaxErrorTitle'         => 'خطا',
     'ajaxCallError1'         => 'لا يمكن اتمام طلبك الان ، تاكد من اتصالك بالانترنت وحاول مجددا',

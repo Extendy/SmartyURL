@@ -56,11 +56,16 @@
                     </a>
                 </li>
 
-
-                <li class="nav-item d-none d-md-block">
-                    <a href="/url/new" class="btn btn-primary"><i
-                            class="bi bi-plus-lg"></i> <?= lang('Url.addNewURLMainbtn'); ?></a>
-                </li>
+                <?php
+                if (auth()->user()->can('url.new', 'super.admin')) {
+                    ?>
+                    <li class="nav-item d-none d-md-block">
+                        <a href="/url/new" class="btn btn-primary"><i
+                                class="bi bi-plus-lg"></i> <?= lang('Url.addNewURLMainbtn'); ?></a>
+                    </li>
+                    <?php
+                }
+?>
 
                 <!--begin: +URL on small screen only -->
                 <li class="nav-item d-block d-sm-none d-md-none d-lg-none d-xl-none">
@@ -222,8 +227,8 @@
                                 </a>
                             </li>
                             <?php
-                            if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
-                                ?>
+            if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
+                ?>
                                 <li class="nav-item">
                                     <a href="<?= site_url('/url'); ?>"
                                        class="nav-link <?= (url_is('/url/')) ? 'active' : '' ?>">
@@ -231,7 +236,8 @@
                                         <p><?= lang('Url.urlsAllLink'); ?></p>
                                     </a>
                                 </li>
-                            <?php } ?>
+                            <?php
+            } ?>
                         </ul>
                     </li>
 

@@ -69,7 +69,7 @@
                                         ?>
                                         <a href="<?= site_url('users/addnew'); ?>"
                                            class="btn btn-sm btn-outline-primary">
-                                            <i class="bi bi-person-fill-add"></i>
+                                            <i class="bi bi-person-plus"></i>
                                             <?= lang('Users.UsersAddNewUser'); ?>
 
                                         </a>
@@ -129,7 +129,7 @@
 
 
 </div> <!-- dev id userslist -->
-
+<?= csrf_field() ?>
 
 <?= $this->endSection() ?>
 
@@ -198,14 +198,181 @@
 
 
     $(document).ready(function () {
-        /* delete url button */
+
+        var csrfToken = $("input[name='csrf_smarty']").val();
+
+        /* delete user button */
         $("#usersList").on("click", "#deleteUserButton", function () {
             /* Store the reference to the button element*/
 
             var deleteButton = this;
             var userId = this.dataset.userId;
             /* samsam @TODO here */
-            alert ("I will try to del " + userId);
+            alert ("this will try to del " + userId);
+
+        });
+
+        /* activate user button */
+        $("#usersList").on("click", "#activateUserButton", function () {
+            /* Store the reference to the button element*/
+
+            var activateButton = this;
+            var userId = this.dataset.userId;
+            var userEmail =  this.dataset.userEmail;
+
+
+            Swal.fire({
+                title: '<?= lang('Users.UserActivateConfrimTitle'); ?>',
+                text: '<?= lang('Users.UserActivateConfrimText', ["' + userEmail + '"]); ?>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#073600',
+                confirmButtonText: '<?= lang('Common.btnYes'); ?>',
+                cancelButtonText: '<?= lang('Common.btnNo'); ?>',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    /* If user clicks "Yes", make AJAX request with CSRF token*/
+                    $.ajax({
+                        url: '/users/activate/'+userId,
+                        type: 'POST',
+                        data: {
+                            /* Any data you want to send for deletion*/
+                            /* Include CSRF token in the data*/
+
+                            /* ... other data ...*/
+                        },
+                        headers: {
+                            /*/ Include CSRF token in the request headers */
+                            'X-CSRF-Token': csrfToken,
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            /* Check if the server response indicates success*/
+                            if (response.status === 'activated') {
+
+                                /* change the button and the status */
+                                $(activateButton).attr('id', 'deactivateUserButton');
+                                $(activateButton).text('<?= lang('Users.ListUsersEmailVerifiedStatusDeActivate'); ?>');
+                                $(activateButton).removeClass('btn-outline-success').addClass('btn-outline-danger');
+                                $(activateButton).prev('span').text('<?= lang('Users.ListUsersEmailVerifiedStatusActiveYes'); ?>');
+
+                                Swal.fire({
+                                    title: '<?= lang('Users.UserActivatedOk'); ?>',
+                                    icon: 'success'
+                                });
+                                /* You can also perform additional actions based on the response*/
+
+                            } else {
+                                Swal.fire('Error', response.error, 'error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            /*/ Handle errors*/
+                            if (xhr.responseJSON && xhr.responseJSON.error) {
+                                /* json error */
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: xhr.responseJSON.error,
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            } else {
+                                /* not json error may be network error*/
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: '<?= lang('Common.ajaxCallError1'); ?>',
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        });
+
+
+        /* deactivate user button */
+        $("#usersList").on("click", "#deactivateUserButton", function () {
+            /* Store the reference to the button element*/
+
+            var deactivateButton = this;
+            var userId = this.dataset.userId;
+            var userEmail =  this.dataset.userEmail;
+
+
+            Swal.fire({
+                title: '<?= lang('Users.UserActivateConfrimTitle'); ?>',
+                text: '<?= lang('Users.UserDeActivateConfrimText', ["' + userEmail + '"]); ?>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#073600',
+                confirmButtonText: '<?= lang('Common.btnYes'); ?>',
+                cancelButtonText: '<?= lang('Common.btnNo'); ?>',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    /* If user clicks "Yes", make AJAX request with CSRF token*/
+                    $.ajax({
+                        url: '/users/deactivate/'+userId,
+                        type: 'POST',
+                        data: {
+                            /* Any data you want to send for deletion*/
+                            /* Include CSRF token in the data*/
+
+                            /* ... other data ...*/
+                        },
+                        headers: {
+                            /*/ Include CSRF token in the request headers */
+                            'X-CSRF-Token': csrfToken,
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            /* Check if the server response indicates success*/
+                            if (response.status === 'deactivated') {
+
+                                /* change the button and the status */
+                                $(deactivateButton).attr('id', 'activateUserButton');
+                                $(deactivateButton).text('<?= lang('Users.ListUsersEmailVerifiedStatusActivate'); ?>');
+                                $(deactivateButton).removeClass('btn-outline-danger').addClass('btn-outline-success');
+                                $(deactivateButton).prev('span').text('<?= lang('Users.ListUsersEmailVerifiedStatusActiveNo'); ?>');
+
+                                Swal.fire({
+                                    title: '<?= lang('Users.UserDeActivatedOk'); ?>',
+                                    icon: 'success'
+                                });
+                                /* You can also perform additional actions based on the response*/
+
+                            } else {
+                                Swal.fire('Error', response.error, 'error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            /*/ Handle errors*/
+                            if (xhr.responseJSON && xhr.responseJSON.error) {
+                                /* json error */
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: xhr.responseJSON.error,
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            } else {
+                                /* not json error may be network error*/
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: '<?= lang('Common.ajaxCallError1'); ?>',
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            }
+                        }
+                    });
+                }
+            });
 
         });
 

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UrlModel;
 use App\Models\UserModel;
+use CodeIgniter\Shield\Models\UserIdentityModel;
 
 class Users extends BaseController
 {
@@ -120,6 +121,8 @@ class Users extends BaseController
         $user_useractions_col = 'edit - delete';
 
         foreach ($users as $user) {
+            $user->email    = esc($user->email);
+            $user->username = esc($user->username);
             // get the user usergroups
             $userGroups = $user->getGroups();
             $user_group = '';
@@ -133,13 +136,18 @@ class Users extends BaseController
             $user_useractions_col = 'edit - ' . $delete_user_button;
 
             if ($user->active) {
-                $userActive = '' . lang('Users.ListUsersEmailVerifiedStatusActiveYes') . " <a class='btn btn-sm btn-outline-danger' href='#deactivate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusDeActivate') . '</a>';
+                $userActive = '<span>' . lang('Users.ListUsersEmailVerifiedStatusActiveYes') . "</span> <button id='deactivateUserButton' data-user-email='{$user->email}' data-user-id='{$user->id}' class='btn btn-sm btn-outline-danger' href='#deactivate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusDeActivate') . '</button>';
             } else {
-                $userActive = '' . lang('Users.ListUsersEmailVerifiedStatusActiveNo') . " <a class='btn btn-sm btn-outline-success' href='#activate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusActivate') . '</a>';
+                $userActive = '<span>' . lang('Users.ListUsersEmailVerifiedStatusActiveNo') . " </span> <button id='activateUserButton' data-user-email='{$user->email}' data-user-id='{$user->id}' class='btn btn-sm btn-outline-success' href='#activate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusActivate') . '</button>';
             }
 
             foreach ($userGroups as $group) {
-                $user_group .= ' ' . $group;
+                if ($group === 'superadmin') {
+                    $btn_class = 'btn-outline-dark';
+                } else {
+                    $btn_class = 'btn-outline-dark';
+                }
+                $user_group .= ' <a href="#" class="btn btn-sm  ' . $btn_class . '">' . esc($group) . '</a>';
             }
             // get the user url counts
 
@@ -148,7 +156,7 @@ class Users extends BaseController
             $users_data[] = [
                 'user_id_col'          => $user->id,
                 'user_username_col'    => $user->username,
-                'user_lastactive_col'  => $user->last_active->format('Y-m-d H:i:s'),
+                'user_lastactive_col'  => $user->last_active ? $user->last_active->format('Y-m-d H:i:s') : '-',
                 'user_email_col'       => $user->email,
                 'user_active_col'      => $userActive,
                 'user_userroup_col'    => $user_group,
@@ -182,7 +190,94 @@ class Users extends BaseController
 
             return $this->response->setStatusCode(403)->setJSON($response);
         }
-        $user_id = (int) esc(smarty_remove_whitespace_from_url_identifier($UrlId));
-        // samsam @TODO iam here
+        $user_id = (int) $UserId;
+        // i will try to find the user
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $user = $this->usermodel
+            ->where($conditions)
+            ->find();
+        // dd($user);
+        // samsam @TODO here
+    }
+
+    /**
+     * This function Activate User Email Account.
+     * called using ajax to activate user account and  it suppose that user confirm activation
+     *
+     * @return \CodeIgniter\HTTP\ResponseInterface
+     */
+    public function activateUser(int $UserId)
+    {
+        $response = [];
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id    = (int) $UserId;
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $users = $this->usermodel
+            ->where($conditions)
+            ->find();
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        // user is exists i will try to activate it
+        foreach ($users as $user) {
+            if (! $user->isActivated()) {
+                $user->activate();
+                // remove any email_activate Identity when activate email
+                $UserIdentityModel = new UserIdentityModel();
+                $UserIdentityModel->deleteIdentitiesByType($user, 'email_activate');
+                $response['status'] = 'activated';
+            } else {
+                $response['error'] = lang('Users.UserIsAlreadyActivated');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
+    }
+
+    public function deactivateUser(int $UserId)
+    {
+        $response = [];
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id    = (int) $UserId;
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $users = $this->usermodel
+            ->where($conditions)
+            ->find();
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        // user is exists i will try to deactivate it
+        foreach ($users as $user) {
+            if ($user->isActivated()) {
+                $user->deactivate();
+                $response['status'] = 'deactivated';
+            } else {
+                $response['error'] = lang('Users.UserIsAlreadyDeActivated');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
     }
 }

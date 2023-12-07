@@ -32,6 +32,6 @@ return [
 
     'UserDelUserErrorDel' => 'خطا اثناء حذف المستخدم ، حاول لاحقا',
     'UserDelConfirmTitle' => 'حذف حساب مستخدم',
-    'UserDelConfirm'      => 'هل انت متاكد من انك تود حذف حساب المستخدم {0}؟',
+    'UserDelConfirm'      => 'هل انت متاكد من انك تود حذف حساب المستخدم {0} وجميع الروابط الخاصة به؟',
     'UserDelUserDeleted'  => 'تم حذف حساب المستخدم',
 ];

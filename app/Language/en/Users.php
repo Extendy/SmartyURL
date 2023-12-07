@@ -32,6 +32,6 @@ return [
 
     'UserDelUserErrorDel' => 'Error while deleting user account, try again',
     'UserDelConfirmTitle' => 'Delete User Account',
-    'UserDelConfirm'      => 'Are you sure you want to delete {0} user account?',
+    'UserDelConfirm'      => 'Are you sure you want to delete {0} user account an all of his/her URLs?',
     'UserDelUserDeleted'  => 'The user account has been deleted',
 ];

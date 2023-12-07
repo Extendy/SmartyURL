@@ -29,4 +29,9 @@ return [
     'UserActivatedOk'            => 'The user email has been activated',
     'UserIsAlreadyDeActivated'   => 'The user email is already not activated',
     'UserDeActivatedOk'          => 'The user email has been deactivated',
+
+    'UserDelUserErrorDel' => 'Error while deleting user account, try again',
+    'UserDelConfirmTitle' => 'Delete User Account',
+    'UserDelConfirm'      => 'Are you sure you want to delete {0} user account?',
+    'UserDelUserDeleted'  => 'The user account has been deleted',
 ];

@@ -207,8 +207,78 @@
 
             var deleteButton = this;
             var userId = this.dataset.userId;
-            /* samsam @TODO here */
-            alert ("this will try to del " + userId);
+            var userAccount =  this.dataset.userName;
+
+            Swal.fire({
+                title: '<?= lang('Users.UserDelConfirmTitle'); ?>',
+                text: '<?= lang('Users.UserDelConfirm', ["' + userAccount + '"]); ?>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#073600',
+                confirmButtonText: '<?= lang('Common.btnYes'); ?>',
+                cancelButtonText: '<?= lang('Common.btnNo'); ?>',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    /* If user clicks "Yes", make AJAX request with CSRF token*/
+                    $.ajax({
+                        url: '/users/del/'+userId,
+                        type: 'POST',
+                        data: {
+                            /* Any data you want to send for deletion*/
+                            /* Include CSRF token in the data*/
+
+                            /* ... other data ...*/
+                        },
+                        headers: {
+                            /*/ Include CSRF token in the request headers */
+                            'X-CSRF-Token': csrfToken,
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            /* Check if the server response indicates success*/
+                            if (response.status === 'deleted') {
+
+                                /* delete the user html row  */
+                                var row = deleteButton.closest('tr');
+                                if (row) {
+                                    row.remove();
+                                }
+
+                                Swal.fire({
+                                    title: '<?= lang('Users.UserDelUserDeleted'); ?>',
+                                    icon: 'success'
+                                });
+                                /* You can also perform additional actions based on the response*/
+
+                            } else {
+                                Swal.fire('Error', response.error, 'error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            /*/ Handle errors*/
+                            if (xhr.responseJSON && xhr.responseJSON.error) {
+                                /* json error */
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: xhr.responseJSON.error,
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            } else {
+                                /* not json error may be network error*/
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: '<?= lang('Common.ajaxCallError1'); ?>',
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
 
         });
 

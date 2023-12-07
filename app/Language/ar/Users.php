@@ -29,4 +29,9 @@ return [
     'UserActivatedOk'            => 'تم تاكيد بريد المستخدم',
     'UserIsAlreadyDeActivated'   => 'بريد المستخدم غير مؤكد بالفعل',
     'UserDeActivatedOk'          => 'تم الغاء تاكيد بريد المستخدم',
+
+    'UserDelUserErrorDel' => 'خطا اثناء حذف المستخدم ، حاول لاحقا',
+    'UserDelConfirmTitle' => 'حذف حساب مستخدم',
+    'UserDelConfirm'      => 'هل انت متاكد من انك تود حذف حساب المستخدم {0}؟',
+    'UserDelUserDeleted'  => 'تم حذف حساب المستخدم',
 ];

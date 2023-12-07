@@ -128,7 +128,7 @@ class Users extends BaseController
             $user_group = '';
 
             $delete_user_button = "
-            <button id='deleteUserButton' data-user-id='{$user->id}' type='button' class=' btn btn-outline-danger'>
+            <button id='deleteUserButton' data-user-id='{$user->id}' data-user-name='{$user->username}' type='button' class=' btn btn-outline-danger'>
                         <i class='bi bi-trash'></i>
             </button>
             ";
@@ -195,11 +195,31 @@ class Users extends BaseController
         $conditions = [
             'id' => $user_id,
         ];
-        $user = $this->usermodel
+        $users = $this->usermodel
             ->where($conditions)
             ->find();
-        // dd($user);
-        // samsam @TODO here
+
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        foreach ($users as $user) {
+            // Get the User Provider (UserModel by default)
+            $usersprovider = auth()->getProvider();
+            $deluser       = $usersprovider->delete($user->id, true);
+
+            if ($deluser) {
+                // user deleted
+                $response['status'] = 'deleted';
+            } else {
+                $response['error'] = lang('Users.UserDelUserErrorDel');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
     }
 
     /**

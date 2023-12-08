@@ -102,6 +102,7 @@
 
                                             <th><?= lang('Users.ListUsersColId'); ?></th>
                                             <th><?= lang('Users.ListUsersColUsername'); ?></th>
+                                            <th><?= lang('Users.ListUsersAccountStatus'); ?></th>
                                             <th><?= lang('Users.ListUsersColEmail'); ?></th>
                                             <th><?= lang('Users.ListUsersColEmailVerifiedStatus'); ?></th>
                                             <th><?= lang('Users.ListUsersColUserGroup'); ?></th>
@@ -181,6 +182,7 @@
             "columns": [
                 {"data": "user_id_col", "name": "user_id", orderable: true,"className": "dt-body-center"},
                 {"data": "user_username_col", "name": "user_username", orderable: true},
+                {"data": "user_actstatus_col", "name": "user_actstatus", orderable: true},
                 {"data": "user_email_col", "name": "user_email"},
                 {"data": "user_active_col", "name": "user_active", orderable: true},
                 {"data": "user_userroup_col", "name": "user_userroup", orderable: false},
@@ -445,6 +447,167 @@
             });
 
         });
+
+        /* ban user */
+        $("#usersList").on("click", "#btnUserBan", function () {
+
+            var banButton = this;
+            var userId = this.dataset.userId;
+            var userAccountUsername =  this.dataset.userName;
+
+
+            Swal.fire({
+                title: '<?= lang('Users.ListUsersAccountBanUserTitle'); ?>',
+                text: '<?= lang('Users.ListUsersAccountBanUserConfirm', ["' + userAccountUsername + '"]); ?>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#073600',
+                confirmButtonText: '<?= lang('Common.btnYes'); ?>',
+                cancelButtonText: '<?= lang('Common.btnNo'); ?>',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    /* If user clicks "Yes", make AJAX request with CSRF token*/
+                    $.ajax({
+                        url: '/users/ban/'+userId,
+                        type: 'POST',
+                        data: {
+                            /* Any data you want to send for deletion*/
+                            /* Include CSRF token in the data*/
+
+                            /* ... other data ...*/
+                        },
+                        headers: {
+                            /*/ Include CSRF token in the request headers */
+                            'X-CSRF-Token': csrfToken,
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            /* Check if the server response indicates success*/
+                            if (response.status === 'banned') {
+
+                                /* change the button and the status */
+                                $(banButton).attr('id', 'btnUserUnBan');
+                                $(banButton).text('<?= lang('Users.ListUsersAccountUnBanUser'); ?>');
+                                $(banButton).removeClass('btn-outline-danger').addClass('btn-outline-success');
+                                $(banButton).prev('span').text('<?= lang('Users.ListUsersAccountStatusBanned'); ?>');
+
+                                Swal.fire({
+                                    title: '<?= lang('Users.ListUsersAccountBannedOk'); ?>',
+                                    icon: 'success'
+                                });
+                                /* You can also perform additional actions based on the response*/
+
+                            } else {
+                                Swal.fire('Error', response.error, 'error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            /*/ Handle errors*/
+                            if (xhr.responseJSON && xhr.responseJSON.error) {
+                                /* json error */
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: xhr.responseJSON.error,
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            } else {
+                                /* not json error may be network error*/
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: '<?= lang('Common.ajaxCallError1'); ?>',
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+        });
+
+        /* unban user */
+        $("#usersList").on("click", "#btnUserUnBan", function () {
+
+            var unbanButton = this;
+            var userId = this.dataset.userId;
+            var userAccountUsername =  this.dataset.userName;
+
+
+            Swal.fire({
+                title: '<?= lang('Users.ListUsersAccountUnBanUserTitle'); ?>',
+                text: '<?= lang('Users.ListUsersAccountUnBanUserConfirm', ["' + userAccountUsername + '"]); ?>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#073600',
+                confirmButtonText: '<?= lang('Common.btnYes'); ?>',
+                cancelButtonText: '<?= lang('Common.btnNo'); ?>',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    /* If user clicks "Yes", make AJAX request with CSRF token*/
+                    $.ajax({
+                        url: '/users/unban/'+userId,
+                        type: 'POST',
+                        data: {
+                            /* Any data you want to send for deletion*/
+                            /* Include CSRF token in the data*/
+
+                            /* ... other data ...*/
+                        },
+                        headers: {
+                            /*/ Include CSRF token in the request headers */
+                            'X-CSRF-Token': csrfToken,
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            /* Check if the server response indicates success*/
+                            if (response.status === 'unbanned') {
+
+                                /* change the button and the status */
+                                $(unbanButton).attr('id', 'btnUserBan');
+                                $(unbanButton).text('<?= lang('Users.ListUsersAccountBanUser'); ?>');
+                                $(unbanButton).removeClass('btn-outline-success').addClass('btn-outline-danger');
+                                $(unbanButton).prev('span').text('<?= lang('Users.ListUsersAccountStatusNormal'); ?>');
+
+                                Swal.fire({
+                                    title: '<?= lang('Users.ListUsersAccountUnBannedOk'); ?>',
+                                    icon: 'success'
+                                });
+                                /* You can also perform additional actions based on the response*/
+
+                            } else {
+                                Swal.fire('Error', response.error, 'error');
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            /*/ Handle errors*/
+                            if (xhr.responseJSON && xhr.responseJSON.error) {
+                                /* json error */
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: xhr.responseJSON.error,
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            } else {
+                                /* not json error may be network error*/
+                                Swal.fire({
+                                    title: '<?= lang('Common.ajaxErrorTitle'); ?>',
+                                    text: '<?= lang('Common.ajaxCallError1'); ?>',
+                                    icon: 'error',
+                                    confirmButtonText: '<?= lang('Common.btnOK'); ?>',
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+        });
+
 
 
     });

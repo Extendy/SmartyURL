@@ -77,6 +77,10 @@ class Users extends BaseController
                     $order_by = 'username';
                     break;
 
+                case 'user_actstatus':
+                    $order_by = 'status';
+                    break;
+
                 case 'user_lastactive':
                     $order_by = 'last_active';
                     break;
@@ -123,6 +127,14 @@ class Users extends BaseController
         foreach ($users as $user) {
             $user->email    = esc($user->email);
             $user->username = esc($user->username);
+
+            // account status
+            if ($user->status === 'banned') {
+                $userActStatus = '<span>' . lang('Users.ListUsersAccountStatusBanned') . "</span> <button id='btnUserUnBan' data-user-id='{$user->id}' data-user-name='{$user->username}' class='btn btn-sm btn-outline-success'>" . lang('Users.ListUsersAccountUnBanUser') . '</button>';
+            } else {
+                $userActStatus = '<span>' . lang('Users.ListUsersAccountStatusNormal') . "</span> <button id='btnUserBan' data-user-id='{$user->id}' data-user-name='{$user->username}' class='btn btn-sm btn-outline-danger'>" . lang('Users.ListUsersAccountBanUser') . '</button>';
+            }
+
             // get the user usergroups
             $userGroups = $user->getGroups();
             $user_group = '';
@@ -156,6 +168,7 @@ class Users extends BaseController
             $users_data[] = [
                 'user_id_col'          => $user->id,
                 'user_username_col'    => $user->username,
+                'user_actstatus_col'   => $userActStatus,
                 'user_lastactive_col'  => $user->last_active ? $user->last_active->format('Y-m-d H:i:s') : '-',
                 'user_email_col'       => $user->email,
                 'user_active_col'      => $userActive,
@@ -295,6 +308,98 @@ class Users extends BaseController
                 $response['status'] = 'deactivated';
             } else {
                 $response['error'] = lang('Users.UserIsAlreadyDeActivated');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
+    }
+
+    public function banUser(int $UserId)
+    {
+        $response = [];
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id    = (int) $UserId;
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $users = $this->usermodel
+            ->where($conditions)
+            ->find();
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        // user is exists i will try to ban it
+        foreach ($users as $user) {
+            if (! $user->isBanned()) {
+                // user cannot ban his account
+                $my_user_id = user_id();
+                if ($my_user_id === $user->id) {
+                    // you cannot ban your own account
+                    $response['error'] = lang('Users.ListUsersAccountBannedErrorYourSelf');
+                } else {
+                    // not superadmin cannot ban superadmin
+                    // now the current logged user usergroup
+                    $auth           = service('auth');
+                    $my_user        = $auth->user();
+                    $my_user_groups = $my_user->getGroups();
+                    // know the needed to ban user usergroup
+                    $user_groups = $user->getGroups();
+                    if (! in_array('superadmin', $my_user_groups, true) && in_array('superadmin', $user_groups, true)) {
+                        // user is not super admin and try to ban superadmin . and this is nit allowed
+                        // when you need to ban superadmin you need to be superadmin
+                        $response['error'] = lang('Users.ListUsersAccountBannedErrorSuperadmin');
+
+                        return $this->response->setStatusCode(200)->setJSON($response);
+                    }
+
+                    $user->ban();
+                    $response['status'] = 'banned';
+                }
+            } else {
+                $response['error'] = lang('Users.ListUsersAccountBannedAlready');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
+    }
+
+    public function unbanUser(int $UserId)
+    {
+        $response = [];
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id    = (int) $UserId;
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $users = $this->usermodel
+            ->where($conditions)
+            ->find();
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        // user is exists i will try to unban it
+        foreach ($users as $user) {
+            if ($user->isBanned()) {
+                $user->unBan();
+                $response['status'] = 'unbanned';
+            } else {
+                $response['error'] = lang('Users.ListUsersAccountUnBannedAlready');
             }
         }
 

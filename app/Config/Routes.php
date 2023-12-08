@@ -40,6 +40,8 @@ $routes->group('users', static function ($routes) {
     $routes->post('del/(:num)', 'Users::delUser/$1', ['filter' => 'session']); // json del user account
     $routes->post('activate/(:num)', 'Users::activateUser/$1', ['filter' => 'session']); // json activate user email
     $routes->post('deactivate/(:num)', 'Users::deactivateUser/$1', ['filter' => 'session']); // json deactivate user email
+    $routes->post('ban/(:num)', 'Users::banUser/$1', ['filter' => 'session']); // json ban user account
+    $routes->post('unban/(:num)', 'Users::unbanUser/$1', ['filter' => 'session']); // json unban user account
 });
 
 // language route

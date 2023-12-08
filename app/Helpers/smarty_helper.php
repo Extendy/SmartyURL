@@ -219,6 +219,9 @@ if (! function_exists('create_nice_url_for_show')) {
     /**
      * Create a nice URL to show on screen and not for real use on visits
      *
+     * @param mixed $original_url
+     * @param mixed $max_length
+     *
      * @return mixed|string
      */
     function create_nice_url_for_show($original_url, $max_length = 50)

@@ -190,7 +190,7 @@ class Users extends BaseController
 
     public function addNew()
     {
-        echo 'Add new user procedures';
+        echo 'Add new user procedures .. in next release .. for not you can see <a href="https://docs.smartyurl.extendy.net/developers/#creating-the-first-user">https://docs.smartyurl.extendy.net/developers/#creating-the-first-user</a> to know how to add users';
         dd('Add New Users form here in future'); // TODO Need work @FIXME
     }
 

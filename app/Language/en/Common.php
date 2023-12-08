@@ -15,6 +15,7 @@ return [
     'Optional'  => 'Optional',
     'btnOK'     => 'OK',
     'btnNo'     => 'No',
+    'btnYes'    => 'Yes',
 
     'ajaxErrorTitle'         => 'Error',
     'ajaxCallError1'         => 'Your request cannot be completed at the moment. Please ensure that you are connected to the internet and try again.',

@@ -20,4 +20,18 @@ return [
     'ListUsersEmailVerifiedStatusDeActivate' => 'الغاء تاكيد',
 
     'UsersAddNewUser' => 'اضافة مستخدم جديد',
+
+    'UserActivateConfrimTitle'   => 'تاكيد بريد مستخدم',
+    'UserDeActivateConfrimTitle' => 'الغاء تاكيد بريد مستخدم',
+    'UserActivateConfrimText'    => 'هل انت متاكد من انك تود التاشير على بريد المستخدم {0} على انه مفعل؟',
+    'UserDeActivateConfrimText'  => 'هل انت متاكد من انك تود التاشير على بريد المستخدم {0} على انه غير مفعل؟',
+    'UserIsAlreadyActivated'     => 'بريد المستخدم مؤكد بالفعل',
+    'UserActivatedOk'            => 'تم تاكيد بريد المستخدم',
+    'UserIsAlreadyDeActivated'   => 'بريد المستخدم غير مؤكد بالفعل',
+    'UserDeActivatedOk'          => 'تم الغاء تاكيد بريد المستخدم',
+
+    'UserDelUserErrorDel' => 'خطا اثناء حذف المستخدم ، حاول لاحقا',
+    'UserDelConfirmTitle' => 'حذف حساب مستخدم',
+    'UserDelConfirm'      => 'هل انت متاكد من انك تود حذف حساب المستخدم {0} وجميع الروابط الخاصة به؟',
+    'UserDelUserDeleted'  => 'تم حذف حساب المستخدم',
 ];

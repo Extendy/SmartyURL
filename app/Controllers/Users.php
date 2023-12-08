@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UrlModel;
 use App\Models\UserModel;
+use CodeIgniter\Shield\Models\UserIdentityModel;
 
 class Users extends BaseController
 {
@@ -80,6 +81,10 @@ class Users extends BaseController
                     $order_by = 'last_active';
                     break;
 
+                case 'user_active':
+                    $order_by = 'active';
+                    break;
+
                 default:
                     $order_by = 'id';
                     break;
@@ -110,23 +115,39 @@ class Users extends BaseController
 
         // $users is CodeIgniter\Shield\Entities\User
         // now i will deal with each user yo define its record
-        $users_data           = [];
-        $recordsFiltered      = $all_users_count; // no need fot counder while not used filter count($users);
+        $users_data      = [];
+        $recordsFiltered = $all_users_count; // no need fot counder while not used filter count($users);
+
         $user_useractions_col = 'edit - delete';
 
         foreach ($users as $user) {
+            $user->email    = esc($user->email);
+            $user->username = esc($user->username);
             // get the user usergroups
             $userGroups = $user->getGroups();
             $user_group = '';
 
+            $delete_user_button = "
+            <button id='deleteUserButton' data-user-id='{$user->id}' data-user-name='{$user->username}' type='button' class=' btn btn-outline-danger'>
+                        <i class='bi bi-trash'></i>
+            </button>
+            ";
+
+            $user_useractions_col = 'edit - ' . $delete_user_button;
+
             if ($user->active) {
-                $userActive = '' . lang('Users.ListUsersEmailVerifiedStatusActiveYes') . " <a class='btn btn-sm btn-outline-danger' href='#deactivate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusDeActivate') . '</a>';
+                $userActive = '<span>' . lang('Users.ListUsersEmailVerifiedStatusActiveYes') . "</span> <button id='deactivateUserButton' data-user-email='{$user->email}' data-user-id='{$user->id}' class='btn btn-sm btn-outline-danger' href='#deactivate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusDeActivate') . '</button>';
             } else {
-                $userActive = '' . lang('Users.ListUsersEmailVerifiedStatusActiveNo') . " <a class='btn btn-sm btn-outline-success' href='#activate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusActivate') . '</a>';
+                $userActive = '<span>' . lang('Users.ListUsersEmailVerifiedStatusActiveNo') . " </span> <button id='activateUserButton' data-user-email='{$user->email}' data-user-id='{$user->id}' class='btn btn-sm btn-outline-success' href='#activate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusActivate') . '</button>';
             }
 
             foreach ($userGroups as $group) {
-                $user_group .= ' ' . $group;
+                if ($group === 'superadmin') {
+                    $btn_class = 'btn-outline-dark';
+                } else {
+                    $btn_class = 'btn-outline-dark';
+                }
+                $user_group .= ' <a href="#" class="btn btn-sm  ' . $btn_class . '">' . esc($group) . '</a>';
             }
             // get the user url counts
 
@@ -135,7 +156,7 @@ class Users extends BaseController
             $users_data[] = [
                 'user_id_col'          => $user->id,
                 'user_username_col'    => $user->username,
-                'user_lastactive_col'  => $user->last_active->format('Y-m-d H:i:s'),
+                'user_lastactive_col'  => $user->last_active ? $user->last_active->format('Y-m-d H:i:s') : '-',
                 'user_email_col'       => $user->email,
                 'user_active_col'      => $userActive,
                 'user_userroup_col'    => $user_group,
@@ -158,5 +179,125 @@ class Users extends BaseController
     {
         echo 'Add new user procedures';
         dd('Add New Users form here in future'); // TODO Need work @FIXME
+    }
+
+    public function delUser(int $UserId)
+    {
+        $response = [];
+
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id = (int) $UserId;
+        // i will try to find the user
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $users = $this->usermodel
+            ->where($conditions)
+            ->find();
+
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        foreach ($users as $user) {
+            // Get the User Provider (UserModel by default)
+            $usersprovider = auth()->getProvider();
+            $deluser       = $usersprovider->delete($user->id, true);
+
+            if ($deluser) {
+                // user deleted
+                $response['status'] = 'deleted';
+            } else {
+                $response['error'] = lang('Users.UserDelUserErrorDel');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
+    }
+
+    /**
+     * This function Activate User Email Account.
+     * called using ajax to activate user account and  it suppose that user confirm activation
+     *
+     * @return \CodeIgniter\HTTP\ResponseInterface
+     */
+    public function activateUser(int $UserId)
+    {
+        $response = [];
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id    = (int) $UserId;
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $users = $this->usermodel
+            ->where($conditions)
+            ->find();
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        // user is exists i will try to activate it
+        foreach ($users as $user) {
+            if (! $user->isActivated()) {
+                $user->activate();
+                // remove any email_activate Identity when activate email
+                $UserIdentityModel = new UserIdentityModel();
+                $UserIdentityModel->deleteIdentitiesByType($user, 'email_activate');
+                $response['status'] = 'activated';
+            } else {
+                $response['error'] = lang('Users.UserIsAlreadyActivated');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
+    }
+
+    public function deactivateUser(int $UserId)
+    {
+        $response = [];
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            $response['error'] = lang('Common.permissionsNoenoughpermissions');
+
+            return $this->response->setStatusCode(403)->setJSON($response);
+        }
+        $user_id    = (int) $UserId;
+        $conditions = [
+            'id' => $user_id,
+        ];
+        $users = $this->usermodel
+            ->where($conditions)
+            ->find();
+        if (count($users) !== 1) {
+            // that mean user not exists
+            $response['error'] = lang('Users.UserNotFound');
+
+            return $this->response->setStatusCode(200)->setJSON($response);
+        }
+
+        // user is exists i will try to deactivate it
+        foreach ($users as $user) {
+            if ($user->isActivated()) {
+                $user->deactivate();
+                $response['status'] = 'deactivated';
+            } else {
+                $response['error'] = lang('Users.UserIsAlreadyDeActivated');
+            }
+        }
+
+        return $this->response->setStatusCode(200)->setJSON($response);
     }
 }

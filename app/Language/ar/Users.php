@@ -19,6 +19,22 @@ return [
     'ListUsersEmailVerifiedStatusActivate'   => 'تاكيد',
     'ListUsersEmailVerifiedStatusDeActivate' => 'الغاء تاكيد',
 
+    'ListUsersAccountStatus'                => 'الحالة',
+    'ListUsersAccountStatusBanned'          => 'محظور',
+    'ListUsersAccountStatusNormal'          => 'فعال',
+    'ListUsersAccountBanUser'               => 'حظر',
+    'ListUsersAccountUnBanUser'             => 'فك حظر',
+    'ListUsersAccountBannedOk'              => 'تم حظر حساب المستخدم بنجاح',
+    'ListUsersAccountBannedErrorYourSelf'   => 'لا يمكنك حظر حسابك',
+    'ListUsersAccountBannedErrorSuperadmin' => 'انت تحاول حظر مستخدم مشرف عام superadmin بيما حسابك لا يمتلك صلاحيات مشرف عام superadmin',
+    'ListUsersAccountBannedAlready'         => 'حساب المستخدم محظور بالفعل',
+    'ListUsersAccountUnBannedOk'            => 'تم الغاء الحظر عن حساب المستخدم',
+    'ListUsersAccountUnBannedAlready'       => 'حساب المستخدم غير محظور بالفعل',
+    'ListUsersAccountBanUserTitle'          => 'حظر حساب المستخدم',
+    'ListUsersAccountBanUserConfirm'        => 'هل انت متاكد من انك تود حظر حساب المستخدم {0}؟',
+    'ListUsersAccountUnBanUserTitle'        => 'الغاء الحظر عن حساب المستخدم',
+    'ListUsersAccountUnBanUserConfirm'      => 'هل انت متاكد من انك تود الغاء الحظر حساب المستخدم {0}؟',
+
     'UsersAddNewUser' => 'اضافة مستخدم جديد',
 
     'UserActivateConfrimTitle'   => 'تاكيد بريد مستخدم',

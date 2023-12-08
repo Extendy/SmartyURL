@@ -114,11 +114,13 @@
 
 
                                         <div class="mb-2">
-                                            <?= lang('Url.OriginalUrl'); ?>: <?= urldecode($url_targeturl); ?>
+                                            <?= lang('Url.OriginalUrl'); ?>:
+                                            <div><span><?= urldecode($url_targeturl); ?></span>
                                             <a data-bs-toggle="tooltip" data-bs-placement="top" target='_blank'
-                                               title='<?= lang('Url.visitOriginalUrl') . ' ' . $url_targeturl; ?>'
-                                               href='<?= $url_targeturl; ?>' class='link-dark edit-link'><i
+                                               title='<?= lang('Url.visitOriginalUrl') . ' ' . create_nice_url_for_show($url_targeturl); ?>'
+                                               href='<?= $url_targeturl; ?>' class='link-primary edit-link'><i
                                                     class='bi bi-box-arrow-up-right'></i></a>
+                                            </div>
                                         </div>
 
 
@@ -231,9 +233,9 @@ echo $url_tags_string;
                                                         <?= esc($link); ?>
                                                         <a data-bs-toggle="tooltip" data-bs-placement="top"
                                                            target='_blank'
-                                                           title='<?= lang('Url.visitOriginalUrl'); ?>'
+                                                           title='<?= lang('Url.visitOriginalUrl') . ' ' . create_nice_url_for_show($link); ?>'
                                                            href='<?= $link ?>'
-                                                           class='link-dark edit-link'><i
+                                                           class='link-primary edit-link'><i
                                                                 class='bi bi-box-arrow-up-right'></i></a>
                                                     </td>
                                                 </tr>
@@ -301,7 +303,7 @@ echo $url_tags_string;
                                                            target='_blank'
                                                            title='<?= lang('Url.visitOriginalUrl'); ?>'
                                                            href='<?= $hit->urlhit_finaltarget; ?>'
-                                                           class='link-dark edit-link'><i
+                                                           class='link-primary edit-link'><i
                                                                 class='bi bi-box-arrow-up-right'></i></a>
 
                                                     </td>

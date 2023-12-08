@@ -289,7 +289,7 @@ class Url extends BaseController
                                             <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil edit-link-btn'></i></a>
                                             <i title='" . lang('Url.CopyURL') . "' class='bi bi-clipboard copy-button' data-content='{$Go_Url}' data-target='link2'></i>    ",
                     'url_title_col' => " {$urlTitle}
-                    <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . $result->url_targeturl . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
+                    <a target='_blank' title='" . lang('Url.visitOriginalUrl') . ' ' . create_nice_url_for_show($result->url_targeturl) . "' href='{$result->url_targeturl}' class='link-dark edit-link'><i class='bi bi-box-arrow-up-right'></i></a>
                     ",
                     'url_hits_col'         => "<a class='text-secondary' href='" . site_url("url/hits/{$result->url_id}") . "'>" . $result->url_hitscounter . '</a>',
                     'url_id'               => $result->url_id,

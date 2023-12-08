@@ -214,3 +214,24 @@ if (! function_exists('smarty_svg_error')) {
 </svg>';
     }
 }
+
+if (! function_exists('create_nice_url_for_show')) {
+    /**
+     * Create a nice URL to show on screen and not for real use on visits
+     *
+     * @return mixed|string
+     */
+    function create_nice_url_for_show($original_url, $max_length = 50)
+    {
+        // Check if the original URL is longer than the specified maximum length
+        if (mb_strlen($original_url, 'UTF-8') > $max_length) {
+            // Trim the URL to the maximum length and add "..." at the end
+            $nice_url = mb_substr($original_url, 0, $max_length - 3, 'UTF-8') . '...';
+        } else {
+            // If the URL is within the maximum length, use the original URL
+            $nice_url = $original_url;
+        }
+
+        return $nice_url;
+    }
+}

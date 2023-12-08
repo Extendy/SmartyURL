@@ -13,7 +13,7 @@ class Email extends BaseConfig
     /**
      * The "user agent"
      */
-    public string $userAgent = 'SmartyURL/Dev';
+    public string $userAgent = 'SmartyURL';
 
     /**
      * The mail sending protocol: mail, sendmail, smtp

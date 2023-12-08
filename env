@@ -86,7 +86,7 @@ smartyurl.urltags_shared_between_users = true
 email.string $protocol = 'mail';
 
 #choose the default sender mail
-email.fromEmail = noreplay@example.com
+email.fromEmail = 'noreplay@example.com'
 
 #choose the default sender name
 email.fromName   = 'SmartyURL'

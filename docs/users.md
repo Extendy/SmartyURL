@@ -1,6 +1,6 @@
 # SmartyURL Users
 
-## Introduction
+## User Groups
 
 To use SmartyURL, you need a user account. Users are grouped based on their permissions into user group. In any new fresh SmartyURL installation, there are three default user groups:
 

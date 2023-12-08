@@ -19,7 +19,7 @@ theme:
     language: en
     direction: ltr
 extra:
-  version: v0.0.0-dev-dnd.3
+  version: v0.0.0-dev-dnd.5
   analytics:
     provider: google
     property: G-M7YCSNSJLJ

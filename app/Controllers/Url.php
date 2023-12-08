@@ -269,7 +269,7 @@ class Url extends BaseController
                 if (auth()->user()->can('admin.manageotherurls', 'super.admin')) {
                     // he is manager so i must let him know the url owner
                     $url_owner_id = smarty_get_user_username($result->url_user_id);
-                    $url_owner    = "<div class='mt-1'>" . lang('Url.UrlOwner') . ": {$url_owner_id}</div>";
+                    $url_owner    = "<div class='mt-1'>" . lang('Url.UrlOwner') . ": <a class='link-dark' href='" . site_url("url/user/{$result->url_user_id}") . "'> {$url_owner_id}</a></div>";
                 } else {
                     $url_owner = '';
                 }

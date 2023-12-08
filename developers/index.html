@@ -368,6 +368,63 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#prepare-for-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare for installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare for installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-choose-a-subdomain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Choose a Subdomain
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-installation-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Installation Location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Installation Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-subdomain-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Subdomain Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-subfolder-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Subfolder Installation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       Installation
@@ -395,15 +452,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#creating-mysql-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating MySQL Database:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-first-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating the first user:
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-git" class="md-nav__link">
+  <a href="#using-git-for-smartyurl-developers-only" class="md-nav__link">
     <span class="md-ellipsis">
-      using git
+      Using git for SmartyUrl developers only
     </span>
   </a>
   
@@ -533,6 +608,63 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#prepare-for-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare for installation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare for installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-choose-a-subdomain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Choose a Subdomain
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-installation-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Installation Location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Installation Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-subdomain-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Subdomain Installation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-subfolder-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Subfolder Installation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       Installation
@@ -560,15 +692,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#creating-mysql-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating MySQL Database:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-first-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating the first user:
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-git" class="md-nav__link">
+  <a href="#using-git-for-smartyurl-developers-only" class="md-nav__link">
     <span class="md-ellipsis">
-      using git
+      Using git for SmartyUrl developers only
     </span>
   </a>
   
@@ -604,36 +754,78 @@
 <li>
 <p>Your web hosting account should have MySQL 8.0+ support</p>
 </li>
+<li>You need yo use <code>composer</code> and <code>php spark</code> command , therefor you must have SSH Access to your host account.</li>
+<li>Your hosting account should have <code>composer</code> command installed before.</li>
 </ul>
+<h2 id="prepare-for-installation">Prepare for installation</h2>
+<p>Before you begin the installation process for SmartyURL, it's crucial to set up the necessary environment. Follow these steps to ensure a smooth installation:</p>
+<h3 id="step-1-choose-a-subdomain">Step 1: Choose a Subdomain</h3>
+<p>For optimal URL management using SmartyURL, it is recommended to create a new subdomain on your domain. For example, you can choose a subdomain like "go.example.com." This subdomain will serve as the base for your SmartyURL installation. Next any URL managed by SmartyURL will look like this (e.g https://go.example.com/link1)</p>
+<h3 id="step-2-installation-location">Step 2: Installation Location</h3>
+<p>While SmartyURL can be used on your apex domain (e.g., example.com), it is not the preferred or logical choice and does not make sense. For better organization and functionality, it's highly advised to use a separate subdomain. as descibed above.</p>
+<h4 id="option-1-subdomain-installation">Option 1: Subdomain Installation</h4>
+<p>Create a new subdomain, such as "go.example.com," and install SmartyURL on this subdomain.</p>
+<h4 id="option-2-subfolder-installation">Option 2: Subfolder Installation</h4>
+<p>If creating a subdomain is not possible, SmartyURL can be installed in a subfolder of your main domain. For instance, you can use a structure like "example.com/go/" where "go" becomes the root folder for SmartyURL.</p>
 <h2 id="installation">Installation</h2>
-<p>Currently, as SmartyURL is in its early stages, you can only install it using <code>Composer</code>. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.</p>
+<p>Currently, as SmartyURL is in its early stages, you can only install it using <code>Composer</code>. Once we release the first official version of SmartyURL, we may offer other installation methods.</p>
 <h3 id="install-smartyurl-using-composer">Install SmartyURL  using <code>Composer</code>:</h3>
-<p>This is the best way for now.</p>
-<p>Login to your web hosting account using SSH and run the following commands:</p>
+<p>This is the best way for now, to install SmartyURL you have to use <code>composer</code> command</p>
+<p>Login to your web hosting account where you want to install SmartyURL using SSH and run the following commands:</p>
 <pre><code class="language-cli">composer create-project extendy/smartyurl:dev-main myapp
 cd myapp
 composer install
-cp env .env
 </code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Your web site must be served from <code>myapp/public</code> , so choose the name <code>myapp</code> to fit with your hosting account configurations.</p>
+<p>The file <code>myapp/public/index.php</code> will be the main index page of your website. therefore consider where you will store the files in your web hosting account</p>
+</div>
 <h3 id="after-installing-the-files">After installing the files</h3>
-<p>Ensure that you've created a MySQL database, then proceed to edit the .env file. Update the database configuration and make any necessary changes to tailor the other settings to your specific requirements, including <code>app.baseUR</code> and <code>cookie.domain</code> and other options.</p>
-<p>Next, execute the 'migrate' command to import the database structure into your created database using:</p>
+<p>After getting SmartyURL files into your website first of all you have to create configuration file which called <code>.env</code></p>
+<p>there is A sample configuration file called <code>env</code> so you have to copy it to <code>.env</code> to let the configuration file take the affect by:</p>
+<p>on the root folder of SmartyURL run the following command:</p>
+<pre><code class="language-bash">cp env .env
+</code></pre>
+<p>which will create a copy of the file <code>env</code> with new file name <code>.env</code></p>
+<p>The <code>.env</code> file now will be your SmartyURL configuration file, therefore you need to edit the file and make sure SmartyURL configuration is correct as you need.</p>
+<h3 id="creating-mysql-database">Creating MySQL Database:</h3>
+<p>Ensure that you've created a MySQL database (by using any tool that allow you to create a new mysql database and assign a user for the database like your hosting control panel or phpMyAdmin or command line).</p>
+<p>Then proceed to edit the <code>.env</code> file. Update the database configuration in <code># DATABASE</code> section and make any necessary changes to tailor the other settings to your specific requirements, including <code>app.baseUR</code> and <code>cookie.domain</code> and other options.</p>
+<p>Next, execute the 'migrate' command to import the database structure into your created database.</p>
+<p>while you are in the root SmartyURL project folder run the command:</p>
 <pre><code class="language-cli">php spark migrate --all
 </code></pre>
-<p>Then you need to create the first user:</p>
-<p>You can create a new user by running:</p>
+<h3 id="creating-the-first-user">Creating the first user:</h3>
+<p>You need to create the first user before you start using SmartyURL.</p>
+<p>You can create a new user by running (create &amp; activate) commands below :</p>
 <pre><code class="language-cli">php spark shield:user create
+php spark shield:user activate
 </code></pre>
-<p>or by visiting your website and register new user</p>
-<p>Ensure the user you've created is designated as a superadmin by modifying the <code>auth_groups_users</code> database table. Set the user's group name to 'superadmin' instead of 'user' for the created user using phpMyAdmin or any mysql client and make sure the user status is active by set <code>active</code> to <code>1</code> in <code>users</code> tables. or you have to verify the email next time you login.</p>
-<p>if you create the user using <code>php spark shield:user create</code> then you must add a new row into database tabele <code>auth_groups_users</code> for the that user with group <code>superadmin</code></p>
-<p>Afterward, you can disable new user registration by editing the .env file. Make sure to set <code>Auth.allowRegistration</code> to 'false'. If it's not already present in your .env file, you can add it like this:</p>
+<p>then add the user you have created to <code>superadmin</code> group by running:</p>
+<pre><code>php spark shield:user addgroup
+</code></pre>
+<p><strong>Rremember that</strong>: we have 3 user groups by defalt <code>superadmin</code> and <code>admins</code> and <code>user</code> , see <a href="../users/#user-groups">SmartyURL Users</a> to know more about user groups.</p>
+<p>When adding the user to a group and enter `superadmin' to set the user as super admin and choose user and enter username and confirm and the user will be added into user group</p>
+<p>This is sample scenario:</p>
+<pre><code>$ php spark shield:user addgroup
+
+CodeIgniter v4.4.3 Command Line Tool - Server Time: 2023-12-08 01:33:01 UTC+00:00
+
+
+Group : superadmin
+Add user to group by username or email ? [u, e]: u
+Username : sam &lt;---- this the username of the user you have created before
+Add the user &quot;sam&quot; to the group &quot;superadmin&quot; ? [y, n]: y
+User &quot;sam&quot; added to group &quot;superadmin&quot;
+</code></pre>
+<p>Afterward, you can access SmartyURL using any web browser by directing the URL to the installation domain where you have SmartyURL installed. (for example: https://go.example.com)</p>
+<p>Remember, you can disable or enable new user registration by editing the <code>.env</code> file. Make sure to set <code>Auth.allowRegistration</code> to <code>false</code> to disable registration or <code>true</code> to enable registration. If it's not already present in your .env file, you can add it like this:</p>
 <pre><code class="language-cli">Auth.allowRegistration = false
 </code></pre>
-<p>Afterward, you can access SmartyURL using any web browser by directing the URL to the installation domain where you have SmartyURL installed.</p>
-<p>When logged in, you might be prompted to verify your email to activate your account. Please check your email for a verification link. If you are unable to access your email or SmartyURL unable to send emails, you can manually set the 'active' value to 1 in the 'users' database table for the user you've created.</p>
-<h2 id="using-git">using <code>git</code></h2>
-<p>During SmartyURL's development stage, it is not advisable for developers to attempt installation using git.</p>
+<p>By default user registration using the portal is <strong>disabled</strong> because SmartyURL is Closed by Default. See <a href="../users/#why-smartyurl-is-closed-by-default">Why SmartyURL is Closed by Default</a> to know why.</p>
+<h2 id="using-git-for-smartyurl-developers-only">Using <code>git</code> for SmartyUrl developers only</h2>
+<p>While it is not advisable for developers to attempt installation using git. but sure you can do that. you need some experice usng git to install code and run the commands in <a href="./#after-installing-the-files">After installing the files</a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you planning to install SmartyURL with <code>git</code>, you gain the flexibility to easily update SmartyURL in the future using <code>git fetch</code> and <code>git pull</code>. However, <strong>noting that</strong> using <code>git</code> may provide bleeding-edge releases, which might not be as stable or thoroughly tested or may contains breaking changes.

@@ -221,14 +221,36 @@ class Users extends BaseController
 
         foreach ($users as $user) {
             // Get the User Provider (UserModel by default)
-            $usersprovider = auth()->getProvider();
-            $deluser       = $usersprovider->delete($user->id, true);
 
-            if ($deluser) {
-                // user deleted
-                $response['status'] = 'deleted';
+            $my_user_id = user_id();
+            if ($my_user_id === $user->id) {
+                // you cannot ban your own account
+                $response['error'] = lang('Users.UserDelUserErrorYourSelf');
             } else {
-                $response['error'] = lang('Users.UserDelUserErrorDel');
+                // not superadmin cannot delete superadmin
+                // now the current logged user usergroup
+                $auth           = service('auth');
+                $my_user        = $auth->user();
+                $my_user_groups = $my_user->getGroups();
+                // know the needed to ban user usergroup
+                $user_groups = $user->getGroups();
+                if (! in_array('superadmin', $my_user_groups, true) && in_array('superadmin', $user_groups, true)) {
+                    // user is not super admin and try to delete superadmin . and this is not allowed
+                    // when you need to del superadmin you need to be superadmin
+                    $response['error'] = lang('Users.UserDelUserErrorSuperadmin');
+
+                    return $this->response->setStatusCode(200)->setJSON($response);
+                }
+
+                $usersprovider = auth()->getProvider();
+                $deluser       = $usersprovider->delete($user->id, true);
+
+                if ($deluser) {
+                    // user deleted
+                    $response['status'] = 'deleted';
+                } else {
+                    $response['error'] = lang('Users.UserDelUserErrorDel');
+                }
             }
         }
 
@@ -304,8 +326,14 @@ class Users extends BaseController
         // user is exists i will try to deactivate it
         foreach ($users as $user) {
             if ($user->isActivated()) {
-                $user->deactivate();
-                $response['status'] = 'deactivated';
+                $my_user_id = user_id();
+                if ($my_user_id === $user->id) {
+                    // you cannot ban your own account
+                    $response['error'] = lang('Users.UserDeActivatedErrorYourSelf');
+                } else {
+                    $user->deactivate();
+                    $response['status'] = 'deactivated';
+                }
             } else {
                 $response['error'] = lang('Users.UserIsAlreadyDeActivated');
             }

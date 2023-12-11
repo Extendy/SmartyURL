@@ -5,12 +5,12 @@
 
 version: 2
 updates:
-  - package-ecosystem: composer
+ - package-ecosystem: "composer"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
-   commit-message:
+    commit-message:
       prefix: "[Composer]"
       include: "scope"
     labels:

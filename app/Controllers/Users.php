@@ -190,8 +190,16 @@ class Users extends BaseController
 
     public function addNew()
     {
-        echo 'Add new user procedures .. in next release .. for now you can see <a href="https://docs.smartyurl.extendy.net/developers/#creating-the-first-user">https://docs.smartyurl.extendy.net/developers/#creating-the-first-user</a> to know how to add users';
-        dd('Add New Users form here in future'); // TODO Need work @FIXME
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $data = [];
+
+        return view(smarty_view('users/new'), $data);
+    }
+
+    public function addNewAction(){
+
     }
 
     public function delUser(int $UserId)

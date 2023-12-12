@@ -193,13 +193,49 @@ class Users extends BaseController
         if (! auth()->user()->can('users.manage', 'super.admin')) {
             return smarty_permission_error();
         }
-        $data = [];
+        // get usergroups
+
+        $usergruops = setting('AuthGroups.groups');
+
+        $data               = [];
+        $data['userGroups'] = $usergruops;
 
         return view(smarty_view('users/new'), $data);
     }
 
-    public function addNewAction(){
+    public function addNewAction()
+    {
+        // @TODO samsam here
 
+        // check the permissions
+        // username and email cannot be used for another user
+
+        $validation = \Config\Services::validation();
+        $postData   = $this->request->getPost();
+        d($postData);
+
+        $validation->setRule('username', lang('Users.ListUsersColUsername'), 'required|min_length[3]|max_length[30]');
+        $validation->setRule('email', lang('Users.ListUsersColEmail'), 'required|valid_email');
+        $validation->setRule('password', lang('Users.UsersAddNewUserPassword'), 'required|min_length[8]');
+
+        // Validate the data
+        if ($validation->withRequest($this->request)->run()) {
+            // Data is valid, proceed with other actions (e.g., saving to the database)
+            dd('i will try to save data');
+        } else {
+            // Error validating form
+            // Data is not valid, show validation errors
+
+            /*
+             * //Not working because it will set error even they are valid
+            $validation->setError('username', 'Custom error message for username');
+            $validation->setError('email', 'Custom error message for email');
+            $validation->setError('password', 'Custom error message for password');*/
+
+            $validationErrors = $validation->getErrors();
+
+            return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
+        }
     }
 
     public function delUser(int $UserId)

@@ -11,11 +11,13 @@ return [
 
     'unSavedFormConfirmMsg' => 'You have unsaved changes in page form. Are you sure you want to leave?',
 
-    'btnDelete' => 'Delete',
-    'Optional'  => 'Optional',
-    'btnOK'     => 'OK',
-    'btnNo'     => 'No',
-    'btnYes'    => 'Yes',
+    'btnDelete'    => 'Delete',
+    'Optional'     => 'Optional',
+    'btnOK'        => 'OK',
+    'btnNo'        => 'No',
+    'btnYes'       => 'Yes',
+    'btnCancel'    => 'Cancel',
+    'titleConfirm' => 'Confirm',
 
     'ajaxErrorTitle'         => 'Error',
     'ajaxCallError1'         => 'Your request cannot be completed at the moment. Please ensure that you are connected to the internet and try again.',

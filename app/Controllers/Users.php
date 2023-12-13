@@ -210,9 +210,6 @@ class Users extends BaseController
             return smarty_permission_error();
         }
 
-        // @TODO samsam here
-        // username and email cannot be used for another user
-
         $validation = \Config\Services::validation();
         $postData   = $this->request->getPost();
 
@@ -224,12 +221,18 @@ class Users extends BaseController
         if ($validation->withRequest($this->request)->run()) {
             // Data is valid, proceed with add new user
 
+            $username = strtolower($postData['username']);
+            $email    = strtolower($postData['email']);
+
+            // @TODO samsam here
+            // username and email cannot be used for another user
+
             // Get the User Provider (UserModel by default)
             $users = auth()->getProvider();
 
             $user = new User([
-                'username' => $postData['username'],
-                'email'    => $postData['email'],
+                'username' => $username,
+                'email'    => $email,
                 'password' => $postData['password'],
             ]);
             $users->save($user);

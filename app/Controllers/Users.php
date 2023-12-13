@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UrlModel;
 use App\Models\UserModel;
+use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Shield\Models\UserIdentityModel;
 
 class Users extends BaseController
@@ -205,14 +206,15 @@ class Users extends BaseController
 
     public function addNewAction()
     {
-        // @TODO samsam here
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            return smarty_permission_error();
+        }
 
-        // check the permissions
+        // @TODO samsam here
         // username and email cannot be used for another user
 
         $validation = \Config\Services::validation();
         $postData   = $this->request->getPost();
-        d($postData);
 
         $validation->setRule('username', lang('Users.ListUsersColUsername'), 'required|min_length[3]|max_length[30]');
         $validation->setRule('email', lang('Users.ListUsersColEmail'), 'required|valid_email');
@@ -220,8 +222,62 @@ class Users extends BaseController
 
         // Validate the data
         if ($validation->withRequest($this->request)->run()) {
-            // Data is valid, proceed with other actions (e.g., saving to the database)
-            dd('i will try to save data');
+            // Data is valid, proceed with add new user
+
+            // Get the User Provider (UserModel by default)
+            $users = auth()->getProvider();
+
+            $user = new User([
+                'username' => $postData['username'],
+                'email'    => $postData['email'],
+                'password' => $postData['password'],
+            ]);
+            $users->save($user);
+
+            // To get the complete user object with ID, we need to get from the database
+            $user = $users->findById($users->getInsertID());
+
+            // set email status
+            switch ($postData['email_status']) {
+                case '1':
+                    // email acive
+                    $user->activate();
+                    break;
+
+                case '0':
+                    // email not active
+                    $user->deactivate();
+                    break;
+            }
+
+            // set account status
+            switch ($postData['account_status']) {
+                case 'active':
+                    $user->unBan();
+                    break;
+
+                case 'banned':
+                    // check to see if ban essage set
+                    if ($postData['ban_reason'] === '') {
+                        $ban_message = null;
+                    } else {
+                        $ban_message = $postData['ban_reason'];
+                    }
+                    $user->ban($ban_message);
+                    break;
+            }
+
+            // now I will add user to the usergroup
+            if (is_array($postData['usergroup'])) {
+                foreach ($postData['usergroup'] as $group) {
+                    $user->addGroup($group);
+                }
+            } else {
+                // how come this filed is required but not array?? . but i will add the user go default system group
+                $users->addToDefaultGroup($user);
+            }
+
+            dd($user);
         } else {
             // Error validating form
             // Data is not valid, show validation errors

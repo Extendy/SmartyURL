@@ -103,13 +103,13 @@
                                             <label><?= lang('Users.ListUsersEmailStatus'); ?>:</label>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
-                                                       value="verified" id="verified">
+                                                       value="1" id="verified">
                                                 <label for="verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveYes'); ?></label>
                                             </div>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
-                                                       value="not_verified" id="not_verified">
+                                                       value="0" id="not_verified">
                                                 <label for="not_verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveNo'); ?>
                                                     - <?= lang('Users.UsersAddNewUserUsersEmailVerifiedStatusActiveNoWillSendActivateCode'); ?></label>

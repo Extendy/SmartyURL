@@ -26,6 +26,8 @@
 app.baseURL = 'https://EXAMPLE.COM'
 
 #your default language for your app
+# 'en' for english
+# 'ar' for arabic
 app.defaultLocale = 'en'
 
 #ENV type , keep it to production for production

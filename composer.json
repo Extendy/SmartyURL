@@ -11,6 +11,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "ext-gettext": "*",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1",
         "ip2location/ip2location-php": "^9.7",

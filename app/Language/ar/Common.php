@@ -11,11 +11,13 @@ return [
 
     'unSavedFormConfirmMsg' => 'لديك تغييرات مدخلة غير محفوظة في النموذج في الصفحة. هل انت متاكد انك تريد ان تغادر؟',
 
-    'btnDelete' => 'حذف',
-    'Optional'  => 'اختياري',
-    'btnOK'     => 'موافق',
-    'btnNo'     => 'لا',
-    'btnYes'    => 'نعم',
+    'btnDelete'    => 'حذف',
+    'Optional'     => 'اختياري',
+    'btnOK'        => 'موافق',
+    'btnNo'        => 'لا',
+    'btnYes'       => 'نعم',
+    'btnCancel'    => 'الغاء الامر',
+    'titleConfirm' => 'تأكيد',
 
     'ajaxErrorTitle'         => 'خطا',
     'ajaxCallError1'         => 'لا يمكن اتمام طلبك الان ، تاكد من اتصالك بالانترنت وحاول مجددا',

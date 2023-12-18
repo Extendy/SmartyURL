@@ -104,7 +104,7 @@
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
                                                        value="1" id="verified" required
-                                                    <?php echo (old('email_status') == '1') ? 'checked' : ''; ?>
+                                                    <?= (old('email_status') === '1') ? 'checked' : ''; ?>
                                                 >
                                                 <label for="verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveYes'); ?></label>
@@ -112,7 +112,7 @@
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
                                                        value="0" id="not_verified"
-                                                    <?php echo (old('email_status') == '0') ? 'checked' : ''; ?>
+                                                    <?= (old('email_status') === '0') ? 'checked' : ''; ?>
                                                        required>
                                                 <label for="not_verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveNo'); ?>
@@ -144,7 +144,7 @@
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="account_status"
                                                        value="active" id="active"
-                                                    <?php echo (old('account_status') == 'active') ? 'checked' : ''; ?>
+                                                    <?= (old('account_status') === 'active') ? 'checked' : ''; ?>
                                                        required>
                                                 <label for="active"
                                                        class="form-check-label"><?= lang('Users.ListUsersAccountStatusNormal'); ?></label>
@@ -152,7 +152,7 @@
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="account_status"
                                                        value="banned" id="banned"
-                                                    <?php echo (old('account_status') == 'banned') ? 'checked' : ''; ?>
+                                                    <?= (old('account_status') === 'banned') ? 'checked' : ''; ?>
                                                        required>
                                                 <label for="banned"
                                                        class="form-check-label"><?= lang('Users.ListUsersAccountStatusBanned'); ?></label>
@@ -182,7 +182,7 @@
                                                     multiple required>
                                                 <?php foreach ($userGroups as $groupKey => $group): ?>
                                                     <option value="<?= $groupKey; ?>"
-                                                        <?= (in_array($groupKey, old('usergroup', []))) ? 'selected' : ''; ?>
+                                                        <?= (in_array($groupKey, old('usergroup', []), true)) ? 'selected' : ''; ?>
                                                     ><?= esc($groupKey); ?>
                                                         - <?= esc($group['title']); ?></option>
                                                 <?php endforeach; ?>

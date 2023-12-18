@@ -213,9 +213,9 @@ class Users extends BaseController
         $validation = \Config\Services::validation();
         $postData   = $this->request->getPost();
 
-        $validation->setRule('username', lang('Users.ListUsersColUsername'), 'required|min_length[3]|max_length[30]');
-        $validation->setRule('email', lang('Users.ListUsersColEmail'), 'required|valid_email');
-        $validation->setRule('password', lang('Users.UsersAddNewUserPassword'), 'required|min_length[8]');
+        $validation->setRule('username', lang('Users.ListUsersColUsername'), 'trim|required|min_length[3]|max_length[30]');
+        $validation->setRule('email', lang('Users.ListUsersColEmail'), 'trim|required|valid_email');
+        $validation->setRule('password', lang('Users.UsersAddNewUserPassword'), 'required|min_length[8]|strong_password[]');
 
         // Validate the data
         if ($validation->withRequest($this->request)->run()) {
@@ -224,9 +224,37 @@ class Users extends BaseController
             $username = strtolower($postData['username']);
             $email    = strtolower($postData['email']);
 
-            // @TODO samsam here
-            // username and email cannot be used for another user
+            // username and email cannot be used by another user
+            // make sure from the username
 
+            // Build the query
+            $this->usermodel->select('id'); // Select only the 'id' column to reduce data retrieval
+            $this->usermodel->where('username', $username);
+
+            // Execute the query
+            $result = $this->usermodel->get();
+            if ($result->getNumRows() > 0) {
+                // username already taken
+                $validationErrors[] = lang('Users.UsersAddNewValidatingUsernameExists');
+
+                return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
+            }
+
+            // make sure from the email
+            $useridentity = new UserIdentityModel();
+            $useridentity->select('id'); // Select only the 'id' column to reduce data retrieval
+            $useridentity->where('secret', $email);
+
+            // Execute the query
+            $result = $useridentity->get();
+            if ($result->getNumRows() > 0) {
+                // username already taken
+                $validationErrors[] = lang('Users.UsersAddNewValidatingEmailExists');
+
+                return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
+            }
+
+            // I will try to add the new user
             // Get the User Provider (UserModel by default)
             $users = auth()->getProvider();
 
@@ -280,21 +308,20 @@ class Users extends BaseController
                 $users->addToDefaultGroup($user);
             }
 
-            dd($user);
-        } else {
-            // Error validating form
-            // Data is not valid, show validation errors
-
-            /*
-             * //Not working because it will set error even they are valid
-            $validation->setError('username', 'Custom error message for username');
-            $validation->setError('email', 'Custom error message for email');
-            $validation->setError('password', 'Custom error message for password');*/
-
-            $validationErrors = $validation->getErrors();
-
-            return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
+            return redirect()->to('users')->with('notice', lang('Users.UsersAddNewOK'));
         }
+        // Error validating form
+        // Data is not valid, show validation errors
+
+        /*
+         * //Not working because it will set error even they are valid
+        $validation->setError('username', 'Custom error message for username');
+        $validation->setError('email', 'Custom error message for email');
+        $validation->setError('password', 'Custom error message for password');*/
+
+        $validationErrors = $validation->getErrors();
+
+        return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
     }
 
     public function delUser(int $UserId)

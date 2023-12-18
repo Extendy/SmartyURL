@@ -91,6 +91,15 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                         aria-label="Close"></button>
                             </div>
+
+                            <!-- Check if 'notice' exists in session and display a success alert if it does -->
+                            <?php if (session()->has('notice')) : ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <?= session('notice') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            <?php endif; ?>
+
                             <div>
                                 <div class="table-responsive">
                                     <table id="usersList"

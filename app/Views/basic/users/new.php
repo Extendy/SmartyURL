@@ -90,12 +90,12 @@
                                         <div class="form-group col-md-6 pt-2">
                                             <label for="username"><?= lang('Users.ListUsersColUsername'); ?>:</label>
                                             <input type="text" class="form-control pt-2" name="username" id="username"
-                                                   required>
+                                                   required value="<?= old('username'); ?>">
                                         </div>
                                         <div class="form-group col-md-6 pt-2">
                                             <label for="email"><?= lang('Users.ListUsersColEmail'); ?>:</label>
                                             <input type="email" class="form-control pt-2" name="email" id="email"
-                                                   required>
+                                                   value="<?= old('email'); ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -103,13 +103,17 @@
                                             <label><?= lang('Users.ListUsersEmailStatus'); ?>:</label>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
-                                                       value="1" id="verified">
+                                                       value="1" id="verified" required
+                                                    <?php echo (old('email_status') == '1') ? 'checked' : ''; ?>
+                                                >
                                                 <label for="verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveYes'); ?></label>
                                             </div>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
-                                                       value="0" id="not_verified">
+                                                       value="0" id="not_verified"
+                                                    <?php echo (old('email_status') == '0') ? 'checked' : ''; ?>
+                                                       required>
                                                 <label for="not_verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveNo'); ?>
                                                     - <?= lang('Users.UsersAddNewUserUsersEmailVerifiedStatusActiveNoWillSendActivateCode'); ?></label>
@@ -117,15 +121,20 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-6 pt-2">
-                                                <label for="password"><?= lang('Users.UsersAddNewUserPassword'); ?>
-                                                    :</label>
-                                                <input type="password" class="form-control pt-2" name="password"
-                                                       id="password" required>
+                                                <label for="password"><?= lang('Users.UsersAddNewUserPassword'); ?>:</label>
+                                                <div class="input-group">
+                                                    <input type="password" class="form-control pt-2" name="password" id="password" required>
+                                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                             <div class="col-md-6 pt-2">
                                                 <label for="password" class="d-none d-md-block">&nbsp;</label>
                                                 <!-- Hidden label for spacing on smaller screens -->
-                                                <p class="form-text text-muted align-middle"><?= lang('Users.UsersAddNewUserKeepPasswordEmptyToNoChange'); ?></p>
+                                                <p class="form-text text-muted align-middle">
+                                                   <!-- hint for later -->
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -134,13 +143,17 @@
                                             <label><?= lang('Users.UsersAddNewUserAccountStatus'); ?>:</label>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="account_status"
-                                                       value="active" id="active">
+                                                       value="active" id="active"
+                                                    <?php echo (old('account_status') == 'active') ? 'checked' : ''; ?>
+                                                       required>
                                                 <label for="active"
                                                        class="form-check-label"><?= lang('Users.ListUsersAccountStatusNormal'); ?></label>
                                             </div>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="account_status"
-                                                       value="banned" id="banned">
+                                                       value="banned" id="banned"
+                                                    <?php echo (old('account_status') == 'banned') ? 'checked' : ''; ?>
+                                                       required>
                                                 <label for="banned"
                                                        class="form-check-label"><?= lang('Users.ListUsersAccountStatusBanned'); ?></label>
                                             </div>
@@ -168,7 +181,9 @@
                                             <select class="form-control pt-2" name="usergroup[]" id="usergroup"
                                                     multiple required>
                                                 <?php foreach ($userGroups as $groupKey => $group): ?>
-                                                    <option value="<?= $groupKey; ?>"><?= esc($groupKey); ?>
+                                                    <option value="<?= $groupKey; ?>"
+                                                        <?= (in_array($groupKey, old('usergroup', []))) ? 'selected' : ''; ?>
+                                                    ><?= esc($groupKey); ?>
                                                         - <?= esc($group['title']); ?></option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -257,7 +272,24 @@
             });
 
 
+            //toggle password
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordInput = document.getElementById('password');
+                const toggleButton = document.getElementById('togglePassword');
+
+                // Toggle the password visibility
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+
+                // Change button color based on password visibility
+                const isPasswordVisible = type === 'text';
+                toggleButton.classList.toggle('btn-danger', isPasswordVisible);
+                toggleButton.classList.toggle('btn-outline-secondary', !isPasswordVisible);
+            });
+
         });
+
+
 
     </script>
 

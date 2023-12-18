@@ -47,6 +47,9 @@ return [
     'UsersAddNewUserUsersEmailVerifiedStatusActiveNoWillSendActivateCode' => 'سوف يتم ارسال كود تحقق للبريد في تسجيل الدخول القادم.',
     'UsersAddNewSuperAdminConfirm'                                        => 'هل انت فعلا متاكد من انك تود اضافة هذا المستخدم لهذة المجموعة التي تحمل صلاحيات المشرف العام للنظام',
     'UsersAddNewValidatingErrorHappen'                                    => 'حدث خطا اثناء التحقق من البيانات ، الرجاء مراجعة الاخطاء التالية:',
+    'UsersAddNewValidatingUsernameExists'                                 => 'اسم المستخدم موجود بالفعل لمستخدم اخر',
+    'UsersAddNewValidatingEmailExists'                                    => 'البريد مستخدم بالفعل لمستخدم اخر',
+    'UsersAddNewOK'                                                       => 'تم اضافة المستخدم بنجاح',
 
     'UserActivateConfrimTitle'     => 'تاكيد بريد مستخدم',
     'UserDeActivateConfrimTitle'   => 'الغاء تاكيد بريد مستخدم',

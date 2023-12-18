@@ -47,6 +47,9 @@ return [
     'UsersAddNewUserUsersEmailVerifiedStatusActiveNoWillSendActivateCode' => 'The verification code for the upcoming login will be sent to email.',
     'UsersAddNewSuperAdminConfirm'                                        => 'Are you sure you want to add this user to the group with system administrator privileges?',
     'UsersAddNewValidatingErrorHappen'                                    => 'An error occurred while verifying the data. Please review the following errors:',
+    'UsersAddNewValidatingUsernameExists'                                 => 'Username is already exists for other user',
+    'UsersAddNewValidatingEmailExists'                                    => 'Email is already exists for other user',
+    'UsersAddNewOK'                                                       => 'User added successfully',
 
     'UserActivateConfrimTitle'     => 'Activate User Email',
     'UserDeActivateConfrimTitle'   => 'DeActivate User Email',

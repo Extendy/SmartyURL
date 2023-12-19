@@ -1,7 +1,9 @@
 <?= $this->extend(smarty_view('layout')); ?>
 
-<?= $this->section('title') ?><?= smarty_pagetitle(lang('Users.UsersAddNewUser')); ?>  <?= $this->endSection() ?>
+<?= $this->section('title') ?><?= smarty_pagetitle(isset($viewaction) ? lang('Users.UsersEditViewTitle') : lang('Users.UsersAddNewUser')); ?>
 
+
+<?= $this->endSection() ?>
 
 <?= $this->section('cssheaderarea') ?>
 
@@ -17,7 +19,7 @@
             <!--begin::Row-->
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0"><?= lang('Users.UsersAddNewUser') ?>  </h3>
+                    <h3 class="mb-0"><?= isset($viewaction) ? lang('Users.UsersEditViewTitle') : lang('Users.UsersAddNewUser') ?>  </h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
@@ -32,7 +34,7 @@
                         </li>
 
                         <li class="breadcrumb-item active" aria-current="page">
-                            <?= lang('Users.UsersAddNewUser'); ?>
+                            <?= isset($viewaction) ? lang('Users.UsersEditViewTitle') : lang('Users.UsersAddNewUser') ?>
                         </li>
 
 
@@ -54,7 +56,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <h3 class="card-title">
-                                        <?= lang('Users.UsersAddNewUser'); ?>
+                                        <?= isset($viewaction) ? lang('Users.UsersEditViewTitle') : lang('Users.UsersAddNewUser') ?>
 
 
                                     </h3>
@@ -83,19 +85,18 @@
 
 
                                 <!-- begin: add new user form -->
-
-                                <form action="<?= site_url('users/addnew') ?>" method="post">
+                                <form action="<?= isset($viewaction) ? site_url('users/edit/' . $userid) : site_url('users/addnew') ?>" method="post">
                                     <?= csrf_field() ?>
                                     <div class="form-row ">
                                         <div class="form-group col-md-6 pt-2">
                                             <label for="username"><?= lang('Users.ListUsersColUsername'); ?>:</label>
                                             <input type="text" class="form-control pt-2" name="username" id="username"
-                                                   required value="<?= old('username'); ?>">
+                                                   required value="<?= old('username') ?? ($userdata['username'] ?? '') ?>">
                                         </div>
                                         <div class="form-group col-md-6 pt-2">
                                             <label for="email"><?= lang('Users.ListUsersColEmail'); ?>:</label>
                                             <input type="email" class="form-control pt-2" name="email" id="email"
-                                                   value="<?= old('email'); ?>" required>
+                                                   value="<?= old('email') ?? ($userdata['email'] ?? '') ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -103,16 +104,16 @@
                                             <label><?= lang('Users.ListUsersEmailStatus'); ?>:</label>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
-                                                       value="1" id="verified" required
-                                                    <?= (old('email_status') === '1') ? 'checked' : ''; ?>
-                                                >
+                                                       value="1" id="verified"
+                                                    <?= (old('email_status') === '1') ? 'checked' : (isset($userdata['email_status']) && $userdata['email_status'] === '1' ? 'checked' : ''); ?>
+                                                    required>
                                                 <label for="verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveYes'); ?></label>
                                             </div>
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="email_status"
                                                        value="0" id="not_verified"
-                                                    <?= (old('email_status') === '0') ? 'checked' : ''; ?>
+                                                    <?= (old('email_status') === '0') ? 'checked' : (isset($userdata['email_status']) && $userdata['email_status'] === '0' ? 'checked' : ''); ?>
                                                        required>
                                                 <label for="not_verified"
                                                        class="form-check-label"><?= lang('Users.ListUsersEmailVerifiedStatusActiveNo'); ?>
@@ -123,7 +124,7 @@
                                             <div class="col-md-6 pt-2">
                                                 <label for="password"><?= lang('Users.UsersAddNewUserPassword'); ?>:</label>
                                                 <div class="input-group">
-                                                    <input type="password" class="form-control pt-2" name="password" id="password" required>
+                                                    <input type="password" class="form-control pt-2" name="password" id="password" <?= ! isset($viewaction) ? 'required' : '' ?>>
                                                     <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                                         <i class="bi bi-eye"></i>
                                                     </button>
@@ -134,6 +135,7 @@
                                                 <!-- Hidden label for spacing on smaller screens -->
                                                 <p class="form-text text-muted align-middle">
                                                    <!-- hint for later -->
+                                                    <?= isset($viewaction) ? lang('Users.UsersAddNewUserKeepPasswordEmptyToNoChange') : '' ?>
                                                 </p>
                                             </div>
                                         </div>
@@ -144,7 +146,7 @@
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="account_status"
                                                        value="active" id="active"
-                                                    <?= (old('account_status') === 'active') ? 'checked' : ''; ?>
+                                                    <?= (old('account_status') === 'active') ? 'checked' : (isset($userdata['account_status']) && $userdata['account_status'] === 'active' ? 'checked' : ''); ?>
                                                        required>
                                                 <label for="active"
                                                        class="form-check-label"><?= lang('Users.ListUsersAccountStatusNormal'); ?></label>
@@ -152,7 +154,7 @@
                                             <div class="form-check">
                                                 <input type="radio" class="form-check-input pt-2" name="account_status"
                                                        value="banned" id="banned"
-                                                    <?= (old('account_status') === 'banned') ? 'checked' : ''; ?>
+                                                    <?= (old('account_status') === 'banned') ? 'checked' : (isset($userdata['account_status']) && $userdata['account_status'] === 'banned' ? 'checked' : ''); ?>
                                                        required>
                                                 <label for="banned"
                                                        class="form-check-label"><?= lang('Users.ListUsersAccountStatusBanned'); ?></label>
@@ -163,7 +165,7 @@
                                                 <label for="ban_reason"><?= lang('Users.ListUsersAccountBanStatus'); ?>
                                                     :</label>
                                                 <input class="form-control pt-2" name="ban_reason" type="text"
-                                                       id="ban_reason"></input>
+                                                       id="ban_reason" value="<?= old('ban_reason') ?? ($userdata['ban_reason'] ?? '') ?>"></input>
                                             </div>
 
                                             <div class="col-md-6 pt-2">
@@ -182,7 +184,7 @@
                                                     multiple required>
                                                 <?php foreach ($userGroups as $groupKey => $group): ?>
                                                     <option value="<?= $groupKey; ?>"
-                                                        <?= (in_array($groupKey, old('usergroup', []), true)) ? 'selected' : ''; ?>
+                                                        <?= (in_array($groupKey, old('usergroup', []), true) || (old('usergroup') === null && isset($userdata['usergroups']) && in_array($groupKey, $userdata['usergroups'], true))) ? 'selected' : ''; ?>
                                                     ><?= esc($groupKey); ?>
                                                         - <?= esc($group['title']); ?></option>
                                                 <?php endforeach; ?>
@@ -192,7 +194,7 @@
                                     <div class="form-row">
                                         <div class="col-md-6 pt-3">
                                             <button type="submit"
-                                                    class="btn btn-primary"><?= lang('Users.UsersAddNewUserAddBtn'); ?></button>
+                                                    class="btn btn-primary"><?= isset($viewaction) ? lang('Users.UsersEditSaveBtn') : lang('Users.UsersAddNewUserAddBtn') ?></button>
                                             <a href="<?= site_url('users') ?>"
                                                class="btn btn-secondary"><?= lang('Common.btnCancel'); ?></a>
                                         </div>
@@ -220,6 +222,18 @@
     <script>
 
         $(document).ready(function () {
+
+            /* Check the initial value on document load for old() */
+
+            if ($('input[name="account_status"]:checked').val() === 'banned') {
+                // Show the ban_reason input field
+                $('#banReasonGroup').show();
+                $('#ban_reason').focus();
+            } else {
+                // Hide the ban_reason input field
+                $('#banReasonGroup').hide();
+            }
+
             /* Listen for changes in the radio button */
             $('input[name="account_status"]').change(function () {
                 /* Check if the selected value is 'banned' */

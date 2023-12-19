@@ -123,8 +123,6 @@ class Users extends BaseController
         $users_data      = [];
         $recordsFiltered = $all_users_count; // no need fot counder while not used filter count($users);
 
-        $user_useractions_col = 'edit - delete';
-
         foreach ($users as $user) {
             $user->email    = esc($user->email);
             $user->username = esc($user->username);
@@ -146,7 +144,13 @@ class Users extends BaseController
             </button>
             ";
 
-            $user_useractions_col = 'edit - ' . $delete_user_button;
+            $edit_user_button = "
+            <button id='editUserButton' data-user-id='{$user->id}' data-user-name='{$user->username}' type='button' class='btn  btn-outline-dark'>
+                        <i class='bi bi-pencil'></i>
+            </button>
+            ";
+
+            $user_useractions_col = $edit_user_button . $delete_user_button;
 
             if ($user->active) {
                 $userActive = '<span>' . lang('Users.ListUsersEmailVerifiedStatusActiveYes') . "</span> <button id='deactivateUserButton' data-user-email='{$user->email}' data-user-id='{$user->id}' class='btn btn-sm btn-outline-danger' href='#deactivate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusDeActivate') . '</button>';
@@ -322,6 +326,71 @@ class Users extends BaseController
         $validationErrors = $validation->getErrors();
 
         return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
+    }
+
+    public function editUser($UserId)
+    {
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $userid = (int) $UserId;
+
+        $usergruops = setting('AuthGroups.groups');
+
+        $data               = [];
+        $data['userid']     = $userid;
+        $data['viewaction'] = 'edit';
+        $data['userGroups'] = $usergruops;
+
+        // I will try to get the user data
+
+        $user = $this->usermodel->findById($userid);
+        if ($user === null) {
+            // user not exists
+            return redirect()->to('users')->with('error', lang('Users.UserNotFound'));
+        }
+
+        $data['userdata']['username']       = esc($user->username);
+        $data['userdata']['email']          = esc($user->email);
+        $data['userdata']['email_status']   = $user->isActivated() ? '1' : '0';
+        $data['userdata']['account_status'] = $user->isBanned() ? 'banned' : 'active';
+        $data['userdata']['ban_reason']     = esc($user->getBanMessage());
+        $data['userdata']['usergroups']     = $user->getGroups();
+
+        return view(smarty_view('users/new'), $data);
+    }
+
+    public function editUserAction($UserId)
+    {
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        // samsam @TODO edit user action
+        // vlidate form
+        // make sure from username not used for other user
+        // make sure from email is not used for other user
+        // fill the user with new data (if password not empty also i will change it)
+        // also check the usergroup if changed i will change it
+        // also active and ban status
+
+        $validation = \Config\Services::validation();
+        $postData   = $this->request->getPost();
+
+        $validation->setRule('username', lang('Users.ListUsersColUsername'), 'trim|required|min_length[3]|max_length[30]');
+        $validation->setRule('email', lang('Users.ListUsersColEmail'), 'trim|required|valid_email');
+        // no need toe validating password using validation in edit action
+        // $validation->setRule('password', lang('Users.UsersAddNewUserPassword'), 'required|min_length[8]|strong_password[]');
+
+        // Validate the data
+        if ($validation->withRequest($this->request)->run()) {
+            // Data is valid, proceed with add new user
+
+            return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', ['edit user']);
+            dd('edit user action');
+        }
+        $validationErrors = $validation->getErrors();
+
+        return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', $validationErrors);
     }
 
     public function delUser(int $UserId)

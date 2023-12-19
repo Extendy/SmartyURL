@@ -51,6 +51,9 @@ return [
     'UsersAddNewValidatingEmailExists'                                    => 'البريد مستخدم بالفعل لمستخدم اخر',
     'UsersAddNewOK'                                                       => 'تم اضافة المستخدم بنجاح',
 
+    'UsersEditViewTitle' => 'تحديث حساب مستخدم',
+    'UsersEditSaveBtn'   => 'حفظ التحديثات',
+
     'UserActivateConfrimTitle'     => 'تاكيد بريد مستخدم',
     'UserDeActivateConfrimTitle'   => 'الغاء تاكيد بريد مستخدم',
     'UserActivateConfrimText'      => 'هل انت متاكد من انك تود التاشير على بريد المستخدم {0} على انه مفعل؟',

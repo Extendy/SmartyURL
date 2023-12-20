@@ -4,7 +4,7 @@
 
 - You need a web hosting account (for a domain or sub-domain) with PHP 8.1 or higher support and the following PHP extensions (typically supported by most PHP hosting providers):
 
-    - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) , [intl](http://php.net/manual/en/intl.requirements.php) , [mbstring](http://php.net/manual/en/mbstring.installation.php) ,  [libcurl](https://www.php.net/manual/en/curl.setup.php) , [gmp](https://www.php.net/manual/en/gmp.installation.php) , [json](https://www.php.net/manual/en/json.installation.php), [bcmath](https://www.php.net/manual/en/bc.setup.php)
+    - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) , [intl](http://php.net/manual/en/intl.requirements.php) , [mbstring](http://php.net/manual/en/mbstring.installation.php) ,  [libcurl](https://www.php.net/manual/en/curl.setup.php) , [gmp](https://www.php.net/manual/en/gmp.installation.php) , [json](https://www.php.net/manual/en/json.installation.php), [bcmath](https://www.php.net/manual/en/bc.setup.php), [gmp](https://www.php.net/manual/en/gmp.setup.php)
 
 - Your web hosting account should have MySQL 8.0+ support
 - You need yo use `composer` and `php spark` command , therefor you must have SSH Access to your host account.

@@ -51,6 +51,11 @@ return [
     'UsersAddNewValidatingEmailExists'                                    => 'Email is already exists for other user',
     'UsersAddNewOK'                                                       => 'User added successfully',
 
+    'UsersEditViewTitle'       => 'Update User Account',
+    'UsersEditSaveBtn'         => 'Save Changes',
+    'UsersEditNothingTomodify' => 'You have not taken any action that requires modification.',
+    'UsersEditOk'              => 'The user account has been successfully updated',
+
     'UserActivateConfrimTitle'     => 'Activate User Email',
     'UserDeActivateConfrimTitle'   => 'DeActivate User Email',
     'UserActivateConfrimText'      => 'Are you sure you want to mark the user email {0} as activated?',

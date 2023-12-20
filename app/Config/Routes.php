@@ -39,6 +39,8 @@ $routes->group('users', static function ($routes) {
     $routes->get('addnew', 'Users::addNew', ['filter' => 'session']);
     $routes->post('addnew', 'Users::addNewAction', ['filter' => 'session']);
     $routes->post('del/(:num)', 'Users::delUser/$1', ['filter' => 'session']); // json del user account
+    $routes->get('edit/(:num)', 'Users::editUser/$1', ['filter' => 'session']); // save edit user account
+    $routes->post('edit/(:num)', 'Users::editUserAction/$1', ['filter' => 'session']); // edit user account
     $routes->post('activate/(:num)', 'Users::activateUser/$1', ['filter' => 'session']); // json activate user email
     $routes->post('deactivate/(:num)', 'Users::deactivateUser/$1', ['filter' => 'session']); // json deactivate user email
     $routes->post('ban/(:num)', 'Users::banUser/$1', ['filter' => 'session']); // json ban user account

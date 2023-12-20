@@ -100,6 +100,15 @@
                                 </div>
                             <?php endif; ?>
 
+
+                            <!-- Check if 'notice' exists in session and display a success alert if it does -->
+                            <?php if (session()->has('error')) : ?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <?= session('error') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            <?php endif; ?>
+
                             <div>
                                 <div class="table-responsive">
                                     <table id="usersList"
@@ -211,6 +220,19 @@
     $(document).ready(function () {
 
         var csrfToken = $("input[name='csrf_smarty']").val();
+
+
+        /* edit user button */
+        $("#usersList").on("click", "#editUserButton", function () {
+            /* Store the reference to the button element*/
+
+            var editButton = this;
+            var userId = this.dataset.userId;
+            var userAccount =  this.dataset.userName;
+            window.location.href = '<?= site_url('users/edit/'); ?>' + userId;
+        });
+
+
 
         /* delete user button */
         $("#usersList").on("click", "#deleteUserButton", function () {

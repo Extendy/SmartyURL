@@ -4,8 +4,10 @@ namespace App\Controllers;
 
 use App\Models\UrlModel;
 use App\Models\UserModel;
+use CodeIgniter\Shield\Authentication\Passwords;
 use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Shield\Models\UserIdentityModel;
+use Config\Services;
 
 class Users extends BaseController
 {
@@ -123,8 +125,6 @@ class Users extends BaseController
         $users_data      = [];
         $recordsFiltered = $all_users_count; // no need fot counder while not used filter count($users);
 
-        $user_useractions_col = 'edit - delete';
-
         foreach ($users as $user) {
             $user->email    = esc($user->email);
             $user->username = esc($user->username);
@@ -146,7 +146,13 @@ class Users extends BaseController
             </button>
             ";
 
-            $user_useractions_col = 'edit - ' . $delete_user_button;
+            $edit_user_button = "
+            <button id='editUserButton' data-user-id='{$user->id}' data-user-name='{$user->username}' type='button' class='btn  btn-outline-dark'>
+                        <i class='bi bi-pencil'></i>
+            </button>
+            ";
+
+            $user_useractions_col = $edit_user_button . $delete_user_button;
 
             if ($user->active) {
                 $userActive = '<span>' . lang('Users.ListUsersEmailVerifiedStatusActiveYes') . "</span> <button id='deactivateUserButton' data-user-email='{$user->email}' data-user-id='{$user->id}' class='btn btn-sm btn-outline-danger' href='#deactivate{$user->id}'>" . lang('Users.ListUsersEmailVerifiedStatusDeActivate') . '</button>';
@@ -215,7 +221,7 @@ class Users extends BaseController
 
         $validation->setRule('username', lang('Users.ListUsersColUsername'), 'trim|required|min_length[3]|max_length[30]');
         $validation->setRule('email', lang('Users.ListUsersColEmail'), 'trim|required|valid_email');
-        $validation->setRule('password', lang('Users.UsersAddNewUserPassword'), 'required|min_length[8]|strong_password[]');
+        $validation->setRule('password', lang('Users.UsersAddNewUserPassword'), 'required|' . Passwords::getMaxLengthRule() . '|strong_password[]');
 
         // Validate the data
         if ($validation->withRequest($this->request)->run()) {
@@ -228,7 +234,7 @@ class Users extends BaseController
             // make sure from the username
 
             // Build the query
-            $this->usermodel->select('id'); // Select only the 'id' column to reduce data retrieval
+            $this->usermodel->select('id');
             $this->usermodel->where('username', $username);
 
             // Execute the query
@@ -242,13 +248,13 @@ class Users extends BaseController
 
             // make sure from the email
             $useridentity = new UserIdentityModel();
-            $useridentity->select('id'); // Select only the 'id' column to reduce data retrieval
+            $useridentity->select('id');
             $useridentity->where('secret', $email);
 
             // Execute the query
             $result = $useridentity->get();
             if ($result->getNumRows() > 0) {
-                // username already taken
+                // email already taken for other user
                 $validationErrors[] = lang('Users.UsersAddNewValidatingEmailExists');
 
                 return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
@@ -322,6 +328,240 @@ class Users extends BaseController
         $validationErrors = $validation->getErrors();
 
         return redirect()->to('/users/addnew')->withInput()->with('validationErrors', $validationErrors);
+    }
+
+    public function editUser($UserId)
+    {
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $userid = (int) $UserId;
+
+        $usergruops = setting('AuthGroups.groups');
+
+        $data               = [];
+        $data['userid']     = $userid;
+        $data['viewaction'] = 'edit';
+        $data['userGroups'] = $usergruops;
+
+        // I will try to get the user data
+
+        $user = $this->usermodel->findById($userid);
+        if ($user === null) {
+            // user not exists
+            return redirect()->to('users')->with('error', lang('Users.UserNotFound'));
+        }
+
+        $data['userdata']['username']       = esc($user->username);
+        $data['userdata']['email']          = esc($user->email);
+        $data['userdata']['email_status']   = $user->isActivated() ? '1' : '0';
+        $data['userdata']['account_status'] = $user->isBanned() ? 'banned' : 'active';
+        $data['userdata']['ban_reason']     = esc($user->getBanMessage());
+        $data['userdata']['usergroups']     = $user->getGroups();
+
+        return view(smarty_view('users/new'), $data);
+    }
+
+    public function editUserAction($UserId)
+    {
+        if (! auth()->user()->can('users.manage', 'super.admin')) {
+            return smarty_permission_error();
+        }
+        $userid = (int) $UserId;
+        // make sure from user is exists
+        $user = $this->usermodel->findById($userid);
+        if ($user === null) {
+            // user not exists
+            return redirect()->to('users')->with('error', lang('Users.UserNotFound'));
+        }
+        // set to see if we will modify any user data or not
+        // by default I will set it to false and later if any changed happen I will set it true;
+        $user_modified = false;
+
+        $validation = \Config\Services::validation();
+        $postData   = $this->request->getPost();
+
+        $username   = strtolower($postData['username']);
+        $email      = strtolower($postData['email']);
+        $password   = $postData['password'];
+        $active     = (bool) $postData['email_status'];
+        $status     = ($postData['account_status'] === 'banned') ? 'banned' : null;
+        $ban_reason = ($postData['ban_reason'] !== '') ? $postData['ban_reason'] : null;
+        $usergroups = $postData['usergroup'];
+
+        $validation->setRule('username', lang('Users.ListUsersColUsername'), 'trim|required|min_length[3]|max_length[30]');
+        $validation->setRule('email', lang('Users.ListUsersColEmail'), 'trim|required|valid_email');
+        // no need toe validating password using validation in edit action
+        // $validation->setRule('password', lang('Users.UsersAddNewUserPassword'), 'required|min_length[8]|strong_password[]');
+
+        // Validate the data
+        if ($validation->withRequest($this->request)->run()) {
+            // Data is valid, proceed with add new user
+
+            // make sure from username not used for other user
+            $this->usermodel->select('id');
+            $this->usermodel->where('username', $username);
+            $this->usermodel->where('id !=', $userid);
+            $duplicate_username_check_result = $this->usermodel->get();
+            if ($duplicate_username_check_result->getNumRows() > 0) {
+                // username already taken for other user
+                $validationErrors[] = lang('Users.UsersAddNewValidatingUsernameExists');
+
+                return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', $validationErrors);
+            }
+
+            // make sure from email is not used for other user
+            $useridentity = new UserIdentityModel();
+            $useridentity->select('id');
+            $useridentity->where('secret', $email);
+            $useridentity->where('user_id !=', $userid);
+            $duplicate_email_check_result = $useridentity->get();
+            if ($duplicate_email_check_result->getNumRows() > 0) {
+                // email already taken for other user
+                $validationErrors[] = lang('Users.UsersAddNewValidatingEmailExists');
+
+                return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', $validationErrors);
+            }
+
+            // define what will be filled in users database
+            $filled_data = [];
+
+            // if password given I must check to validate the password.
+            if ($password !== '') {
+                // password should be changed
+                $this->validation     = Services::validation();
+                $data_to_be_validated = [
+                    'password' => $password,
+                ];
+                $rules = [
+                    'password' => ['label' => lang('Users.UsersAddNewUserPassword'), 'rules' => 'required|' . Passwords::getMaxLengthRule() . '|strong_password'],
+                ];
+
+                $this->validation->setRules($rules);
+                if (! $this->validation->run($data_to_be_validated)) {
+                    // error password strength or  validity
+                    // dd($this->validation->getErrors());
+                    return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', $this->validation->getErrors());
+                }
+                $filled_data['password'] = $password;
+                // set as user modified
+                $user_modified = true;
+            }
+
+            // $user hold the user object from shield
+            // if username changed so will be filled
+            if ($user->username !== $username) {
+                // username should be changed
+                $filled_data['username'] = $username;
+                // set as user modified
+                $user_modified = true;
+            }
+
+            // if email changed so will be filled
+            if ($user->email !== $email) {
+                // email should be changed
+                $filled_data['email'] = $email;
+                // set as user modified
+                $user_modified = true;
+            }
+
+            // fill the basic user info
+            $user->fill($filled_data);
+            $users = auth()->getProvider();
+            $users->save($user);
+            // if password changed forget any remember me tokens
+            if ($password !== '') {
+                auth()->forget($user);
+                // @TODO also make sure if he is logged in in active session to log him out.
+            }
+
+            // if email active status changed  then it should be changed
+            if ($user->active !== $active) {
+                // active status changed
+                switch ($active) {
+                    case true:
+                        $user->activate();
+                        $UserIdentityModel = new UserIdentityModel();
+                        $UserIdentityModel->deleteIdentitiesByType($user, 'email_activate');
+                        break;
+
+                    case false:
+                        $user->deactivate();
+                        break;
+                }
+                // set as user modified
+                $user_modified = true;
+            }
+
+            // if account status changed  then it should be changed
+            if ($user->status !== $status) {
+                // account status changed
+                switch ($status) {
+                    case null:
+                        $user->unBan();
+                        break;
+
+                    case 'banned':
+                        $user->ban($ban_reason !== '' ? $ban_reason : null);
+                        break;
+                }
+                // set as user modified
+                $user_modified = true;
+            }
+
+            // if $ban_reason changed only
+            if ($ban_reason !== $user->getBanMessage()) {
+                // make sure it works only if banned
+                if ($status === 'banned') {
+                    $user->ban($ban_reason);
+                }
+                $user_modified = true;
+            }
+
+            // if usergroups changed
+            // compare the submitted usergroups
+            $stored_usergroups  = $user->getGroups();
+            $usergroups_is_diff = false;
+
+            foreach ($usergroups as $usergroup) {
+                if (! in_array($usergroup, $stored_usergroups, true)) {
+                    $usergroups_is_diff = true;
+                }
+            }
+
+            // compare the stored usergroups
+            foreach ($stored_usergroups as $stored_usergroup) {
+                if (! in_array($stored_usergroup, $usergroups, true)) {
+                    $usergroups_is_diff = true;
+                }
+            }
+            // if $usergroups_is_diff so there is usergroups changes
+            // then I must update user groups
+            if ($usergroups_is_diff) {
+                // remove all groups from user
+                foreach ($stored_usergroups as $stored_usergroup) {
+                    $user->removeGroup($stored_usergroup);
+                }
+
+                // add the new groups to user
+                foreach ($usergroups as $usergroup) {
+                    $user->addGroup($usergroup);
+                }
+                $user_modified = true;
+            }
+
+            // check if anything not modified return to user edit with error
+            if (! $user_modified) {
+                return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', [lang('Users.UsersEditNothingTomodify')]);
+            }
+
+            return redirect()->to('/users')->with('notice', lang('Users.UsersEditOk'));
+        }
+
+        // something not valid while validating
+        $validationErrors = $validation->getErrors();
+
+        return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', $validationErrors);
     }
 
     public function delUser(int $UserId)

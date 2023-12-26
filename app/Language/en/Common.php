@@ -22,4 +22,11 @@ return [
     'ajaxErrorTitle'         => 'Error',
     'ajaxCallError1'         => 'Your request cannot be completed at the moment. Please ensure that you are connected to the internet and try again.',
     'ajaxCallErrorAjaxError' => 'An error occurred while loading data. Please try again.',
+
+    'CountsTotalAllUrl'      => 'Total of All URLs',
+    'CountsThisMonthAllUrl'  => 'This Month Created URLs Count',
+    'CountsTodayAllUrl'      => 'Today Created URL Count',
+    'CountsTotalAllHits'     => 'Total of All URL visits',
+    'CountsThisMonthAllHits' => 'This Month URL visits',
+    'CountsTodayAllHits'     => 'Today URL visits',
 ];

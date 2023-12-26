@@ -22,4 +22,11 @@ return [
     'ajaxErrorTitle'         => 'خطا',
     'ajaxCallError1'         => 'لا يمكن اتمام طلبك الان ، تاكد من اتصالك بالانترنت وحاول مجددا',
     'ajaxCallErrorAjaxError' => 'حدث خطأ أثناء تحميل البيانات. حاول مرة اخرى.',
+
+    'CountsTotalAllUrl'      => 'عدد جميع الروابط',
+    'CountsThisMonthAllUrl'  => 'عدد الروابط المنشئة هذا الشهر',
+    'CountsTodayAllUrl'      => 'عدد الروابط المنشئة هذا اليوم',
+    'CountsTotalAllHits'     => 'عدد زيارات الروابط المسجلة',
+    'CountsThisMonthAllHits' => 'عدد زيارات الروابط لهذا الشهر',
+    'CountsTodayAllHits'     => 'عدد زيارات الروابط اليوم',
 ];

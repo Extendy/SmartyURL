@@ -64,7 +64,7 @@ class Smartyurl extends BaseConfig
     public $urltags_shared_between_users = false;
 
     /**
-     * @var bool if $url_can_be_shared_between_users?
+     * @var bool if?
      *           if you enable this setting so any user can choose to let the URL shared between other
      *           system users  when he create new URL.
      *           and if it shared then any user can see the URL (but cannot edit or delete it)

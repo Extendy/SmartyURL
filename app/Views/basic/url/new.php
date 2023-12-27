@@ -119,6 +119,14 @@
                                     </div>
                                 </div>
 
+                                <!--  samsam -->
+                                <div class="mt-2 form-check form-check-lg">
+                                    <input class="form-check-input" type="checkbox" value="1" name="UrlShared" id="UrlShared" <?= old('UrlShared') ?? $UrlShared ? 'checked' : '' ?>>
+                                    <label class="" for="UrlShared"><?= lang('Url.SharedUrl') . ' ' . lang('Url.SharedUrlNotice'); ?>:</label>
+                                </div>
+
+
+
 
                                 <div class="container mt-4">
 

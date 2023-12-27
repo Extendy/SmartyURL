@@ -16,6 +16,7 @@ class UrlModel extends BaseModel
         'url_title',
         'url_targeturl',
         'url_conditions',
+        'url_shared',
     ];
 
     // Dates

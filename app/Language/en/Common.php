@@ -23,6 +23,7 @@ return [
     'ajaxCallError1'         => 'Your request cannot be completed at the moment. Please ensure that you are connected to the internet and try again.',
     'ajaxCallErrorAjaxError' => 'An error occurred while loading data. Please try again.',
 
+    // Statistics in Dashboard
     'CountsTotalAllUrl'       => 'Total of All URLs',
     'CountsThisMonthAllUrl'   => 'Created URLs this month',
     'CountsTodayAllUrl'       => 'Created URLs today',

@@ -9,18 +9,12 @@ SmartyURL, a powerful & open-source URL management tool, empowers businesses and
 You can utilize SmartyURL to generate redirect links to the final URL, considering various variables like the visitor's geographical location or user device information.
 
 
-![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/3f24ac02-d42e-413f-a2d8-5564587862f1)
+![image](https://github.com/Extendy/SmartyURL/assets/162535/2d08c064-89e6-4d87-9bbc-067e3168c0ea)
 
 
 For instance, you can create a unified link for mobile app downloads, dynamically adjusting the destination URL based on the user's device, whether it runs on Android or iOS. This ensures users are directed to the appropriate download link from the official store, tailored to their operating system.
 
-![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/22b62a10-e02c-43e7-8d76-2f875f6d9230)
-
-
 Likewise, you can also generate intelligent links to route visitors to specific URLs based on their location. For instance, users from the United States will be redirected to one link, while those from Saudi Arabia will be directed to another
-
-![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/0afe4a88-918e-4713-bab7-fe0d51d08433)
-
 
 In addition to shortening URLs (based on domain that you use), SmartyURL also offers a variety of other features, such as:
 

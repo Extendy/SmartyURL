@@ -1,6 +1,6 @@
 # SmartyURL Documentation
 
-![image](https://github.com/extendy-sam/SmartyURL/assets/146824708/3f24ac02-d42e-413f-a2d8-5564587862f1)
+![image](https://github.com/Extendy/SmartyURL/assets/162535/2d08c064-89e6-4d87-9bbc-067e3168c0ea)
 
 SmartyURL, a powerful & open-source URL management tool, empowers businesses and individuals they need self-hosted tool to customize, track, shorten URLs, and manage their URLs for marketing, analytics, and reporting.
 

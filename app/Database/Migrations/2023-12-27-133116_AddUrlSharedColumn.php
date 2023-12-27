@@ -10,7 +10,6 @@ use CodeIgniter\Database\Migration;
  */
 class AddUrlSharedColumn extends Migration
 {
-
     public function __construct(?Forge $forge = null)
     {
         helper('config');
@@ -30,9 +29,9 @@ class AddUrlSharedColumn extends Migration
     {
         $fields = [
             'url_shared' => [
-                'type' => 'BOOLEAN',
+                'type'    => 'BOOLEAN',
                 'default' => 0, // Default value for existing URLs
-                'after' => 'url_hitscounter', // Specify the position after url_hitscounter
+                'after'   => 'url_hitscounter', // Specify the position after url_hitscounter
             ],
         ];
 

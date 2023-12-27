@@ -97,4 +97,32 @@ class UrlHitsModel extends BaseModel
 
         return $builder->countAllResults();
     }
+
+    /**
+     * Get count of hits for all URLs, or for a specific user if $userId is provided,
+     * within a specified date range.
+     *
+     * @param int|null $userId
+     * @param string   $dateRange ('all', 'this_month', 'today')
+     *
+     * @return int
+     */
+    public function getCountHits($userId = null, $dateRange = 'all')
+    {
+        $query = $this->db->table('urlhits')
+            ->join('urls', 'urls.url_id = urlhits.urlhit_urlid');
+
+        if ($userId !== null) {
+            $query->where('urls.url_user_id', $userId);
+        }
+
+        if ($dateRange === 'this_month') {
+            $query->where('MONTH(urlhits.urlhit_at)', date('m'))
+                ->where('YEAR(urlhits.urlhit_at)', date('Y'));
+        } elseif ($dateRange === 'today') {
+            $query->where('DATE(urlhits.urlhit_at)', date('Y-m-d'));
+        }
+
+        return $query->countAllResults();
+    }
 }

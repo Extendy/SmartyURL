@@ -12,6 +12,8 @@ return [
     'UrlTitleDescription'          => '(Any description)',
     'UrlTitleNoTitle'              => 'No Title',
     'MaskedShortUrl'               => 'Masked (or shorten) URL',
+    'SharedUrl'                    => 'Shared URL between system users?',
+    'SharedUrlNotice'              => '(If Shared other users can view the URL without the ability to delete or edit it)',
     'AddRedirectConditionOptional' => 'Add Redirect condition (Optional',
     'ByvisitorsGeolocation'        => 'By Visitor\'s Geolocation',
     'ByvisitorsDevice'             => 'By Visitor\'s Device',
@@ -56,6 +58,7 @@ return [
     'UrlId'                         => 'Url No.',
     'UrlTestUrl'                    => 'Test Url',
     'UrlOwner'                      => 'Url Owner',
+    'UrlIsSharedBetweenUsers'       => 'Shared URL with other system users',
     'UrlCreateDate'                 => 'URL create date',
     'UrlUpdateDate'                 => 'URL last update date',
 

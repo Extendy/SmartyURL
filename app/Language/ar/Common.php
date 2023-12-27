@@ -29,4 +29,8 @@ return [
     'CountsTotalAllHits'     => 'عدد زيارات الروابط المسجلة',
     'CountsThisMonthAllHits' => 'عدد زيارات الروابط لهذا الشهر',
     'CountsTodayAllHits'     => 'عدد زيارات الروابط اليوم',
+
+    'MyURLsHitCountAllTime'   => 'اجمالي زيارات روابطي',
+    'MyURLsHitCountThisMonth' => 'زيارات روابطي هذا الشهر',
+    'MyURLsHitCountToday'     => 'زيارات روابطي اليوم',
 ];

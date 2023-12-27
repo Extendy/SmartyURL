@@ -5,92 +5,224 @@
 <?= $this->section('main') ?>
 
 
-
 <!--begin::App Content Header-->
 <div class="app-content-header">
-    <!--begin::Container-->
-    <div class="container-fluid">
-        <!--begin::Row-->
-        <div class="row">
-            <div class="col-sm-6">
-                <h3 class="mb-0">Fixed Layout</h3>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Fixed Layout
-                    </li>
-                </ol>
-            </div>
 
-        </div>
-        <!--end::Row-->
-    </div>
-    <!--end::Container-->
 </div>
 <!--end::App Content Header-->
 <!--begin::App Content-->
-<div class="app-content">
-    <!--begin::Container-->
-    <div class="container-fluid">
-        <!--begin::Row-->
-        <div class="row">
-            <div class="col-12">
 
-                <?php if (session('error') !== null) : ?>
-                    <div class="alert alert-danger" role="alert" id="infoMessage" style="">
-                        <?= session('error') ?>
-                    </div>
-                <?php endif ?>
 
-                <?php if (session('message') !== null) : ?>
-                    <div class="alert alert-success" role="alert" id="infoMessage" style="">
-                        <?= session('message') ?>
-                    </div>
-                <?php endif ?>
+<div class="container-fluid">
 
-                <?php if (session('notice') !== null) : ?>
-                    <div class="alert alert-warning" role="alert" id="infoMessage" style="">
-                        <?= session('notice') ?>
-                    </div>
-                <?php endif ?>
-
-                <!-- Default box -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Title</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
-                                <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                                <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        Start creating your amazing application!
-                        Fixed Layout
-                        <br /><br /><br /><br /><br /><br /><br /><br />
-                        <br /><br /><br /><br /><br /><br /><br />
-                        <br /><br /><br /><br /><br /><br />
-                        <br /><br /><br /><br /><br /><br /><br />
-
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">Footer</div>
-                    <!-- /.card-footer-->
-                </div>
-                <!-- /.card -->
-            </div>
+    <?php if (session('error') !== null) : ?>
+        <div class="alert alert-danger" role="alert" id="infoMessage" style="">
+            <?= session('error') ?>
         </div>
-        <!--end::Row-->
+    <?php endif ?>
+
+
+    <?php if (session('notice') !== null) : ?>
+        <div class="alert alert-warning" role="alert" id="infoMessage" style="">
+            <?= session('notice') ?>
+        </div>
+    <?php endif ?>
+
+    <?php if (session('message') !== null) : ?>
+        <div class="alert alert-success" role="alert" id="infoMessage" style="">
+            <?= session('message') ?>
+        </div>
+    <?php endif ?>
+
+
+    <?php if ($show_global_statistics) {
+        ?>
+        <!-- BEGIN: Url Count boxes -->
+        <div class="row">
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                    <i class="bi bi bi-calendar-fill"></i>
+                                </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?= lang('Common.CountsTotalAllUrl'); ?></span>
+                        <span class="info-box-number">
+                                        <?= $all_urls_count; ?>
+
+                                    </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="info-box">
+                                <span class="info-box-icon text-bg-danger shadow-sm">
+                                    <i class="bi bi-calendar-week-fill"></i>
+                                </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?= lang('Common.CountsThisMonthAllUrl'); ?></span>
+                        <span class="info-box-number"><?= $all_urls_this_month; ?></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <!-- <div class="clearfix hidden-md-up"></div> -->
+
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="info-box">
+                                <span class="info-box-icon text-bg-success shadow-sm">
+                                    <i class="bi bi-calendar-event-fill"></i>
+                                </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?= lang('Common.CountsTodayAllUrl'); ?></span>
+                        <span class="info-box-number"><?= $all_urls_today; ?></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+        </div>
+        <!-- /.row -->
+        <!-- END: Url Count boxes -->
+
+
+        <!-- BEGIN: Url Hits count boxes -->
+        <div class="row">
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                    <i class="bi bi-folder-symlink-fill"></i>
+                                </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?= lang('Common.CountsTotalAllHits'); ?></span>
+                        <span class="info-box-number">
+                                        <?= $all_hits_count; ?>
+
+                                    </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="info-box">
+                                <span class="info-box-icon text-bg-danger shadow-sm">
+                                    <i class="bi bi-calendar-event-fill"></i>
+                                </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?= lang('Common.CountsThisMonthAllHits'); ?></span>
+                        <span class="info-box-number"><?= $all_hits_this_month; ?></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <!-- <div class="clearfix hidden-md-up"></div> -->
+
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="info-box">
+                                <span class="info-box-icon text-bg-success shadow-sm">
+                                    <i class="bi bi-cart-fill"></i>
+                                </span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?= lang('Common.CountsTodayAllHits'); ?></span>
+                        <span class="info-box-number"><?= $all_hits_today; ?> </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+        </div>
+        <!-- /.row -->
+        <!-- END: Url Hits count boxes -->
+
+        <?php
+    }
+?>
+
+
+    <!-- my -->
+
+    <!-- BEGIN: Url Hits count boxes -->
+    <div class="row">
+        <div class="col-12 col-sm-4 col-md-4">
+            <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                    <i class="bi bi-folder-symlink-fill"></i>
+                                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"><?= lang('Common.MyURLsHitCountAllTime'); ?></span>
+                    <span class="info-box-number">
+                                        <?= $myurl_hits_alltime; ?>
+
+                                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-4 col-md-4">
+            <div class="info-box">
+                                <span class="info-box-icon text-bg-danger shadow-sm">
+                                    <i class="bi bi-calendar-event-fill"></i>
+                                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"><?= lang('Common.MyURLsHitCountThisMonth'); ?></span>
+                    <span class="info-box-number"><?= $myurl_hits_thismonth; ?></span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <!-- <div class="clearfix hidden-md-up"></div> -->
+
+        <div class="col-12 col-sm-4 col-md-4">
+            <div class="info-box">
+                                <span class="info-box-icon text-bg-success shadow-sm">
+                                    <i class="bi bi-cart-fill"></i>
+                                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"><?= lang('Common.MyURLsHitCountToday'); ?></span>
+                    <span class="info-box-number"><?= $myurl_hits_today; ?> </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+
     </div>
-    <!--end::Container-->
+    <!-- /.row -->
+    <!-- END: Url Hits count boxes -->
+
+
 </div>
+
+
 <!--end::App Content-->
 
 

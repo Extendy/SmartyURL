@@ -124,4 +124,35 @@ class UrlModel extends BaseModel
         // Check the affected rows to determine if the deletion was successful
         return $this->db->affectedRows() > 0;
     }
+
+    /**
+     * Get created Url count for all users, or for a specific user if $userId is provided,
+     * within a specified create date range (created_at)
+     *
+     * @param int|null $userId
+     * @param string   $dateRange ('all', 'this_month', 'today')
+     *
+     * @return int
+     */
+    public function getUrlCount($userId = null, $dateRange = 'all')
+    {
+        if ($userId !== null) {
+            // If $urlUserId is an array, use whereIn
+            if (is_array($userId)) {
+                $this->whereIn('url_user_id', $userId);
+            } else {
+                // If $urlUserId is a single ID, use where
+                $this->where('url_user_id', $userId);
+            }
+        }
+
+        if ($dateRange === 'this_month') {
+            $this->where('MONTH(created_at)', date('m'))
+                ->where('YEAR(created_at)', date('Y'));
+        } elseif ($dateRange === 'today') {
+            $this->where('DATE(created_at)', date('Y-m-d'));
+        }
+
+        return $this->countAllResults();
+    }
 }

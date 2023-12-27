@@ -214,4 +214,14 @@ class Smartyurl extends BaseConfig
      *          Use this response code if you intend to keep the short URL active for a temporary period. It tells search engines and browsers that the redirection is temporary, and they should continue to check the original URL for updates.
      */
     public $http_response_codes_when_redirect = 301;
+
+    /**
+     * @var string for whom to show All URLs statistics in the dashboard.
+     *             Possible values:
+     *             'all' (for all logged in users),
+     *             'permitted' (for permitted users only which admin.manageotherurls or  super.admin),
+     *             'none' (do not display statistics for global urls).
+     *             default permitted
+     */
+    public $show_global_statistics_in_dashboard = 'permitted';
 }

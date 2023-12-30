@@ -64,6 +64,19 @@ class Smartyurl extends BaseConfig
     public $urltags_shared_between_users = false;
 
     /**
+     * @var bool if?
+     *           if you enable this setting so any user can choose to let the URL shared between other
+     *           system users  when he create new URL.
+     *           and if it shared then any user can see the URL (but cannot edit or delete it)
+     *
+     *           KEEP IT FALSE IF YOU DO NOT NEED LET USERS SHARED URLS FOR OTHER USERS
+     *           FOR PUBLIC SITES ENABLE THIS CAN MAKE PERFORMANCE AND PRIVACY PROBLEMS
+     *
+     * @default true
+     */
+    public $url_can_be_shared_between_users = true;
+
+    /**
      * @var int when try to return the tags cloud for the users what is the maximum number the tags cloud shoud
      *          contains
      *          we think 500 tag is enough, if you want you can increase or decrease it.

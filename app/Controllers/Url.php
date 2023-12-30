@@ -283,9 +283,16 @@ class Url extends BaseController
                                         <i class="bi bi-trash"></i>
                                     </button></div>';
 
+                // even if url shared , but if setting share url between users is disabled the icon shared will not display
+                if ($result->url_shared && setting('Smartyurl.url_can_be_shared_between_users')) {
+                    $url_shared_line = "<i class='bi bi-universal-access text-danger' title='" . lang('Url.UrlIsSharedShort') . "'></i>";
+                } else {
+                    $url_shared_line = null;
+                }
+
                 $records[] = [
                     'url_id_col'         => $result->url_id,
-                    'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
+                    'url_identifier_col' => "{$url_shared_line} <a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
                                             <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil edit-link-btn'></i></a>
                                             <i title='" . lang('Url.CopyURL') . "' class='bi bi-clipboard copy-button' data-content='{$Go_Url}' data-target='link2'></i>    ",
                     'url_title_col' => " {$urlTitle}
@@ -347,11 +354,12 @@ class Url extends BaseController
         if ($urlData['url_title'] === '') {
             $urlData['url_title'] = lang('Url.UrlTitleNoTitle');
         }
-        $data['url_owner_username'] = $url_owner_username;
-        $data['url_title']          = esc($urlData['url_title']);
-        $data['url_targeturl']      = esc($urlData['url_targeturl']);
-        $data['url_identifier']     = esc($urlData['url_identifier']);
-        $data['url_hitscounter']    = $urlData['url_hitscounter'];
+        $data['url_owner_username']           = $url_owner_username;
+        $data['url_shered_with_system_users'] = $urlData['url_shared'] ? '<span class="text-danger">' . lang('Common.btnYes') . '</span>' : lang('Common.btnNo');
+        $data['url_title']                    = esc($urlData['url_title']);
+        $data['url_targeturl']                = esc($urlData['url_targeturl']);
+        $data['url_identifier']               = esc($urlData['url_identifier']);
+        $data['url_hitscounter']              = $urlData['url_hitscounter'];
 
         $data['created_at'] = $urlData['created_at'];
         $data['updated_at'] = $urlData['updated_at'];
@@ -458,6 +466,16 @@ class Url extends BaseController
             $json_urlConditions = null;
         }
 
+        // check if url shared feat enabled to let the user share the urls with other if he want
+        $shared_url_feat_enabled = setting('Smartyurl.url_can_be_shared_between_users');
+        if ($shared_url_feat_enabled) {
+            // check if the user choose to share the url with users.
+            $UrlShared = (bool) $this->request->getPost('UrlShared') ?? false;
+        } else {
+            // sharing feat not enabled globally
+            $UrlShared = false;
+        }
+
         // try to insert the url into db
         // Define the data to be inserted
         $url_table_data = [
@@ -466,6 +484,7 @@ class Url extends BaseController
             'url_title'      => $urlTitle,
             'url_targeturl'  => $originalUrl,
             'url_conditions' => $json_urlConditions,
+            'url_shared'     => $UrlShared,
         ];
 
         $UrlModel     = new UrlModel();
@@ -600,6 +619,7 @@ class Url extends BaseController
             'originalUrl'       => esc($urlData['url_targeturl']),
             'UrlTitle'          => esc($urlData['url_title']),
             'UrlIdentifier'     => esc($urlData['url_identifier']),
+            'UrlShared'         => esc($urlData['url_shared']),
             'urlTags'           => esc($urlTagsCloud), // i must get the URLTags
             'redirectCondition' => $redirectCondition,
         ];
@@ -681,6 +701,16 @@ class Url extends BaseController
             $json_urlConditions = null;
         }
 
+        // check if url shared feat enabled to let the user share the urls with other if he want
+        $shared_url_feat_enabled = setting('Smartyurl.url_can_be_shared_between_users');
+        if ($shared_url_feat_enabled) {
+            // check if the user choose to share the url with users.
+            $UrlShared = (bool) $this->request->getPost('UrlShared') ?? false;
+        } else {
+            // sharing feat not enabled globally
+            $UrlShared = false;
+        }
+
         // try to update the url data on db
 
         $updatedData = [
@@ -688,6 +718,7 @@ class Url extends BaseController
             'url_title'      => $urlTitle,
             'url_targeturl'  => $originalUrl,
             'url_conditions' => $json_urlConditions,
+            'url_shared'     => $UrlShared,
             // Add more fields as needed
         ];
 

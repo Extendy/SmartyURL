@@ -65,6 +65,10 @@ smartyurl.mainpagefor404notfound = "http://example.com/"
 #KEEP IT FALSE IF YOU DO NOT NEED SHARED TAGS BETWEEN ALL USERS
 smartyurl.urltags_shared_between_users = true
 
+#Users can create shared urls which is shared between system users
+#and if it shared then any user can see the URL (but cannot edit or delete it)
+smartyurl.url_can_be_shared_between_users = true
+
 
 #--------------------------------------------------------------------
 # DATABASE

@@ -133,6 +133,10 @@
                                             <?= lang('Url.UrlOwner'); ?>: <?= $url_owner_username; ?>
                                         </div>
 
+                                        <div class="mb-2">
+                                            <?= lang('Url.UrlIsSharedBetweenUsers'); ?>: <?= $url_shered_with_system_users; ?> <?= lang('Url.SharedUrlNotice'); ?>
+                                        </div>
+
 
                                         <div class="row col-8 mb-2">
                                             <div class="col-6">

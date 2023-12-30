@@ -16,6 +16,7 @@ class UrlModel extends BaseModel
         'url_title',
         'url_targeturl',
         'url_conditions',
+        'url_shared',
     ];
 
     // Dates
@@ -71,8 +72,13 @@ class UrlModel extends BaseModel
     {
         $builder = $this->builder();
 
+        // Check if shared URLs should be included
+        $sharedUrlFeatureEnabled = setting('Smartyurl.url_can_be_shared_between_users');
+
         // Check if $userIds is an array or a single value
         if (isset($userIds)) {
+            $builder->groupStart();
+
             if (is_array($userIds)) {
                 // If it's an array, use WHERE IN to filter by multiple user IDs
                 $builder->whereIn('url_user_id', $userIds);
@@ -80,6 +86,12 @@ class UrlModel extends BaseModel
                 // If it's a single value, use a simple WHERE to filter by that user ID
                 $builder->where('url_user_id', $userIds);
             }
+
+            if ($sharedUrlFeatureEnabled) {
+                $builder->orWhere('url_shared', 1);
+            }
+
+            $builder->groupEnd();
         }
 
         if ($search_string !== null) {

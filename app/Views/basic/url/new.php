@@ -75,7 +75,7 @@
                                         <?= session('error') ?>
                                     </div>
                                 <?php elseif (session('errors') !== null) : ?>
-                                    <div class="alert alert-danger" role="alert" >
+                                    <div class="alert alert-danger" role="alert">
                                         <?php if (is_array(session('errors'))) : ?>
                                             <?php foreach (session('errors') as $error) : ?>
                                                 <?= $error ?>
@@ -92,19 +92,22 @@
                                         <?= session('success') ?>
                                     </div>
 
-                                <?php  endif ?>
+                                <?php endif ?>
 
                                 <div class="mt-2">
                                     <label class="" for="originalUrl"><?= lang('Url.OriginalUrl'); ?>:</label>
                                     <input dir="ltr" type="url" class="form-control " name="originalUrl"
                                            id="originalUrl" required
-                                           placeholder="" value="<?=  old('originalUrl') ?? $originalUrl ?? ''; ?>">
+                                           placeholder="" value="<?= old('originalUrl') ?? $originalUrl ?? ''; ?>">
                                 </div>
 
 
                                 <div class="mt-2">
-                                    <label class="" for="UrlTitle"><?= lang('Url.UrlTitle') . ' ' . lang('Url.UrlTitleDescription') . ' ' . lang('Common.Optional'); ?>:</label>
-                                    <input type="text" class="form-control " name="UrlTitle"  id="UrlTitle"  placeholder="" value="<?= old('UrlTitle') ?? $UrlTitle ?? ''; ?>" >
+                                    <label class=""
+                                           for="UrlTitle"><?= lang('Url.UrlTitle') . ' ' . lang('Url.UrlTitleDescription') . ' ' . lang('Common.Optional'); ?>
+                                        :</label>
+                                    <input type="text" class="form-control " name="UrlTitle" id="UrlTitle"
+                                           placeholder="" value="<?= old('UrlTitle') ?? $UrlTitle ?? ''; ?>">
                                 </div>
 
 
@@ -114,11 +117,38 @@
                                     <div class="input-group mb-3" dir="ltr">
                                     <span class="input-group-text"
                                           id="basic-addon3"><?= smarty_detect_site_shortlinker(); ?></span>
-                                        <input type="text" dir="ltr" class="form-control" name="UrlIdentifier"  id="UrlIdentifier"
-                                               aria-describedby="basic-addon3" value="<?= old('UrlIdentifier') ?? $UrlIdentifier ?? ''; ?>" required>
+                                        <input type="text" dir="ltr" class="form-control" name="UrlIdentifier"
+                                               id="UrlIdentifier"
+                                               aria-describedby="basic-addon3"
+                                               value="<?= old('UrlIdentifier') ?? $UrlIdentifier ?? ''; ?>" required>
                                     </div>
                                 </div>
 
+
+                                <?php
+                                if (setting('Smartyurl.url_can_be_shared_between_users')):
+                                    ?>
+                                    <div class="mt-2 form-check form-check-lg">
+                                        <input class="form-check-input" type="checkbox" value="1" name="UrlShared"
+                                               id="UrlShared"
+                                            <?php
+                                            // @TODO are you sure
+                                            if (old('UrlShared') === '1') {
+                                                echo 'checked';
+                                            } else {
+                                                if (isset($editUrlAction)) {
+                                                    if (isset($UrlShared) && $UrlShared === '1') {
+                                                        echo 'checked';
+                                                    }
+                                                }
+                                            }
+?>
+                                        >
+                                        <label class=""
+                                               for="UrlShared"><?= lang('Url.SharedUrl') . ' ' . lang('Url.SharedUrlNotice'); ?>
+                                            :</label>
+                                    </div>
+                                <?php endif; ?>
 
                                 <div class="container mt-4">
 
@@ -130,12 +160,14 @@
                                         <ul id="newurlconditionmenu" class="dropdown-menu dropdown-menu-dark"
                                             aria-labelledby="choosUrlCondition">
                                             <li>
-                                                <a class="smarty-clickable-link dropdown-item" id="addGeoloctionCond" href="#">
+                                                <a class="smarty-clickable-link dropdown-item" id="addGeoloctionCond"
+                                                   href="#">
                                                     <?= lang('Url.ByvisitorsGeolocation'); ?>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="smarty-clickable-link dropdown-item" id="addDeviceCond" href="#">
+                                                <a class="smarty-clickable-link dropdown-item" id="addDeviceCond"
+                                                   href="#">
                                                     <?= lang('Url.ByvisitorsDevice'); ?>
                                                 </a>
                                             </li>
@@ -167,25 +199,14 @@
                                 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 <div class="mt-4">
                                     <label for="urlTags" class="form-label"><?= lang('Url.URLTagsOptional'); ?></label>
 
 
                                     <div class="input-group mb-3">
-                                        <input name='urlTags' id="urlTags" class='form-control' placeholder='<?= lang('Url.EnterSomeTags'); ?>' value='<?= old('urlTags') ?? $urlTags ?? ''; ?>'>
+                                        <input name='urlTags' id="urlTags" class='form-control'
+                                               placeholder='<?= lang('Url.EnterSomeTags'); ?>'
+                                               value='<?= old('urlTags') ?? $urlTags ?? ''; ?>'>
 
 
                                         <div id="tagsContainer" class="mt-2"></div>
@@ -205,7 +226,8 @@
                                            value=" <?= isset($editUrlAction) ? lang('Url.UpdateUrlSubmitbtn') : lang('Url.AddNewUrlSubmitbtn'); ?>">
 
                                     <?php if (isset($editUrlAction) && (session('success') === null)): ?>
-                                        <a href="<?= site_url("url/edit/{$UrlId}"); ?>" class="btn btn-secondary ms-3"><?= lang('Url.UpdateUrlCancelbtn'); ?></a>
+                                        <a href="<?= site_url("url/edit/{$UrlId}"); ?>"
+                                           class="btn btn-secondary ms-3"><?= lang('Url.UpdateUrlCancelbtn'); ?></a>
                                     <?php endif; ?>
 
                                 </div>
@@ -230,9 +252,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
 
-<link href="<?= smarty_cdn() ?>css/urltags.css" rel="stylesheet" type="text/css" />
+<link href="<?= smarty_cdn() ?>css/urltags.css" rel="stylesheet" type="text/css"/>
 
 <script src="<?= site_url('assist/newurl') ?>"></script>
 <?= $this->endSection() ?>

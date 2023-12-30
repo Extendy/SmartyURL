@@ -216,7 +216,7 @@ class Users extends BaseController
             return smarty_permission_error();
         }
 
-        $validation = \Config\Services::validation();
+        $validation = Services::validation();
         $postData   = $this->request->getPost();
 
         $validation->setRule('username', lang('Users.ListUsersColUsername'), 'trim|required|min_length[3]|max_length[30]');
@@ -378,7 +378,7 @@ class Users extends BaseController
         // by default I will set it to false and later if any changed happen I will set it true;
         $user_modified = false;
 
-        $validation = \Config\Services::validation();
+        $validation = Services::validation();
         $postData   = $this->request->getPost();
 
         $username   = strtolower($postData['username']);

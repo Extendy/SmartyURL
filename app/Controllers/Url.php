@@ -283,9 +283,16 @@ class Url extends BaseController
                                         <i class="bi bi-trash"></i>
                                     </button></div>';
 
+                // even if url shared , but if setting share url between users is disabled the icon shared will not display
+                if ($result->url_shared && setting('Smartyurl.url_can_be_shared_between_users')) {
+                    $url_shared_line = "<i class='bi bi-universal-access text-danger' title='" . lang('Url.UrlIsSharedShort') . "'></i>";
+                } else {
+                    $url_shared_line = null;
+                }
+
                 $records[] = [
                     'url_id_col'         => $result->url_id,
-                    'url_identifier_col' => "<a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
+                    'url_identifier_col' => "{$url_shared_line} <a class='link-dark listurls-link' href='" . site_url("url/view/{$result->url_id}") . "' data-url='{$Go_Url}'>{$result->url_identifier}</a>
                                             <a title='" . lang('Url.UpdateUrlSubmitbtn') . "' href='" . site_url("url/edit/{$result->url_id}") . "' class='link-dark edit-link'><i class='bi bi-pencil edit-link-btn'></i></a>
                                             <i title='" . lang('Url.CopyURL') . "' class='bi bi-clipboard copy-button' data-content='{$Go_Url}' data-target='link2'></i>    ",
                     'url_title_col' => " {$urlTitle}

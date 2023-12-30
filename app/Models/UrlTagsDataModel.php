@@ -76,6 +76,9 @@ class UrlTagsDataModel extends BaseModel
         $orderByDirection = 'desc',
         $returnType = 'data'
     ) {
+        // Check if shared URLs should be included
+        $sharedUrlFeatureEnabled = setting('Smartyurl.url_can_be_shared_between_users');
+
         $builder = $this->builder();
         $builder->select('urls.*'); // Select all columns from 'urls'
         $builder->join('urls', 'urls.url_id = urltagsdata.url_id');
@@ -89,6 +92,8 @@ class UrlTagsDataModel extends BaseModel
         }
 
         if ($userIds !== null) {
+            $builder->groupStart();
+
             if (is_array($userIds)) {
                 // If $userIds is an array, use WHERE IN to filter by multiple user IDs
                 $builder->whereIn('urls.url_user_id', $userIds);
@@ -96,6 +101,12 @@ class UrlTagsDataModel extends BaseModel
                 // If $userIds is a single value, use a simple WHERE to filter by that user ID
                 $builder->where('urls.url_user_id', $userIds);
             }
+
+            if ($sharedUrlFeatureEnabled) {
+                $builder->orWhere('url_shared', 1);
+            }
+
+            $builder->groupEnd();
         }
 
         if ($search_string !== null) {

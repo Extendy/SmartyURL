@@ -66,14 +66,15 @@ class SmartyUrl
      */
     public function userCanAccessUrlInfo($urlId, $urlOwnerUserId = null): bool
     {
+        $UrlModel = new UrlModel();
+        $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($urlId));
+        $urlData  = $UrlModel->where('url_id', $url_id)->first();
+        if ($urlData === null) {
+            return false;
+        }
+
         if ($urlOwnerUserId === null) {
             // i will get the url data to know its owner
-            $UrlModel = new UrlModel();
-            $url_id   = (int) esc(smarty_remove_whitespace_from_url_identifier($urlId));
-            $urlData  = $UrlModel->where('url_id', $url_id)->first();
-            if ($urlData === null) {
-                return false;
-            }
             $urlOwnerUserId = (int) $urlData['url_user_id'];
         }
         // we will start from large permission to the lowest permission
@@ -86,6 +87,16 @@ class SmartyUrl
 
         // the above permissions are for superuser and admins and can deal with all urls not just there urls.
         // but url.manage permission means his own urls only
+
+        // now i will check if the url is shared
+        $sharedUrlFeatureEnabled = setting('Smartyurl.url_can_be_shared_between_users');
+        if ($sharedUrlFeatureEnabled) {
+            // now will check if the url is shared
+            if ($urlData['url_shared']) {
+                return true;
+            }
+        }
+
         // check it this url is his own url and his usergroup has url.manage permissions
         return (bool) (auth()->user()->can('url.access') && ($urlOwnerUserId === user_id()));
     }

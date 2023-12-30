@@ -14,6 +14,7 @@ return [
     'MaskedShortUrl'               => 'الرابط المختصر',
     'SharedUrl'                    => 'مشاركة الرابط مع مستخدمي النظام؟',
     'SharedUrlNotice'              => '(في حال المشاركة يستطيع عندها باقي المستخدمين مشاهدة الرابط دون القدرة على الحذف او التحرير)',
+    'UrlIsSharedShort'             => 'رابط مشترك بين المستخدمين',
     'AddRedirectConditionOptional' => 'اضافة شرط اعادة توجية (اختياري)',
     'ByvisitorsGeolocation'        => 'بالاعتماد على الموقع الجغرافي للزائر',
     'ByvisitorsDevice'             => 'بالاعتماد على جهاز الزائر',

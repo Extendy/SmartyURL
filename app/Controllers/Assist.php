@@ -546,8 +546,21 @@ class Assist extends BaseController
 
                $(document).ready(function () {
 
+                   /* define getUrlParameter to get url parameters if specified */
+                   function getUrlParameter(name) {
+                       name = name.replace(/[[]/, '\\[').replace(/[\\]]/, '\\]');
+                       var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                       var results = regex.exec(location.search);
+                       return results === null ? '' : decodeURIComponent(results[1].replace(/\\+/g, ' '));
+                   }
+
+                   /* define the  initial Search from query string */
+                   var initialSearch = getUrlParameter('search') || ''; /* Get search parameter from URL */
+                   /* set the default value of search input */
+                   $('#searchInput').val(initialSearch);
+
+
                     //var csrfToken = document.querySelector("input[name=csrf_smarty]").value;
-                    // alert(csrfToken);
 
 
                     function format(d) {
@@ -622,8 +635,48 @@ class Assist extends BaseController
 
 
 
+                         /* listen when datatables draw to the change browser url based on that*/
+
+                         var dataTable = table;
+                         /* initialSearch defined above */
+                         dataTable.search(initialSearch).draw();
+
+                         /* Event listener for when the table is drawn */
+                         dataTable.on('draw', function() {
+                        /* Get current search keyword */
+                        var searchKeyword = dataTable.search();
 
 
+                        /* Get current page */
+                        var currentPage = dataTable.page();
+
+                        /* Update the URL with the filter criteria */
+                        var currentUrl = window.location.href;
+
+                        /* Parse the current URL to extract existing query parameters */
+                            var urlObject = new URL(currentUrl);
+                            var params = new URLSearchParams(urlObject.search);
+
+                            /* Update the URL with the current search value, order, and page */
+                            if (searchKeyword.trim() !== '') {
+                                params.set("search", encodeURIComponent(searchKeyword));
+                            } else {
+                                params.delete("search");
+                            }
+                            /* NOT USED params.set("order", dataTable.order()[0][0]); */
+                            /* NOT USED params.set("dir", dataTable.order()[0][1]); */
+                            /* NOT USED params.set("page", dataTable.page.info().page || 0); */
+
+                            /* Update the URL without triggering a page reload */
+                            urlObject.search = params.toString();
+                            var newUrl = urlObject.toString();
+                            /* Update the URL without triggering a page reload */
+                            window.history.replaceState({}, '', newUrl);
+
+
+
+
+                    });
 
 
 

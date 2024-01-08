@@ -51,10 +51,11 @@ return [
     'UsersAddNewValidatingEmailExists'                                    => 'Email is already exists for other user',
     'UsersAddNewOK'                                                       => 'User added successfully',
 
-    'UsersEditViewTitle'       => 'Update User Account',
-    'UsersEditSaveBtn'         => 'Save Changes',
-    'UsersEditNothingTomodify' => 'You have not taken any action that requires modification.',
-    'UsersEditOk'              => 'The user account has been successfully updated',
+    'UsersEditViewTitle'           => 'Update User Account',
+    'UsersEditSaveBtn'             => 'Save Changes',
+    'UsersEditNothingTomodify'     => 'You have not taken any action that requires modification.',
+    'UsersEditOk'                  => 'The user account has been successfully updated',
+    'UsersEditHisOwnAcccountError' => 'You cannot change your account status this way',
 
     'UserActivateConfrimTitle'     => 'Activate User Email',
     'UserDeActivateConfrimTitle'   => 'DeActivate User Email',

@@ -170,7 +170,7 @@ class Users extends BaseController
             }
             // get the user url counts
 
-            $user_url_count = "<a class='text-secondary' href='url/user/{$user->id}'>" . $this->urlmodel->getUrlsForUser($user->id, null, null, null, 'url_id', 'asc', 'count') . '</a>';
+            $user_url_count = "<a class='text-secondary' href='url/user/{$user->id}'>" . $this->urlmodel->getUrlCount($user->id) . '</a>';
 
             $users_data[] = [
                 'user_id_col'          => $user->id,

@@ -658,7 +658,11 @@ class Assist extends BaseController
                             var params = new URLSearchParams(urlObject.search);
 
                             /* Update the URL with the current search value, order, and page */
-                            params.set("search", encodeURIComponent(searchKeyword));
+                            if (searchKeyword.trim() !== '') {
+                                params.set("search", encodeURIComponent(searchKeyword));
+                            } else {
+                                params.delete("search");
+                            }
                             /* NOT USED params.set("order", dataTable.order()[0][0]); */
                             /* NOT USED params.set("dir", dataTable.order()[0][1]); */
                             /* NOT USED params.set("page", dataTable.page.info().page || 0); */

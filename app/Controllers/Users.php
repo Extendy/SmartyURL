@@ -465,6 +465,16 @@ class Users extends BaseController
                 $user_modified = true;
             }
 
+            // make sure from the user cannot ban his self or deactivate hit own account
+            if (($user->active !== $active) || ($user->status !== $status)) {
+                // user change the active  or the status
+                // I will make sure He is not doing that with his own account
+                if ($userid === user_id()) {
+                    // cannot make this to your own account
+                    return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', [lang('Users.UsersEditHisOwnAcccountError')]);
+                }
+            }
+
             // fill the basic user info
             $user->fill($filled_data);
             $users = auth()->getProvider();

@@ -548,10 +548,10 @@ class Assist extends BaseController
 
                    /* define getUrlParameter to get url parameters if specified */
                    function getUrlParameter(name) {
-                       name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+                       name = name.replace(/[[]/, '\\[').replace(/[\\]]/, '\\]');
                        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
                        var results = regex.exec(location.search);
-                       return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+                       return results === null ? '' : decodeURIComponent(results[1].replace(/\\+/g, ' '));
                    }
 
                    /* define the  initial Search from query string */

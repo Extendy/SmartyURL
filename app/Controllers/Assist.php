@@ -555,7 +555,7 @@ class Assist extends BaseController
                    }
 
                    /* define the  initial Search from query string */
-                   var initialSearch = getUrlParameter('search') || ''; /* Get search parameter from URL */
+                   var initialSearch =  decodeURIComponent(getUrlParameter('search')) || ''; /* Get search parameter from URL */
                    /* set the default value of search input */
                    $('#searchInput').val(initialSearch);
 

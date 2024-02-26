@@ -22,7 +22,7 @@ class Tests extends BaseController
 {
     public function index()
     {
-        $ipTools = new IPTools();
+        $ipTools = new IpTools();
 
         // Call the getVisitorIp() method on the instance
         $visitorIp = $ipTools->getVisitorIp();

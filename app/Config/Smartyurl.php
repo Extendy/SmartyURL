@@ -167,7 +167,7 @@ class Smartyurl extends BaseConfig
     public $themeFolder = 'basic';
 
     /**
-     * @var string[] the views used on smarty ,see helper smarty_view()
+     * @var list<string> the views used on smarty ,see helper smarty_view()
      *
      * @TODO i think this is not used yet
      */

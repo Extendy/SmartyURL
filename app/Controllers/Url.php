@@ -910,6 +910,43 @@ class Url extends BaseController
     }
 
     /**
+     * Show all urls hits view file
+     *
+     * @param $UrlId
+     *
+     * @return void
+     */
+    public function urlshitslist()
+    {
+        // check the permissions
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+
+        $data = [];
+
+        $data['lang'] = session('lang');
+
+        return view(smarty_view('url/allhitslist'), $data);
+    }
+
+    /**
+     * hits list for all urls
+     *
+     * @return void
+     */
+    public function urlshitslistData()
+    {
+        // check the permissions
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
+        }
+
+        // if he is notmal user i will show hits for his urls only
+        // if he is manageotherurls or superadmin i will show all hits
+    }
+
+    /**
      * This function generates QR Code for tge given URL id
      *
      * @return mixed

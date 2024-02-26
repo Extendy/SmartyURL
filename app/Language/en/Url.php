@@ -93,4 +93,6 @@ return [
     'urlDelCannotDelthisUrlDuePermissions' => 'You cannot delete this URL because you do not have sufficient permissions to do so.',
     'urlDelError'                          => 'Cannot delete this URL now , please try again later',
     'urlDelOK'                             => 'The URL has been successfully deleted',
+
+    'SeeAllURLsHits' => 'List All URLs visits',
 ];

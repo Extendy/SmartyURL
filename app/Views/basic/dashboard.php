@@ -101,13 +101,15 @@
             <div class="col-12 col-sm-4 col-md-4">
                 <div class="info-box">
                                 <span class="info-box-icon text-bg-primary shadow-sm">
-                                    <i class="bi bi-folder-symlink-fill"></i>
+                                    <i class="bi bi-calendar-fill"></i>
                                 </span>
 
                     <div class="info-box-content">
                         <span class="info-box-text"><?= lang('Common.CountsTotalAllHits'); ?></span>
                         <span class="info-box-number">
+                            <a href="<?= site_url('url/hits'); ?>">
                                         <?= $all_hits_count; ?>
+                                </a>
 
                                     </span>
                     </div>
@@ -119,12 +121,16 @@
             <div class="col-12 col-sm-4 col-md-4">
                 <div class="info-box">
                                 <span class="info-box-icon text-bg-danger shadow-sm">
-                                    <i class="bi bi-calendar-event-fill"></i>
+                                    <i class="bi bi-calendar-week-fill"></i>
                                 </span>
 
                     <div class="info-box-content">
                         <span class="info-box-text"><?= lang('Common.CountsThisMonthAllHits'); ?></span>
-                        <span class="info-box-number"><?= $all_hits_this_month; ?></span>
+                        <span class="info-box-number">
+                            <a href="<?= site_url('url/hits'); ?>">
+                            <?= $all_hits_this_month; ?>
+                            </a>
+                        </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -138,12 +144,16 @@
             <div class="col-12 col-sm-4 col-md-4">
                 <div class="info-box">
                                 <span class="info-box-icon text-bg-success shadow-sm">
-                                    <i class="bi bi-cart-fill"></i>
+                                    <i class="bi bi-calendar-event-fill"></i>
                                 </span>
 
                     <div class="info-box-content">
                         <span class="info-box-text"><?= lang('Common.CountsTodayAllHits'); ?></span>
-                        <span class="info-box-number"><?= $all_hits_today; ?> </span>
+                        <span class="info-box-number">
+                            <a href="<?= site_url('url/hits'); ?>">
+                                <?= $all_hits_today; ?>
+                            </a>
+                        </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -166,13 +176,15 @@
         <div class="col-12 col-sm-4 col-md-4">
             <div class="info-box">
                                 <span class="info-box-icon text-bg-primary shadow-sm">
-                                    <i class="bi bi-folder-symlink-fill"></i>
+                                    <i class="bi bi-calendar-fill"></i>
                                 </span>
 
                 <div class="info-box-content">
                     <span class="info-box-text"><?= lang('Common.MyURLsHitCountAllTime'); ?></span>
                     <span class="info-box-number">
+                        <a href="<?= site_url('url/hits'); ?>">
                                         <?= $myurl_hits_alltime; ?>
+                        </a>
 
                                     </span>
                 </div>
@@ -184,12 +196,16 @@
         <div class="col-12 col-sm-4 col-md-4">
             <div class="info-box">
                                 <span class="info-box-icon text-bg-danger shadow-sm">
-                                    <i class="bi bi-calendar-event-fill"></i>
+                                    <i class="bi bi-calendar-week-fill"></i>
                                 </span>
 
                 <div class="info-box-content">
                     <span class="info-box-text"><?= lang('Common.MyURLsHitCountThisMonth'); ?></span>
-                    <span class="info-box-number"><?= $myurl_hits_thismonth; ?></span>
+                    <span class="info-box-number">
+                        <a href="<?= site_url('url/hits'); ?>">
+                        <?= $myurl_hits_thismonth; ?>
+                        </a>
+                    </span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -203,12 +219,16 @@
         <div class="col-12 col-sm-4 col-md-4">
             <div class="info-box">
                                 <span class="info-box-icon text-bg-success shadow-sm">
-                                    <i class="bi bi-cart-fill"></i>
+                                    <i class="bi bi-calendar-event-fill"></i>
                                 </span>
 
                 <div class="info-box-content">
                     <span class="info-box-text"><?= lang('Common.MyURLsHitCountToday'); ?></span>
-                    <span class="info-box-number"><?= $myurl_hits_today; ?> </span>
+                    <span class="info-box-number">
+                        <a href="<?=site_url('url/hits'); ?>">
+                        <?= $myurl_hits_today; ?>
+                        </a>
+                    </span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

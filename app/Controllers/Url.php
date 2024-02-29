@@ -77,7 +77,12 @@ class Url extends BaseController
 
         $data['filterrule']  = 'user';
         $data['filtervalue'] = $urlOwnerUserId;
-        $data['filtertext']  = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($user_id);
+
+        if ($urlOwnerUserId !== null) {
+            $data['filtertext'] = lang('Url.urlsUserLinks') . ' ' . smarty_get_user_username($urlOwnerUserId);
+        } else {
+            $data['filtertext'] = lang('Url.urlsAllLink') . ' ' . smarty_get_user_username($user_id);
+        }
 
         if (! auth()->user()->can('admin.manageotherurls', 'super.admin') && (int) $urlOwnerUserId !== $user_id) {
             return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), false);

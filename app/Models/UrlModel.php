@@ -73,7 +73,14 @@ class UrlModel extends BaseModel
         $builder = $this->builder();
 
         // Check if shared URLs should be included
-        $sharedUrlFeatureEnabled = setting('Smartyurl.url_can_be_shared_between_users');
+        if ((is_array($userIds) && in_array(user_id(), $userIds, true)) || ((user_id() === $userIds))) {
+            // that mean user is try to get his urls, so i will check if the shared urls feature is enabled
+            $sharedUrlFeatureEnabled = setting('Smartyurl.url_can_be_shared_between_users');
+        } else {
+            // that mean other user try to get the user urls , mostly admin
+            // so i will not show shared urls
+            $sharedUrlFeatureEnabled = false;
+        }
 
         // Check if $userIds is an array or a single value
         if (isset($userIds)) {

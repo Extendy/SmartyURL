@@ -548,6 +548,13 @@ class Users extends BaseController
             // if $usergroups_is_diff so there is usergroups changes
             // then I must update user groups
             if ($usergroups_is_diff) {
+                // check if the user try to modify his own usergroups
+                if ($userid === user_id()) {
+                    // cannot make this to your own account , user cannot change his account that way
+                    // it is not logical to change your own account usergroups
+                    return redirect()->to('/users/edit/' . $UserId)->withInput()->with('validationErrors', [lang('Users.UsersEditHisOwnAcccountError')]);
+                }
+
                 // remove all groups from user
                 foreach ($stored_usergroups as $stored_usergroup) {
                     $user->removeGroup($stored_usergroup);

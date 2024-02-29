@@ -134,57 +134,6 @@ class UrlHitsModel extends BaseModel
         return $builder->countAllResults();
     }
 
-    public function getHitsForUserIdUrls(int|array|null $userId = null, string|null $period = null, int|null $start = null, int|null $length = null, string $orderBy = 'urlhit_urlid', string $orderDirection = 'DESC', bool $returnData = true)
-    {
-        $builder = $this->builder();
-        $builder->select('urlhits.*, urls.url_identifier'); // Select the necessary columns
-
-        $builder->join('urls', 'urls.url_id = urlhits.urlhit_urlid'); // Join with the urls table
-        $builder->whereIn('urls.url_user_id', $userId);
-
-        $builder->orderBy($orderBy, $orderDirection);
-
-        // Specify the period if provided
-        if ($period !== null) {
-            switch ($period) {
-                case 'today':
-                    $startOfDay = date('Y-m-d 00:00:00');
-                    $endOfDay   = date('Y-m-d 23:59:59');
-                    $builder->where('urlhit_at >=', $startOfDay);
-                    $builder->where('urlhit_at <=', $endOfDay);
-                    break;
-
-                case 'this_month':
-                    $startOfMonth = date('Y-m-01 00:00:00');
-                    $endOfMonth   = date('Y-m-t 23:59:59');
-                    $builder->where('urlhit_at >=', $startOfMonth);
-                    $builder->where('urlhit_at <=', $endOfMonth);
-                    break;
-                    // Add more cases for other periods if needed
-            }
-        }
-
-        if ($userId === null) {
-            // No URL ID provided, return all hits
-        } else {
-            if (is_array($userId)) {
-                $builder->whereIn('urls.url_user_id', $userId);
-            } else {
-                $builder->where('urls.url_user_id', $userId);
-            }
-        }
-
-        if ($start !== null && $length !== null) {
-            $builder->limit($length, $start);
-        }
-
-        if ($returnData) {
-            return $builder->get()->getResult();
-        }
-
-        return $builder->countAllResults();
-    }
-
     /**
      * Get count of hits for all URLs, or for a specific user if $userId is provided,
      * within a specified date range.

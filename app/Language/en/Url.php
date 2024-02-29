@@ -95,4 +95,8 @@ return [
     'urlDelOK'                             => 'The URL has been successfully deleted',
 
     'SeeAllURLsHits' => 'List All URLs visits',
+    'Today'          => 'Today',
+    'ThisMonth'      => 'This Month',
+    'AllTime'        => 'All Time',
+    'MyUrls'         => 'My URLs',
 ];

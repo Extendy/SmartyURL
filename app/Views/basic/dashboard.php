@@ -107,7 +107,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text"><?= lang('Common.CountsTotalAllHits'); ?></span>
                         <span class="info-box-number">
-                            <a href="<?= site_url('url/hits'); ?>">
+                            <a class="link-dark" href="<?= site_url('url/hits'); ?>">
                                         <?= $all_hits_count; ?>
                                 </a>
 
@@ -127,7 +127,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text"><?= lang('Common.CountsThisMonthAllHits'); ?></span>
                         <span class="info-box-number">
-                            <a href="<?= site_url('url/hits'); ?>">
+                            <a class="link-dark" href="<?= site_url('url/hits?p=this_month'); ?>">
                             <?= $all_hits_this_month; ?>
                             </a>
                         </span>
@@ -150,7 +150,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text"><?= lang('Common.CountsTodayAllHits'); ?></span>
                         <span class="info-box-number">
-                            <a href="<?= site_url('url/hits'); ?>">
+                            <a class="link-dark" href="<?= site_url('url/hits?p=today'); ?>">
                                 <?= $all_hits_today; ?>
                             </a>
                         </span>
@@ -182,7 +182,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text"><?= lang('Common.MyURLsHitCountAllTime'); ?></span>
                     <span class="info-box-number">
-                        <a href="<?= site_url('url/hits'); ?>">
+                        <a class="link-dark" href="<?= site_url('url/hits?who=me'); ?>">
                                         <?= $myurl_hits_alltime; ?>
                         </a>
 
@@ -202,7 +202,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text"><?= lang('Common.MyURLsHitCountThisMonth'); ?></span>
                     <span class="info-box-number">
-                        <a href="<?= site_url('url/hits'); ?>">
+                        <a class="link-dark" href="<?= site_url('url/hits?p=this_month&who=me'); ?>">
                         <?= $myurl_hits_thismonth; ?>
                         </a>
                     </span>
@@ -225,7 +225,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text"><?= lang('Common.MyURLsHitCountToday'); ?></span>
                     <span class="info-box-number">
-                        <a href="<?=site_url('url/hits'); ?>">
+                        <a class="link-dark" href="<?=site_url('url/hits?p=today&who=me'); ?>">
                         <?= $myurl_hits_today; ?>
                         </a>
                     </span>

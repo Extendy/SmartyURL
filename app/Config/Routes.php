@@ -27,6 +27,7 @@ $routes->group('url', static function ($routes) {
     $routes->get('edit/(:num)', 'Url::edit/$1', ['filter' => 'session']);
     $routes->post('edit/(:num)', 'Url::editAction/$1', ['filter' => 'session']);
     $routes->get('hits', 'Url::urlshitslist', ['filter' => 'session']); // view list all url hits
+    $routes->get('urlshitslistdata', 'Url::urlshitslistData', ['filter' => 'session']); // json hits list for ALL url
 
     $routes->get('hits/(:num)', 'Url::hitslist/$1', ['filter' => 'session']);
     $routes->get('hitslistdata/(:num)', 'Url::hitslistData/$1', ['filter' => 'session']); // json hits list for url

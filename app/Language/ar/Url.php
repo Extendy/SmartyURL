@@ -99,4 +99,7 @@ return [
     'ThisMonth'      => 'هذا الشهر',
     'AllTime'        => 'كل الوقت',
     'MyUrls'         => 'روابطي',
+
+    'TagsCloud'  => 'سحابة هاشتاق الروابط',
+    'TagCreator' => 'منشئ الهاشتاق',
 ];

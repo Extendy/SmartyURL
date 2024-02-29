@@ -99,4 +99,7 @@ return [
     'ThisMonth'      => 'This Month',
     'AllTime'        => 'All Time',
     'MyUrls'         => 'My URLs',
+
+    'TagsCloud'  => 'URL Tags Cloud',
+    'TagCreator' => 'Tag Creator',
 ];

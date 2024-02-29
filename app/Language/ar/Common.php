@@ -33,4 +33,6 @@ return [
     'MyURLsHitCountAllTime'   => 'اجمالي زيارات روابطي',
     'MyURLsHitCountThisMonth' => 'زيارات روابطي هذا الشهر',
     'MyURLsHitCountToday'     => 'زيارات روابطي اليوم',
+
+    'CreatedAt' => 'في تاريخ',
 ];

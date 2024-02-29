@@ -100,4 +100,18 @@ class UrlTagsModel extends BaseModel
 
         return $this->countAllResults();
     }
+
+    /**
+     * This function return tags cloud with url count for each tag
+     */
+    public function getTagsWithUrlCount()
+    {
+        return $this->db->table($this->table)
+            ->select('urltags.*, COUNT(urltagsdata.url_id) AS url_count, users.username AS creator_username')
+            ->join('urltagsdata', 'urltags.tag_id = urltagsdata.tag_id', 'left')
+            ->join('users', 'urltags.tag_user_id = users.id', 'left')
+            ->groupBy('urltags.tag_id')
+            ->get()
+            ->getResultArray();
+    }
 }

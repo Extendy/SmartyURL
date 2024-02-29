@@ -171,11 +171,11 @@ if (! function_exists('smarty_get_visitor_ip_country')) {
     {
         if ($ip === null) {
             // Call the getVisitorIp() method on the instance
-            $ipTools = new IPTools();
+            $ipTools = new IpTools();
             $ip      = $ipTools->getVisitorIp();
         }
-        $ip2locationdb                 = new \IP2Location\Database(Config('Smartyurl')->ip2location_bin_file, \IP2Location\Database::FILE_IO);
-        $visitorIp2locationRecords     = $ip2locationdb->lookup($ip, \IP2Location\Database::ALL);
+        $ip2locationdb                 = new IP2Location\Database(Config('Smartyurl')->ip2location_bin_file, IP2Location\Database::FILE_IO);
+        $visitorIp2locationRecords     = $ip2locationdb->lookup($ip, IP2Location\Database::ALL);
         $visitorIp2locationcountryCode = $visitorIp2locationRecords['countryCode'];
 
         return trim($visitorIp2locationcountryCode);

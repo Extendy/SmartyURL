@@ -108,6 +108,11 @@ class UrlModel extends BaseModel
             return $builder->countAllResults();
         }
 
+        if ($returnType === 'ids') {
+            // Return only the URL IDs
+            $builder->select('url_id');
+        }
+
         if ($orderBy !== null) {
             // Add the ORDER BY clause
             $builder->orderBy($orderBy, $orderDirection);
@@ -166,5 +171,16 @@ class UrlModel extends BaseModel
         }
 
         return $this->countAllResults();
+    }
+
+    public function getUrlIdentifierById(int $urlId)
+    {
+        $url = $this->find($urlId);
+
+        if ($url) {
+            return $url['url_identifier'];
+        }
+
+        return null; // or throw an exception if desired
     }
 }

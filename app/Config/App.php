@@ -27,7 +27,7 @@ class App extends BaseConfig
      *      'http://accounts.example.com/':
      *          ['media.example.com', 'accounts.example.com']
      *
-     * @var string[]
+     * @var         list<string>
      * @phpstan-var list<string>
      */
     public array $allowedHostnames = [];
@@ -99,7 +99,7 @@ class App extends BaseConfig
      * *** You must define language variable in Config/Smartyurl.php $locales array
      * *** or it will break the system
      *
-     * @var string[]
+     * @var list<string>
      */
     public array $supportedLocales = ['en', 'ar'];
 

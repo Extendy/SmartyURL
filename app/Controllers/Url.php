@@ -882,9 +882,9 @@ class Url extends BaseController
             $order_by_rule = 'desc';
         }
 
-        $urlAllCount      = $this->urlhitsmodel->getHitsByUrlId($url_id, null, null, 'urlhit_urlid', 'desc', false);
+        $urlAllCount      = $this->urlhitsmodel->getHitsByUrlId($url_id, null, null, null, null, 'urlhit_urlid', 'desc', false);
         $filterAllnumRows = $urlAllCount;
-        $results          = $this->urlhitsmodel->getHitsByUrlId($url_id, $start, $length, $order_by, $order_by_rule, true);
+        $results          = $this->urlhitsmodel->getHitsByUrlId($url_id, null, null, $start, $length, $order_by, $order_by_rule, true);
         $records          = [];
         if ($results !== null) {
             foreach ($results as $result) {
@@ -895,6 +895,186 @@ class Url extends BaseController
                     'hit_device_col'    => $result->urlhit_visitordevice,
                     'hit_useragent_col' => esc($result->urlhit_useragent),
                     'hit_finalurl_col'  => urldecode($result->urlhit_finaltarget),
+                ];
+            }
+        }
+
+        $data = [
+            'draw'            => $draw,
+            'recordsTotal'    => $urlAllCount, // $urlAllCount
+            'recordsFiltered' => $filterAllnumRows, // $filterAllnumRows
+            'data'            => $records,
+        ];
+
+        return $this->response->setJSON($data);
+    }
+
+    /**
+     * Show all urls hits view file
+     *
+     * @param $UrlId
+     *
+     * @return void
+     */
+    public function urlshitslist()
+    {
+        // check the permissions
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error();
+        }
+
+        $data = [];
+
+        $period = $this->request->getGet('p');
+        $who    = $this->request->getGet('who');
+
+        switch ($period) {
+            case 'today':
+                $data['period'] = 'today';
+                $title_segment  = lang('Url.Today');
+                break;
+
+            case 'this_month':
+                $data['period'] = 'this_month';
+                $title_segment  = lang('Url.ThisMonth');
+                break;
+
+            default:
+                $data['period'] = null;
+                $title_segment  = lang('Url.AllTime');
+                break;
+        }
+
+        switch ($who) {
+            case 'me':
+                $data['who']   = 'me';
+                $title_segment = lang('Url.MyUrls') . ' ' . $title_segment;
+                break;
+
+            default:
+                $data['who'] = null;
+                break;
+        }
+
+        $data['lang']          = session('lang');
+        $data['title_segment'] = $title_segment;
+
+        return view(smarty_view('url/allhitslist'), $data);
+    }
+
+    /**
+     * hits list for all urls
+     *
+     * @return void
+     */
+    public function urlshitslistData()
+    {
+        // check the permissions
+        if (! auth()->user()->can('url.access', 'admin.manageotherurls', 'super.admin')) {
+            return smarty_permission_error(lang('Common.permissionsNoenoughpermissions'), true);
+        }
+
+        $draw   = $this->request->getGet('draw');
+        $start  = $this->request->getGet('start');
+        $length = $this->request->getGet('length');
+
+        // Do not think that the data that comes from the client is always correct
+        // so set force max length it  maxUrlListPerPage
+        $system_forcemax_length = setting('Smartyurl.maxUrlListPerPage');
+        if ($length > setting('Smartyurl.maxUrlListPerPage')) {
+            $length = $system_forcemax_length;
+        }
+
+        $columnOrder = $this->request->getGet('order');
+        if ($columnOrder !== null) {
+            $ajax_column_index = $columnOrder['0']['column'];
+            $order_by_dir      = $columnOrder['0']['dir'];
+
+            // Do not think that the data that comes from the client is always correct
+            // so switch it to use defaults
+            switch ($order_by_dir) {
+                case 'asc':
+                    $order_by_rule = 'asc';
+                    break;
+
+                case 'desc':
+                    $order_by_rule = 'desc';
+                    break;
+
+                default:
+                    $order_by_rule = 'desc';
+                    break;
+            }
+
+            // i will know the column name from get
+            $ajax_columns              = $this->request->getGet('columns');
+            $order_by_ajax_column_name = $ajax_columns[$ajax_column_index]['name'];
+
+            // echo $order_by_ajax_column_name;
+            // echo $order_by_rule;
+
+            switch ($order_by_ajax_column_name) {
+                case 'hit_date':
+                    $order_by = 'urlhit_at';
+                    break;
+
+                default:
+                    $order_by = 'urlhit_urlid';
+                    break;
+            }
+        } else {
+            $order_by      = 'urlhit_id';
+            $order_by_rule = 'desc';
+        }
+
+        // if he is notmal user i will show hits for his urls only
+        // if he is manageotherurls or superadmin i will show all hits
+        // @TODO fix me
+
+        $period = $this->request->getGet('p');
+        $who    = $this->request->getGet('who');
+
+        switch ($period) {
+            case 'today':
+                $data['period'] = 'today';
+                break;
+
+            case 'this_month':
+                $data['period'] = 'this_month';
+                break;
+
+            default:
+                $data['period'] = null;
+                break;
+        }
+
+        if (auth()->user()->can('admin.manageotherurls', 'super.admin') && $who !== 'me') {
+            // mean all urls are allowed
+            $urlAllCount      = $this->urlhitsmodel->getHitsByUrlId(null, null, $period, null, null, 'urlhit_urlid', 'desc', false);
+            $filterAllnumRows = $urlAllCount;
+            $results          = $this->urlhitsmodel->getHitsByUrlId(null, null, $period, $start, $length, $order_by, $order_by_rule, true);
+        } else {
+            if (auth()->user()->can('url.access')) {
+                // show hits of his urls only
+
+                $urlAllCount      = $this->urlhitsmodel->getHitsByUrlId(null, user_id(), $period, null, null, 'urlhit_urlid', 'desc', false);
+                $filterAllnumRows = $urlAllCount;
+                $results          = $this->urlhitsmodel->getHitsByUrlId(null, user_id(), $period, $start, $length, $order_by, $order_by_rule, true);
+            }
+        }
+
+        $records = [];
+        if ($results !== null) {
+            foreach ($results as $result) {
+                $records[] = [
+                    'hit_date_col' => $result->urlhit_at,
+                    'hit_url_col'  => '<a class="link-dark listurls-link" href=' . site_url('url/view/' . $result->urlhit_urlid) . '>' . $result->url_identifier,
+                    '</a>',
+                    'hit_ip_col'        => $result->urlhit_ip,
+                    'hit_country_col'   => $result->urlhit_country,
+                    'hit_device_col'    => $result->urlhit_visitordevice,
+                    'hit_useragent_col' => esc($result->urlhit_useragent),
+                    'hit_finalurl_col'  => urldecode($result->urlhit_finaltarget) . '<a title="' . lang('Url.visitOriginalUrl') . '"  class="link-dark edit-link"  target="_blank" href="' . $result->urlhit_finaltarget . '" class="link-primary edit-link"><i class="bi bi-box-arrow-up-right"></i></a>',
                 ];
             }
         }

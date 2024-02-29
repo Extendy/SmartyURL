@@ -39,7 +39,7 @@ class Autoload extends AutoloadConfig
      *       'App'         => APPPATH
      *   ];
      *
-     * @var array<string, array<int, string>|string>
+     * @var         array<string, array<int, string>|string>
      * @phpstan-var array<string, string|list<string>>
      */
     public $psr4 = [
@@ -79,7 +79,7 @@ class Autoload extends AutoloadConfig
      *       '/path/to/my/file.php',
      *   ];
      *
-     * @var string[]
+     * @var         list<string>
      * @phpstan-var list<string>
      */
     public $files = [];
@@ -93,7 +93,7 @@ class Autoload extends AutoloadConfig
      *       'form',
      *   ];
      *
-     * @var string[]
+     * @var         list<string>
      * @phpstan-var list<string>
      */
     public $helpers = ['smarty', 'cookie', 'auth', 'setting'];

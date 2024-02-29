@@ -70,21 +70,57 @@ class UrlHitsModel extends BaseModel
     }
 
     /**
-     * This function gets the URL visit list for a given $urlId which can be a single Url ID or an array of Url IDs.
+     * This function gets the URL visit list for a given $urlId or $userId which can be a single Url ID or an array of Url IDs.
      * $returnType can be:
      * - true to return data as an array
      * - false to return the row count as an integer without the start and limit
      */
-    public function getHitsByUrlId(int|array $urlId, int|null $start = null, int|null $length = null, string $orderBy = 'urlhit_urlid', string $orderDirection = 'DESC', bool $returnData = true)
+    public function getHitsByUrlId(int|array|null $urlId = null, int|array|null $userId = null, string|null $period = null, int|null $start = null, int|null $length = null, string $orderBy = 'urlhit_urlid', string $orderDirection = 'DESC', bool $returnData = true)
     {
         $builder = $this->builder();
+        $builder->select('urlhits.*, urls.url_identifier'); // Select the necessary columns
+
+        $builder->join('urls', 'urls.url_id = urlhits.urlhit_urlid'); // Join with the urls table
 
         $builder->orderBy($orderBy, $orderDirection);
 
-        if (is_array($urlId)) {
-            $builder->whereIn('urlhit_urlid', $urlId);
+        // Specify the period if provided
+        if ($period !== null) {
+            switch ($period) {
+                case 'today':
+                    $startOfDay = date('Y-m-d 00:00:00');
+                    $endOfDay   = date('Y-m-d 23:59:59');
+                    $builder->where('urlhit_at >=', $startOfDay);
+                    $builder->where('urlhit_at <=', $endOfDay);
+                    break;
+
+                case 'this_month':
+                    $startOfMonth = date('Y-m-01 00:00:00');
+                    $endOfMonth   = date('Y-m-t 23:59:59');
+                    $builder->where('urlhit_at >=', $startOfMonth);
+                    $builder->where('urlhit_at <=', $endOfMonth);
+                    break;
+                    // Add more cases for other periods if needed
+            }
+        }
+
+        if ($urlId === null) {
+            // No URL ID provided, return all hits
         } else {
-            $builder->where('urlhit_urlid', $urlId);
+            if (is_array($urlId)) {
+                $builder->whereIn('urlhit_urlid', $urlId);
+            } else {
+                $builder->where('urlhit_urlid', $urlId);
+            }
+        }
+
+        // Apply user ID filter if provided
+        if ($userId !== null) {
+            if (is_array($userId)) {
+                $builder->whereIn('urls.url_user_id', $userId);
+            } else {
+                $builder->where('urls.url_user_id', $userId);
+            }
         }
 
         if ($start !== null && $length !== null) {

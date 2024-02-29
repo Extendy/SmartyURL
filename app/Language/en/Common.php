@@ -33,4 +33,6 @@ return [
     'MyURLsHitCountAllTime'   => 'Total visits of my URLs',
     'MyURLsHitCountThisMonth' => 'My URLs visits this month',
     'MyURLsHitCountToday'     => 'My URLs visits today',
+
+    'CreatedAt' => 'At',
 ];

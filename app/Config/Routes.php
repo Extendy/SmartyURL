@@ -35,6 +35,10 @@ $routes->group('url', static function ($routes) {
     $routes->post('del/(:num)', 'Url::delUrl/$1', ['filter' => 'session']); // json del url
 });
 
+$routes->group('urltags', static function ($routes) {
+    $routes->get('/', 'Urltags::index', ['as' => 'url-tags', 'filter' => 'session']);
+});
+
 // Users
 $routes->group('users', static function ($routes) {
     $routes->get('/', 'Users::index', ['filter' => 'session']);

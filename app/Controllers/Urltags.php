@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\UrltagsModel;
+use App\Models\UrlTagsModel;
 use CodeIgniter\Controller;
 use CodeIgniter\I18n\Time;
 

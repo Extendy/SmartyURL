@@ -476,9 +476,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-git-for-smartyurl-developers-only" class="md-nav__link">
+  <a href="#using-git-for-smartyurl-developers-only-not-recommended" class="md-nav__link">
     <span class="md-ellipsis">
-      Using git for SmartyUrl developers only
+      Using git for SmartyUrl developers only (Not recommended)
     </span>
   </a>
   
@@ -716,9 +716,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-git-for-smartyurl-developers-only" class="md-nav__link">
+  <a href="#using-git-for-smartyurl-developers-only-not-recommended" class="md-nav__link">
     <span class="md-ellipsis">
-      Using git for SmartyUrl developers only
+      Using git for SmartyUrl developers only (Not recommended)
     </span>
   </a>
   
@@ -768,11 +768,11 @@
 <h4 id="option-2-subfolder-installation">Option 2: Subfolder Installation</h4>
 <p>If creating a subdomain is not possible, SmartyURL can be installed in a subfolder of your main domain. For instance, you can use a structure like "example.com/go/" where "go" becomes the root folder for SmartyURL.</p>
 <h2 id="installation">Installation</h2>
-<p>Currently, as SmartyURL is in its early stages, you can only install it using <code>Composer</code>. Once we release the first official version of SmartyURL, we may offer other installation methods.</p>
+<p>Currently, as SmartyURL is in its early stages, you can only install it using <code>Composer</code>. In future releases, we may support other installation methods..</p>
 <h3 id="install-smartyurl-using-composer">Install SmartyURL  using <code>Composer</code>:</h3>
 <p>This is the best way for now, to install SmartyURL you have to use <code>composer</code> command</p>
 <p>Login to your web hosting account where you want to install SmartyURL using SSH and run the following commands:</p>
-<pre><code class="language-cli">composer create-project extendy/smartyurl:dev-main myapp
+<pre><code class="language-cli">composer create-project extendy/smartyurl myapp
 cd myapp
 composer install
 </code></pre>
@@ -824,8 +824,8 @@ User &quot;sam&quot; added to group &quot;superadmin&quot;
 <pre><code class="language-cli">Auth.allowRegistration = false
 </code></pre>
 <p>By default user registration using the portal is <strong>disabled</strong> because SmartyURL is Closed by Default. See <a href="../users/#why-smartyurl-is-closed-by-default">Why SmartyURL is Closed by Default</a> to know why.</p>
-<h2 id="using-git-for-smartyurl-developers-only">Using <code>git</code> for SmartyUrl developers only</h2>
-<p>While it is not advisable for developers to attempt installation using git. but sure you can do that. you need some experice usng git to install code and run the commands in <a href="./#after-installing-the-files">After installing the files</a></p>
+<h2 id="using-git-for-smartyurl-developers-only-not-recommended">Using <code>git</code> for SmartyUrl developers only (Not recommended)</h2>
+<p>While it is Not recommended for developers to attempt installation using git. but sure you can do that. you need some experice usng git to install code and run the commands in <a href="./#after-installing-the-files">After installing the files</a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you planning to install SmartyURL with <code>git</code>, you gain the flexibility to easily update SmartyURL in the future using <code>git fetch</code> and <code>git pull</code>. However, <strong>noting that</strong> using <code>git</code> may provide bleeding-edge releases, which might not be as stable or thoroughly tested or may contains breaking changes.

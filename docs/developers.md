@@ -31,7 +31,7 @@ If creating a subdomain is not possible, SmartyURL can be installed in a subfold
 
 ## Installation
 
-Currently, as SmartyURL is in its early stages, you can only install it using `Composer`. Once we release the first official version of SmartyURL, we may offer other installation methods.
+Currently, as SmartyURL is in its early stages, you can only install it using `Composer`. In future releases, we may support other installation methods..
 
 ### Install SmartyURL  using `Composer`:
 
@@ -40,7 +40,7 @@ This is the best way for now, to install SmartyURL you have to use `composer` co
 Login to your web hosting account where you want to install SmartyURL using SSH and run the following commands:
 
 ```cli
-composer create-project extendy/smartyurl:dev-main myapp
+composer create-project extendy/smartyurl myapp
 cd myapp
 composer install
 ```
@@ -125,8 +125,9 @@ Auth.allowRegistration = false
 
 By default user registration using the portal is **disabled** because SmartyURL is Closed by Default. See [Why SmartyURL is Closed by Default](users.md/#why-smartyurl-is-closed-by-default) to know why.
 
-## Using `git` for SmartyUrl developers only
-While it is not advisable for developers to attempt installation using git. but sure you can do that. you need some experice usng git to install code and run the commands in [After installing the files](developers.md/#after-installing-the-files)
+## Using `git` for SmartyUrl developers only (Not recommended)
+
+While it is Not recommended for developers to attempt installation using git. but sure you can do that. you need some experice usng git to install code and run the commands in [After installing the files](developers.md/#after-installing-the-files)
 
 !!! note
     If you planning to install SmartyURL with `git`, you gain the flexibility to easily update SmartyURL in the future using `git fetch` and `git pull`. However, **noting that** using `git` may provide bleeding-edge releases, which might not be as stable or thoroughly tested or may contains breaking changes.

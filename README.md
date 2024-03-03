@@ -1,9 +1,5 @@
 # SmartyURL
 
-> [!IMPORTANT]
-> **NOT READY!! The application is currently under development and not yet ready for use. We will remove this notice once it becomes available for use.**
-
-
 SmartyURL, a powerful & open-source URL management tool, empowers businesses and individuals they need self-hosted tool to customize, track, shorten URLs, and manage their URLs for marketing, analytics, and reporting.
 
 You can utilize SmartyURL to generate redirect links to the final URL, considering various variables like the visitor's geographical location or user device information.
@@ -25,9 +21,9 @@ In addition to shortening URLs (based on domain that you use), SmartyURL also of
 
 ## Installation
 
-Currently, as SmartyURL is in its early stages, you can only install it using Composer. Once we release the first official version of SmartyURL, we will offer detailed installation instructions for other methods.
+Currently, as SmartyURL is in its early stages, you can only install it using Composer. In future releases, we may support other installation methods.
 
-see [Developers Guide](http://extendy.github.io/SmartyURL/developers) for more information about how to install SmartyURL.
+See [Developers Guide](http://extendy.github.io/SmartyURL/developers) for more information about how to install SmartyURL.
 
 Certainly, please refer to the [documentation](http://extendy.github.io/SmartyURL) for detailed instructions How configure, and effectively use SmartyURL for comprehensive guidance.
 

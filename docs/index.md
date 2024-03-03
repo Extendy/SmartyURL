@@ -27,4 +27,8 @@ Every open-source project depends on its contributors to be a success. Thanks to
 
 Also We would like to acknowledge the following resources and contributors for their valuable assistance and support in the development of this project:
 
-- [MassarCloud Company](https://massarcloud.sa): We would like to express our gratitude to [MassarCloud LLC](https://massarcloud.sa) for their valuable support in providing hosting services during the development of this project.
+|   | |
+| ------------- | ------------- |
+| <img width="150" src="https://d1z6v8w317q2lf.cloudfront.net/misc/cdn1/img/massarcloud_logo_rectangle_336x106px.png" alt="PhpStorm logo."> | [MassarCloud Company](https://massarcloud.sa): We would like to express our gratitude to [MassarCloud LLC](https://massarcloud.sa) for their valuable support in providing hosting services during the development of this project.  |
+| <img width="100" src="https://resources.jetbrains.com/storage/products/company/brand/logos/PhpStorm_icon.svg" alt="PhpStorm logo.">  | [JetBrains s.r.o](https://jb.gg/OpenSourceSupport) We would like to express our gratitude to JetBrains s.r.o for their valuable support in providing Open Source development license.  |
+|   | |

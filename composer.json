@@ -14,7 +14,7 @@
         "ext-gettext": "*",
         "ext-gmp": "*",
         "laminas/laminas-escaper": "^2.9",
-        "psr/log": "^1.1",
+        "psr/log": "^3.0",
         "ip2location/ip2location-php": "^9.7",
         "mobiledetect/mobiledetectlib": "4.8.x-dev",
         "sokil/php-isocodes": "^4.2",

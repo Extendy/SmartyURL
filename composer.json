@@ -24,7 +24,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9",
         "mikey179/vfsstream": "^1.6",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^11.4",
         "codeigniter/coding-standard": "^1.7",
         "phpstan/phpstan": "^1.10"
     },

@@ -28,6 +28,7 @@ class Filters extends BaseConfig
         'afterlangchange' => \App\Filters\LangFilter::class,  // it is just a test just to show how filter works , mshannaq not real filter
         'webratelimit'    => \App\Filters\Webratelimit::class,
         'smartyglobal'    => \App\Filters\SmartyglobalFilter::class,
+        'clickjacking' => \App\Filters\ClickjackingFilter::class,
 
         // if you want to define alias for multiple filter see https://forum.codeigniter.com/thread-76946.html
 
@@ -66,11 +67,13 @@ class Filters extends BaseConfig
             // 'session' => ['except' => ['/', 'go/*', 'tests*', 'lang*', 'account/login*', 'account/register', 'account/auth/a/*']],
             // 'invalidchars',
             'smartyglobal', // global filter for SmartyUrl
+
         ],
         'after' => [
             'toolbar',
             // 'honeypot',
             // 'secureheaders',
+            'clickjacking', // check security headers to mitigate clickjacking
         ],
     ];
 

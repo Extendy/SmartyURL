@@ -80,6 +80,9 @@ if [[ -n "${INPUT_DOMAIN}" ]]; then
   DOMAIN="${INPUT_DOMAIN}"
 fi
 
+echo "[*] SmartyURL will be installed for domain: ${DOMAIN}"
+echo
+
 read -rp "Enter email for Let's Encrypt notifications [${ADMIN_EMAIL}]: " INPUT_EMAIL
 if [[ -n "${INPUT_EMAIL}" ]]; then
   ADMIN_EMAIL="${INPUT_EMAIL}"

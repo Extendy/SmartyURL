@@ -40,8 +40,8 @@ class Users extends BaseController
         }
 
         $draw        = $this->request->getGet('draw');
-        $start       = $this->request->getGet('start');
-        $length      = $this->request->getGet('length');
+        $start       = (int) $this->request->getGet('start');
+        $length      = (int) $this->request->getGet('length');
         $columnOrder = $this->request->getGet('order');
 
         if ($columnOrder !== null) {

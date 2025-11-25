@@ -323,8 +323,8 @@
             <!--end::To the end-->
             <!--begin::Copyright-->
             <strong>
-                Copyright &copy; 2023
-                <a target="_blank" rel="external" href="https://extendy.net">Extendy</a>.
+                Copyright &copy; 2025
+                <a target="_blank" rel="external" href="https://extendy.uk">Extendy LTD</a>.
             </strong>
             All rights reserved.
             <!--end::Copyright-->

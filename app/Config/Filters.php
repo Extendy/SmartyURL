@@ -2,21 +2,26 @@
 
 namespace Config;
 
-use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Config\Filters as BaseFilters;
+use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
+use CodeIgniter\Filters\ForceHTTPS;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
+use CodeIgniter\Filters\PageCache;
+use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
-
-class Filters extends BaseConfig
+class Filters extends BaseFilters
 {
     /**
      * Configures aliases for Filter classes to
      * make reading things nicer and simpler.
      *
-     * @var         array<string, string>
-     * @phpstan-var array<string, class-string>
+     * @var array<string, class-string|list<class-string>>
+     *
+     * [filter_name => classname]
+     * or [filter_name => [classname1, classname2, ...]]
      */
     public array $aliases = [
         'csrf'            => CSRF::class,
@@ -24,11 +29,15 @@ class Filters extends BaseConfig
         'honeypot'        => Honeypot::class,
         'invalidchars'    => InvalidChars::class,
         'secureheaders'   => SecureHeaders::class,
+        'cors'            => Cors::class,
+        'forcehttps'      => ForceHTTPS::class,
+        'pagecache'       => PageCache::class,
+        'performance'     => PerformanceMetrics::class,
         'localization'    => \App\Filters\Localization::class,
         'afterlangchange' => \App\Filters\LangFilter::class,  // it is just a test just to show how filter works , mshannaq not real filter
         'webratelimit'    => \App\Filters\Webratelimit::class,
         'smartyglobal'    => \App\Filters\SmartyglobalFilter::class,
-        'clickjacking' => \App\Filters\ClickjackingFilter::class,
+        'clickjacking'    => \App\Filters\ClickjackingFilter::class,
 
         // if you want to define alias for multiple filter see https://forum.codeigniter.com/thread-76946.html
 
@@ -48,6 +57,31 @@ class Filters extends BaseConfig
     ];
 
     /**
+     * List of special required filters.
+     *
+     * The filters listed here are special. They are applied before and after
+     * other kinds of filters, and always applied even if a route does not exist.
+     *
+     * Filters set by default provide framework functionality. If removed,
+     * those functions will no longer work.
+     *
+     * @see https://codeigniter.com/user_guide/incoming/filters.html#provided-filters
+     *
+     * @var array{before: list<string>, after: list<string>}
+     */
+    public array $required = [
+        'before' => [
+            'forcehttps', // Force Global Secure Requests
+            'pagecache',  // Web Page Caching
+        ],
+        'after' => [
+            'pagecache',   // Web Page Caching
+            'performance', // Performance Metrics
+            'toolbar',     // Debug Toolbar
+        ],
+    ];
+
+    /**
      * List of filter aliases that are always
      * applied before and after every request.
      *
@@ -56,6 +90,8 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
+            'forcehttps', // Force Global Secure Requests
+            'pagecache',  // Web Page Caching
             // 'honeypot',
             // 'csrf',
             'csrf' => ['except' => ['api/*']],
@@ -73,6 +109,8 @@ class Filters extends BaseConfig
             'toolbar',
             // 'honeypot',
             // 'secureheaders',
+            'pagecache',   // Web Page Caching
+            'performance', // Performance Metrics
             'clickjacking', // check security headers to mitigate clickjacking
         ],
     ];
@@ -88,7 +126,10 @@ class Filters extends BaseConfig
      * permits any HTTP method to access a controller. Accessing the controller
      * with a method you don't expect could bypass the filter.
      */
-    public array $methods = [];
+    public array $methods = [
+        'POST' => ['invalidchars', 'csrf'],
+        'GET'  => ['csrf'],
+    ];
 
     /**
      * List of filter aliases that should run on any

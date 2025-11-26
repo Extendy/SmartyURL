@@ -56,7 +56,7 @@ class Modules extends BaseModules
      *       ],
      *   ]
      *
-     * @var array
+     * @var array{only?: list<string>, exclude?: list<string>}
      */
     public $composerPackages = [];
 

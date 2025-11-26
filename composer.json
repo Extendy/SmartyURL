@@ -5,7 +5,7 @@
     "version": "1.0.0-dev",
     "require": {
         "php": "^8.1",
-        "codeigniter4/framework": "^4.3",
+        "codeigniter4/framework": "^4.6",
         "codeigniter4/settings": "^2.1",
         "codeigniter4/shield": "^1.0",
         "ext-intl": "*",
@@ -19,7 +19,8 @@
         "mobiledetect/mobiledetectlib": "4.8.x-dev",
         "sokil/php-isocodes": "^4.2",
         "sokil/php-isocodes-db-i18n": "^4.0",
-        "chillerlan/php-qrcode": "^5.0"
+        "chillerlan/php-qrcode": "^5.0",
+        "codeigniter4/translations": "^4.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

@@ -40,13 +40,13 @@ class Users extends BaseController
         }
 
         $draw        = $this->request->getGet('draw');
-        $start       = $this->request->getGet('start');
-        $length      = $this->request->getGet('length');
+        $start       = (int) $this->request->getGet('start');
+        $length      = (int) $this->request->getGet('length');
         $columnOrder = $this->request->getGet('order');
 
         if ($columnOrder !== null) {
             $ajax_column_index = $columnOrder['0']['column'];
-            $order_by_dir      = $columnOrder['0']['dir'];
+            $order_by_dir      = $columnOrder['0']['dir'] ;
 
             // Do not think that the data that comes from the client is always correct
             // so switch it to use defaults
@@ -99,6 +99,7 @@ class Users extends BaseController
         } else {
             $order_by      = 'id';
             $order_by_rule = 'desc';
+            $order_by_dir = "";
         }
 
         $data = [];

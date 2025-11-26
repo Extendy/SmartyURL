@@ -25,6 +25,12 @@
 #your smartyurl website url
 app.baseURL = 'https://EXAMPLE.COM'
 
+# force use https
+# app.forceGlobalSecureRequests = false
+
+# disable load javascript from unknowns
+# app.CSPEnabled = false
+
 #your default language for your app
 # 'en' for english
 # 'ar' for arabic
@@ -79,7 +85,16 @@ smartyurl.url_can_be_shared_between_users = true
  database.default.username = databaseusername
  database.default.password = database_password
  database.default.DBDriver = MySQLi
+ database.tests.charset = utf8mb4
+ database.tests.charset = utf8mb4
+ database.tests.DBCollat = utf8mb4_general_ci
  database.default.port = 3306
+
+#--------------------------------------------------------------------
+# ENCRYPTION
+#--------------------------------------------------------------------
+# can be created by running `php -r "echo 'base64:' . base64_encode(random_bytes(32));"`
+encryption.key = base64:lL2ENITP7PZz5EI6HmQaqPC+vDQujHkeHNMPBmKAuKA=
 
 
 #--------------------------------------------------------------------

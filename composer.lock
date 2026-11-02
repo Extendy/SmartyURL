@@ -241,25 +241,24 @@
         },
         {
             "name": "codeigniter4/settings",
-            "version": "v2.2.0",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/settings.git",
-                "reference": "2748f2b4572d44a940f98c31847d65272cac5666"
+                "reference": "7cbd2e2146e32211cc8194d9c35632631500adad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/settings/zipball/2748f2b4572d44a940f98c31847d65272cac5666",
-                "reference": "2748f2b4572d44a940f98c31847d65272cac5666",
+                "url": "https://api.github.com/repos/codeigniter4/settings/zipball/7cbd2e2146e32211cc8194d9c35632631500adad",
+                "reference": "7cbd2e2146e32211cc8194d9c35632631500adad",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0"
+                "php": "^8.2"
             },
             "require-dev": {
-                "codeigniter4/devkit": "^1.1.2",
-                "codeigniter4/framework": "^4.2.3",
-                "rector/rector": "0.18.13"
+                "codeigniter4/devkit": "^1.3",
+                "codeigniter4/framework": "^4.3"
             },
             "type": "library",
             "autoload": {
@@ -290,9 +289,9 @@
             ],
             "support": {
                 "issues": "https://github.com/codeigniter4/settings/issues",
-                "source": "https://github.com/codeigniter4/settings/tree/v2.2.0"
+                "source": "https://github.com/codeigniter4/settings/tree/v2.4.0"
             },
-            "time": "2024-01-06T07:10:58+00:00"
+            "time": "2026-07-30T16:03:46+00:00"
         },
         {
             "name": "codeigniter4/shield",
@@ -5411,5 +5410,5 @@
         "ext-gmp": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

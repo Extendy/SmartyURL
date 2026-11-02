@@ -19,7 +19,7 @@
         "mobiledetect/mobiledetectlib": "4.8.x-dev",
         "sokil/php-isocodes": "^4.2",
         "sokil/php-isocodes-db-i18n": "^4.0",
-        "chillerlan/php-qrcode": "^5.0",
+        "chillerlan/php-qrcode": "^6.0",
         "codeigniter4/translations": "^4.6"
     },
     "require-dev": {

@@ -767,16 +767,16 @@
         },
         {
             "name": "sokil/php-isocodes-db-i18n",
-            "version": "4.0.27",
+            "version": "4.0.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sokil/php-isocodes-db-i18n.git",
-                "reference": "8854934be5f7fb7d7a1c93db938791c5135e2db6"
+                "reference": "debdd0ee74df019c39e4583253788c6d817e2656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sokil/php-isocodes-db-i18n/zipball/8854934be5f7fb7d7a1c93db938791c5135e2db6",
-                "reference": "8854934be5f7fb7d7a1c93db938791c5135e2db6",
+                "url": "https://api.github.com/repos/sokil/php-isocodes-db-i18n/zipball/debdd0ee74df019c39e4583253788c6d817e2656",
+                "reference": "debdd0ee74df019c39e4583253788c6d817e2656",
                 "shasum": ""
             },
             "require": {
@@ -801,9 +801,9 @@
             "description": "Database and internationalisation filed for ISO country, subdivision, language, currency and script definitions and their translations. Based on pythons pycountry and Debian's iso-codes.",
             "support": {
                 "issues": "https://github.com/sokil/php-isocodes-db-i18n/issues",
-                "source": "https://github.com/sokil/php-isocodes-db-i18n/tree/4.0.27"
+                "source": "https://github.com/sokil/php-isocodes-db-i18n/tree/4.0.29"
             },
-            "time": "2025-10-06T17:14:31+00:00"
+            "time": "2026-09-19T13:54:30+00:00"
         }
     ],
     "packages-dev": [
@@ -5411,5 +5411,5 @@
         "ext-gmp": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

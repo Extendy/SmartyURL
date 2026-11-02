@@ -241,25 +241,24 @@
         },
         {
             "name": "codeigniter4/settings",
-            "version": "v2.2.0",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/settings.git",
-                "reference": "2748f2b4572d44a940f98c31847d65272cac5666"
+                "reference": "7cbd2e2146e32211cc8194d9c35632631500adad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/settings/zipball/2748f2b4572d44a940f98c31847d65272cac5666",
-                "reference": "2748f2b4572d44a940f98c31847d65272cac5666",
+                "url": "https://api.github.com/repos/codeigniter4/settings/zipball/7cbd2e2146e32211cc8194d9c35632631500adad",
+                "reference": "7cbd2e2146e32211cc8194d9c35632631500adad",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0"
+                "php": "^8.2"
             },
             "require-dev": {
-                "codeigniter4/devkit": "^1.1.2",
-                "codeigniter4/framework": "^4.2.3",
-                "rector/rector": "0.18.13"
+                "codeigniter4/devkit": "^1.3",
+                "codeigniter4/framework": "^4.3"
             },
             "type": "library",
             "autoload": {
@@ -290,36 +289,38 @@
             ],
             "support": {
                 "issues": "https://github.com/codeigniter4/settings/issues",
-                "source": "https://github.com/codeigniter4/settings/tree/v2.2.0"
+                "source": "https://github.com/codeigniter4/settings/tree/v2.4.0"
             },
-            "time": "2024-01-06T07:10:58+00:00"
+            "time": "2026-07-30T16:03:46+00:00"
         },
         {
             "name": "codeigniter4/shield",
-            "version": "v1.2.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/shield.git",
-                "reference": "2d1b2177a914dcd490f54a6706792eacabd9e3e8"
+                "reference": "93c5f1f1481ced93ceb4071ffa3a08a9647a7c8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/2d1b2177a914dcd490f54a6706792eacabd9e3e8",
-                "reference": "2d1b2177a914dcd490f54a6706792eacabd9e3e8",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/93c5f1f1481ced93ceb4071ffa3a08a9647a7c8b",
+                "reference": "93c5f1f1481ced93ceb4071ffa3a08a9647a7c8b",
                 "shasum": ""
             },
             "require": {
                 "codeigniter4/settings": "^2.1",
-                "php": "^8.1"
+                "php": "^8.2"
             },
             "provide": {
                 "codeigniter4/authentication-implementation": "1.0"
             },
             "require-dev": {
-                "codeigniter/phpstan-codeigniter": "^1.3",
+                "boundwize/pyrameter": "^0.5",
+                "boundwize/structarmed": "^0.15",
+                "codeigniter/phpstan-codeigniter": "^2.0",
                 "codeigniter4/devkit": "^1.3",
                 "codeigniter4/framework": ">=4.3.5 <4.5.0 || ^4.5.1",
-                "firebase/php-jwt": "^6.4",
+                "firebase/php-jwt": "^7.0.3",
                 "mikey179/vfsstream": "^1.6.7",
                 "mockery/mockery": "^1.0",
                 "phpstan/phpstan-strict-rules": "^2.0"
@@ -363,7 +364,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/shield"
             },
-            "time": "2025-07-14T10:26:03+00:00"
+            "time": "2026-08-18T12:02:04+00:00"
         },
         {
             "name": "codeigniter4/translations",
@@ -5411,5 +5412,5 @@
         "ext-gmp": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

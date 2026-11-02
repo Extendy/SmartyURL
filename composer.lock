@@ -418,16 +418,16 @@
         },
         {
             "name": "ip2location/ip2location-php",
-            "version": "9.8.0",
+            "version": "9.8.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/chrislim2888/IP2Location-PHP-Module.git",
-                "reference": "1cf3c4a20befd7d788cf0a088c5348146e136aa2"
+                "url": "https://github.com/ip2location/IP2Location-PHP-Module.git",
+                "reference": "e18e5372cfa4b57f33d2dc8c15d24cee1ee6d1ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chrislim2888/IP2Location-PHP-Module/zipball/1cf3c4a20befd7d788cf0a088c5348146e136aa2",
-                "reference": "1cf3c4a20befd7d788cf0a088c5348146e136aa2",
+                "url": "https://api.github.com/repos/ip2location/IP2Location-PHP-Module/zipball/e18e5372cfa4b57f33d2dc8c15d24cee1ee6d1ce",
+                "reference": "e18e5372cfa4b57f33d2dc8c15d24cee1ee6d1ce",
                 "shasum": ""
             },
             "require": {
@@ -472,10 +472,10 @@
                 "zip code"
             ],
             "support": {
-                "issues": "https://github.com/chrislim2888/IP2Location-PHP-Module/issues",
-                "source": "https://github.com/chrislim2888/IP2Location-PHP-Module/tree/9.8.0"
+                "issues": "https://github.com/ip2location/IP2Location-PHP-Module/issues",
+                "source": "https://github.com/ip2location/IP2Location-PHP-Module/tree/9.8.1"
             },
-            "time": "2025-09-02T02:28:52+00:00"
+            "time": "2025-12-21T22:28:29+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -5411,5 +5411,5 @@
         "ext-gmp": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

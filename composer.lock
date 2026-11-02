@@ -367,21 +367,21 @@
         },
         {
             "name": "codeigniter4/translations",
-            "version": "v4.6.3",
+            "version": "v4.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/translations.git",
-                "reference": "98a47fc1e9ab7de5f8db0a4ef9fd40a3b85fde5e"
+                "reference": "a5df30934aa25a65bc1f78e6462b47fae0a0179a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/translations/zipball/98a47fc1e9ab7de5f8db0a4ef9fd40a3b85fde5e",
-                "reference": "98a47fc1e9ab7de5f8db0a4ef9fd40a3b85fde5e",
+                "url": "https://api.github.com/repos/codeigniter4/translations/zipball/a5df30934aa25a65bc1f78e6462b47fae0a0179a",
+                "reference": "a5df30934aa25a65bc1f78e6462b47fae0a0179a",
                 "shasum": ""
             },
             "require": {
                 "ext-intl": "*",
-                "php": "^8.1"
+                "php": "^8.2"
             },
             "require-dev": {
                 "codeigniter/coding-standard": "^1.7",
@@ -389,7 +389,7 @@
                 "ext-tokenizer": "*",
                 "friendsofphp/php-cs-fixer": "^3.53",
                 "nexusphp/cs-config": "^3.22",
-                "phpunit/phpunit": "^10.5 || ^11.0"
+                "phpunit/phpunit": "^11.5 || ^12.5"
             },
             "type": "project",
             "extra": {
@@ -414,7 +414,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/translations"
             },
-            "time": "2025-08-02T13:51:57+00:00"
+            "time": "2026-08-05T12:38:16+00:00"
         },
         {
             "name": "ip2location/ip2location-php",
@@ -5411,5 +5411,5 @@
         "ext-gmp": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
